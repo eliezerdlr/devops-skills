@@ -1,5 +1,7 @@
 # DevOps Skills
 
+**Português** | [English](README.en.md)
+
 Pack de skills para engenharia, DevOps, cybersecurity e operações de IT.
 
 Inclui **89 skills/sub-skills**, organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
