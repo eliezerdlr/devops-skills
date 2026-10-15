@@ -4,7 +4,7 @@
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares only skill resources. It has no runtime dependencies, install scripts, extensions, prompt templates or automatic hooks. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares skills and three adapted ECC network role prompts. It has no runtime dependencies, install scripts, extensions or automatic hooks. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
 This is not a full workstation bootstrap. Credentials, network access, cloud subscriptions, target software and permissions must be provided separately. Do not install every dependency globally or run `npm install` recursively over all manifests.
 
@@ -12,17 +12,17 @@ This is not a full workstation bootstrap. Credentials, network access, cloud sub
 
 Choose **one** method to avoid duplicate skill names.
 
-### Clone and register an explicit skills directory
+### Clone and register a local package
 
-Clone to a chosen directory, then merge a `skills` entry into the existing `~/.pi/agent/settings.json`:
+Clone to a chosen directory, then merge a `packages` entry into the existing `~/.pi/agent/settings.json`:
 
 ```json
 {
-  "skills": ["~/devops-skills/skills/engineering-skills"]
+  "packages": ["~/devops-skills"]
 }
 ```
 
-Replace the path if the checkout is elsewhere. Preserve the user's existing settings and skill entries; do not overwrite the entire settings file. `examples/pi-settings.json` is a merge example, not an installer. Pi discovers nested SKILL.md files recursively. Run `/reload` after editing settings or pulling updates.
+Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's `**/SKILL.md` glob selects every specialist even though their parent contains the catalogue. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
 
 ### Register the checkout as a local Pi package
 
@@ -94,7 +94,7 @@ The upstream SKILL.md is preserved unchanged. These local notes qualify example 
 | Kubernetes and containers | kubectl, Docker/Compose or the actual chosen runtime; access to the intended cluster/daemon |
 | Google Workspace | gws CLI, OAuth configuration/scopes and tenant permissions; some bundled scripts fall back to demo output if gws is absent, which is not a live audit |
 | Microsoft 365 | PowerShell and applicable Graph/Exchange modules and authorised tenant access for generated commands; generating text alone does not install or authenticate them |
-| Network automation proposed from ECC | Netmiko and optionally ntc-templates/TextFSM, device SSH access and verified host keys; diagnostic OS/vendor commands vary |
+| Network automation from ECC skills | Netmiko and optionally ntc-templates/TextFSM, device SSH access and verified host keys; diagnostic OS/vendor commands vary |
 | Security tests, load tests and incident response | Tools explicitly selected by the workflow, written scope/authorisation and appropriate isolated environment |
 
 This table describes workflow families, not an exhaustive executable allowlist. Instructions and generated code may mention further tools. Commands that are absent should produce a prerequisite check, not an automatic unapproved install.
@@ -107,7 +107,7 @@ The selected skills are bundled, not its entire development environment. Its roo
 
 ### ECC
 
-Eight skills and three network agents have been recommended, not copied into this distribution. Those Markdown skills do not require installing the ECC framework merely to read them. Netmiko collection examples need their separate Python dependencies; kubectl/Linux/network commands are task-specific.
+Eight selected skills are now included unchanged, plus three network agents adapted as same-session Pi prompts. Those Markdown resources do not require installing the ECC framework merely to read them. The manifest explicitly lists the three prompt files; no agent README or licence is loaded as a command. Adapted frontmatter does not select a Claude model or impose tool permissions. No autonomous subagent extension is bundled. Netmiko collection examples need their separate Python dependencies; kubectl/Linux/network commands are task-specific.
 
 The complete ECC repository declares a Node runtime, npm dependencies, a Python LLM abstraction package (Python >=3.11 with anthropic/openai), a prepack build, Pi extension code, hooks, rules and commands. Do not inherit that root manifest for a small curated subset.
 
@@ -131,7 +131,7 @@ Completed without running bundled scripts:
 - Python AST parsing: 171 files; no syntax errors on the review interpreter, one inherited escape warning.
 - JavaScript syntax checks: standalone JS/MJS files passed Node 22.23.1 `--check`; TypeScript modules were not compiled.
 - Bash syntax checks: three bundled hook scripts passed `bash -n`; they are not Pi hooks and were not activated.
-- The original 90 SKILL.md frontmatters (89 specialists plus index) passed safe YAML/name/description checks. After adding deep-agents-core, all 91 entrypoints (90 specialists plus index) were rechecked for metadata and catalogue coverage; examples were not executed.
+- The original 90 SKILL.md frontmatters (89 specialists plus index) passed safe YAML/name/description checks. After adding deep-agents-core and eight ECC skills, all 99 entrypoints (98 specialists plus index) were rechecked for metadata and catalogue coverage, along with three role prompt files; examples were not executed.
 - Three npm manifests classified: two optional MCP integrations and one fixture, not root pack dependencies.
 
 Not completed: dependency installation/resolution, build/integration tests, live CVE/licence databases, exhaustive generated-code dependency resolution, clean-machine Pi loading and subagent execution. Do not publish claims that the whole pack works without setup or has passed security analysis.

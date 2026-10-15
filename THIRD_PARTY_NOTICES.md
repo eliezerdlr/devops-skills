@@ -15,12 +15,16 @@ The full notices are retained at:
 - `skills/engineering-skills/playwright-pro/LICENSE`
 - `skills/engineering-skills/self-improving-agent/LICENSE`
 
-## ECC — planned integration, not yet bundled
+## ECC — selected skills and adapted network role prompts
 
 Source: https://github.com/affaan-m/ecc
 
 MIT License — Copyright (c) 2026 Affaan Mustafa.
-The unmodified source licence is preserved in `licenses/ecc-MIT.txt`. Its copyright notice is included in the root MIT notice in preparation for the combined distribution; ECC skills and agents have not yet been copied. Update this section with the exact included paths when integration is performed. The ECC notice does not attribute the existing engineering skills to Affaan Mustafa.
+The unmodified source licence is preserved in `licenses/ecc-MIT.txt`, `agents/LICENSE`, and each included ECC skill directory. The root MIT notice includes the original copyright. This does not attribute other authors' content to Affaan Mustafa.
+
+Included unchanged under `skills/engineering-skills/`: `network-interface-health`, `network-config-validation`, `network-bgp-diagnostics`, `netmiko-ssh-automation`, `cisco-ios-patterns`, `homelab-network-readiness`, `homelab-network-setup`, and `kubernetes-patterns`.
+
+Adapted from ECC `agents/`: `agents/network-architect.md`, `agents/network-troubleshooter.md`, and `agents/network-config-reviewer.md`. Local modifications remove Claude model/tool frontmatter, add a Pi argument hint and task substitution, and explain same-session execution and approval boundaries. The original role bodies remain otherwise unchanged. These are prompt templates, not a bundled subagent runtime. ECC installers, hooks, rules and extension code are not included.
 
 ## LangChain — Deep Agents Core
 

@@ -4,7 +4,7 @@
 
 A collection of skills for engineering, DevOps, cybersecurity, and IT operations.
 
-Includes **90 skills/sub-skills**, organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
+Includes **98 skills/sub-skills**, organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
 
 ## 1. Prerequisites
 
@@ -20,19 +20,17 @@ After cloning this repository, choose **one** of the following methods. Do not r
 
 ### Option A — Register the path in settings.json
 
-Edit `~/.pi/agent/settings.json` and add the absolute skills directory path to the existing `skills` list:
+Edit `~/.pi/agent/settings.json` and add the checkout to the existing `packages` list as a local package:
 
 ```json
 {
-  "skills": [
-    "/absolute/path/devops-skills/skills/engineering-skills"
-  ]
+  "packages": ["/absolute/path/devops-skills"]
 }
 ```
 
 Replace the path with your actual checkout location. **Do not replace the entire settings file** if it already contains configuration: preserve other fields and paths.
 
-The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. Pi discovers nested SKILL.md files recursively, without requiring a separate entry for each skill.
+The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The package manifest explicitly selects all SKILL.md files and the three network prompts. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
 
 ### Option B — Install the checkout as a Pi package
 
@@ -41,7 +39,7 @@ pi install /absolute/path/devops-skills
 pi list
 ```
 
-The `package.json` manifest registers skills only. It does not include extensions, hooks, themes, prompts, or installation scripts. You do not need to run `npm install` at the repository root to load the skills.
+The `package.json` manifest registers skills and three network role prompts. It does not include extensions, hooks, themes, or installation scripts. You do not need to run `npm install` at the repository root to load the skills.
 
 You can also install directly from GitHub:
 
@@ -72,7 +70,7 @@ Pi advertises skill names/descriptions and loads detailed instructions when need
 
 ## 3. Enable operational capabilities
 
-**Registering the pack above makes the 90 skills available.** Running their workflows may require additional setup:
+**Registering the pack above makes the 98 skills available.** Running their workflows may require additional setup:
 
 | Capability | Separate setup |
 |---|---|
@@ -91,9 +89,13 @@ The [dependency guide](docs/DEPENDENCIES.md) distinguishes optional libraries, e
 
 The [deep-agents-core](skills/engineering-skills/deep-agents-core/SKILL.md) skill from the LangChain project guides development of Deep Agents applications. It does not install the framework or add subagents or memory to Pi. Read the [dependencies and example limitations](docs/DEPENDENCIES.md#deep-agents-core-langchain) before running code.
 
-### What is not enabled/included
+### ECC network agents
 
-- The recommended ECC skills and agents have not yet been incorporated.
+Eight ECC skills and three agents adapted as Pi prompts are included: `/network-architect`, `/network-troubleshooter`, and `/network-config-reviewer`. Both `pi install` and a `packages` entry in `settings.json` register them through the manifest.
+
+These are roles in the current session, **not autonomous subagents or permission isolation**. See the [agent index](agents/README.md) and [post-pull testing guide](docs/TESTING.md).
+
+### What is not enabled/included
 - Markdown agent definitions do not automatically become Pi subagents.
 - Original hooks for other agent environments are not enabled by this pack.
 - Snyk Agent Scan and Sage are neither distributed nor installed by this pack.
@@ -101,7 +103,7 @@ The [deep-agents-core](skills/engineering-skills/deep-agents-core/SKILL.md) skil
 
 ### UniFi — optional integration under review
 
-The original project is available in [integrations/unifi-skills](integrations/unifi-skills/README.md), including five skills and a Python helper. **It is not loaded by this pack's Pi manifest** and is not part of the 90 main skills.
+The original project is available in [integrations/unifi-skills](integrations/unifi-skills/README.md), including five skills and a Python helper. **It is not loaded by this pack's Pi manifest** and is not part of the 98 main skills.
 
 **Do not use unchanged in production:** the original helper disables TLS verification, permits writes by default, and may expose sensitive data in responses/dry-run output. Corrections and real-device tests have not been completed. Publication is not operational approval. Do not run examples against a company network with administrative credentials.
 

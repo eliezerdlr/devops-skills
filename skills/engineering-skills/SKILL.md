@@ -1,11 +1,11 @@
 ---
 name: engineering-skills
-description: "Catalogue of 90 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
+description: "Catalogue of 98 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
 ---
 
 # Engineering Skills — Catalogue
 
-This catalogue lists **90 skills/sub-skills** included in this repository, excluding this index. All listed paths are relative to the directory containing this file. Test fixtures are not operational skills.
+This catalogue lists **98 skills/sub-skills** included in this repository, excluding this index. All listed paths are relative to the directory containing this file. Test fixtures are not operational skills.
 
 Copyright and licence notices are preserved in the repository's `LICENSE`, `THIRD_PARTY_NOTICES.md`, and nested licence files. Inclusion is not a security certification.
 
@@ -158,9 +158,24 @@ These specialists are installed directly in this catalogue's directory. All path
 
 Optional framework dependencies and example limitations are documented in `../../docs/DEPENDENCIES.md`. Load this specialist only when developing Deep Agents applications.
 
+## Network operations and Kubernetes — ECC (8)
+
+| Skill | File |
+|---|---|
+| network-interface-health | `network-interface-health/SKILL.md` |
+| network-config-validation | `network-config-validation/SKILL.md` |
+| network-bgp-diagnostics | `network-bgp-diagnostics/SKILL.md` |
+| netmiko-ssh-automation | `netmiko-ssh-automation/SKILL.md` |
+| cisco-ios-patterns | `cisco-ios-patterns/SKILL.md` |
+| homelab-network-readiness | `homelab-network-readiness/SKILL.md` |
+| homelab-network-setup | `homelab-network-setup/SKILL.md` |
+| kubernetes-patterns | `kubernetes-patterns/SKILL.md` |
+
+The three adapted ECC network role prompts are indexed in `../../agents/README.md`. They run in the current Pi session, not isolated subagents. Network guidance is vendor/version-dependent; host syntax and permissions must be verified.
+
 ## Known coverage gaps for hybrid IT
 
-There are no dedicated installed skills for enterprise networking/firewalls, Windows Server/AD/GPO, Linux administration, VMware/Proxmox, storage, backup/disaster recovery, endpoint management or ITIL/ITSM. Existing skills may partially overlap; do not claim dedicated coverage.
+Focused network guidance is now included, primarily IOS/IOS-XE and small-lab planning; it does not establish comprehensive multi-vendor coverage. Dedicated Windows Server/AD/GPO, Linux administration, VMware/Proxmox, Xen Orchestra/XCP-ng, storage, enterprise backup/disaster recovery, endpoint management and ITIL/ITSM skills remain gaps. Optional UniFi source is separate and not production-approved.
 
 For these areas, use vendor documentation and approved local runbooks. Add specialist skills only after reviewing their provenance, scope, requirements and operational safety. Company-specific versions, network topology, policies and tools must be supplied separately; never embed secrets.
 

@@ -4,7 +4,7 @@
 
 Pack de skills para engenharia, DevOps, cybersecurity e operações de IT.
 
-Inclui **90 skills/sub-skills**, organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
+Inclui **98 skills/sub-skills**, organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
 
 ## 1. Pré-requisitos
 
@@ -20,19 +20,17 @@ Depois de clonar este repositório, escolhe **uma** das opções seguintes. Não
 
 ### Opção A — Registar o caminho em settings.json
 
-Edita `~/.pi/agent/settings.json` e acrescenta o caminho absoluto da pasta de skills à lista `skills` existente:
+Edita `~/.pi/agent/settings.json` e acrescenta o checkout como pacote local à lista `packages` existente:
 
 ```json
 {
-  "skills": [
-    "/caminho/absoluto/devops-skills/skills/engineering-skills"
-  ]
+  "packages": ["/caminho/absoluto/devops-skills"]
 }
 ```
 
 Substitui o caminho pelo local real do checkout. **Não substituas o ficheiro inteiro** se já contém configurações: preserva os restantes campos e caminhos.
 
-O [exemplo de configuração](examples/pi-settings.json) usa `~/devops-skills`; ajusta-o se clonaste para outra pasta. Pi descobre os SKILL.md recursivamente, sem listar cada skill.
+O [exemplo de configuração](examples/pi-settings.json) usa `~/devops-skills`; ajusta-o se clonaste para outra pasta. O manifesto do pacote seleciona explicitamente todos os SKILL.md e os três prompts de rede. Não registes apenas a pasta do índice em `skills`: o carregador Pi para de descer ao encontrar um SKILL.md numa pasta.
 
 ### Opção B — Instalar o checkout como pacote Pi
 
@@ -41,7 +39,7 @@ pi install /caminho/absoluto/devops-skills
 pi list
 ```
 
-O manifesto `package.json` regista apenas skills. Não inclui extensões, hooks, temas, prompts nem scripts de instalação. Não é necessário executar `npm install` na raiz para carregar as skills.
+O manifesto `package.json` regista skills e três prompts de agentes de rede. Não inclui extensões, hooks, temas nem scripts de instalação. Não é necessário executar `npm install` na raiz para carregar as skills.
 
 Depois da publicação, podes instalar diretamente a partir do GitHub:
 
@@ -72,7 +70,7 @@ Pi anuncia os nomes/descrições das skills e carrega as instruções detalhadas
 
 ## 3. Ativar capacidades operacionais
 
-**As 90 skills ficam disponíveis com o registo acima.** Executar os seus workflows pode exigir preparação adicional:
+**As 98 skills ficam disponíveis com o registo acima.** Executar os seus workflows pode exigir preparação adicional:
 
 | Capacidade | Preparação separada |
 |---|---|
@@ -91,9 +89,13 @@ O guia [DEPENDENCIES.md](docs/DEPENDENCIES.md) distingue bibliotecas opcionais, 
 
 A skill [deep-agents-core](skills/engineering-skills/deep-agents-core/SKILL.md), do projeto LangChain, orienta o desenvolvimento de aplicações com Deep Agents. Não instala o framework nem acrescenta subagentes ou memória ao Pi. Consulta as [dependências e limites dos exemplos](docs/DEPENDENCIES.md#deep-agents-core-langchain) antes de executar código.
 
-### O que não está ativado/incluído
+### Agentes de rede ECC
 
-- As skills e agentes ECC recomendados ainda não foram incorporados.
+Incluímos oito skills ECC e três agentes adaptados como prompts Pi: `/network-architect`, `/network-troubleshooter` e `/network-config-reviewer`. O método `pi install` e a entrada `packages` no `settings.json` registam ambos através do manifesto.
+
+São papéis na sessão atual, **não subagentes autónomos nem isolamento de permissões**. Consulta o [índice dos agentes](agents/README.md) e o [teste após o pull](docs/TESTING.md).
+
+### O que não está ativado/incluído
 - Definições de agentes Markdown não se tornam subagentes Pi automaticamente.
 - Hooks originais de outros agentes não são ativados por este pack.
 - Snyk Agent Scan e Sage não são distribuídos nem instalados pelo pack.
@@ -101,7 +103,7 @@ A skill [deep-agents-core](skills/engineering-skills/deep-agents-core/SKILL.md),
 
 ### UniFi — integração opcional em revisão
 
-O projeto original está em [integrations/unifi-skills](integrations/unifi-skills/README.md), com cinco skills e um helper Python. **Não é carregado pelo manifesto Pi deste pack** e não entra na contagem das 90 skills principais.
+O projeto original está em [integrations/unifi-skills](integrations/unifi-skills/README.md), com cinco skills e um helper Python. **Não é carregado pelo manifesto Pi deste pack** e não entra na contagem das 98 skills principais.
 
 **Não utilizar sem revisão em produção:** o helper original desativa a verificação TLS, permite escritas por defeito e pode expor dados sensíveis em respostas/dry-run. As correções e os testes nos equipamentos reais ainda não foram realizados. Publicar os ficheiros não significa aprovação operacional. Não executar exemplos contra a rede empresarial com credenciais administrativas.
 
