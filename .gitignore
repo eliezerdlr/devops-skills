@@ -1,0 +1,42 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+
+# Dependencies and environments
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Generated output and local reports
+coverage/
+htmlcov/
+playwright-report/
+test-results/
+*.log
+*.jsonl
+*.tmp
+*.bak
+*.before-catalog-update
+
+# Editor and OS metadata
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local scanner checkouts, downloads and audit reports
+.local-tools/
+quarantine/
+audit-reports/
