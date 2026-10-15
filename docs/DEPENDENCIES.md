@@ -63,6 +63,27 @@ There is no reviewed, reproducible global Python lockfile in this pack. Do not a
 
 No npm dependency installation or live advisory query was performed during this review. No claim of a clean CVE result is made.
 
+## deep-agents-core (LangChain)
+
+This Markdown skill teaches development with LangChain's Deep Agents framework; it is not a Pi extension, a subagent runner or an executable scanner. Loading it requires no extra packages.
+
+To execute examples, create an isolated project and install a reviewed compatible framework stack:
+- Python examples import `deepagents`, LangChain tools and LangGraph checkpoint/store APIs.
+- TypeScript examples import `deepagents`, `@langchain/core`, `@langchain/langgraph` and `zod`.
+- The chosen model requires its provider integration, credentials, access and billing as applicable.
+
+These are optional dependencies of the application being developed, NOT root dependencies of this skills pack. The skill does not specify a tested version matrix; do not invent pins or claim the examples were runtime-tested here.
+
+Example limitations to review before implementation:
+- `custom_tool1`, `custom_tool2`, subagent variables and their TypeScript equivalents are placeholders, not a complete runnable application.
+- MemorySaver/InMemoryStore retain state in memory only; they do not provide durable storage across process restarts.
+- Reusing thread_id does not alone guarantee conversation persistence without a configured checkpointer; isolate thread identities per authorised user/session.
+- Filesystem root/virtual mode is not a complete security sandbox. Define real file, network and tool permissions independently.
+- Approval configured for write_file alone does not govern every custom tool or other side effect.
+- Model identifiers, middleware availability and backend path semantics must be checked against the selected framework version.
+
+The upstream SKILL.md is preserved unchanged. These local notes qualify example usage; inclusion is not an independent security assessment or endorsement.
+
 ## External tools and services by workflow
 
 | Workflow | Tools / access needed when actually performing it |
@@ -110,7 +131,7 @@ Completed without running bundled scripts:
 - Python AST parsing: 171 files; no syntax errors on the review interpreter, one inherited escape warning.
 - JavaScript syntax checks: standalone JS/MJS files passed Node 22.23.1 `--check`; TypeScript modules were not compiled.
 - Bash syntax checks: three bundled hook scripts passed `bash -n`; they are not Pi hooks and were not activated.
-- All 90 SKILL.md frontmatters (89 specialists plus index) parsed with safe YAML loading; name/description checks and uniqueness passed.
+- The original 90 SKILL.md frontmatters (89 specialists plus index) passed safe YAML/name/description checks. After adding deep-agents-core, all 91 entrypoints (90 specialists plus index) were rechecked for metadata and catalogue coverage; examples were not executed.
 - Three npm manifests classified: two optional MCP integrations and one fixture, not root pack dependencies.
 
 Not completed: dependency installation/resolution, build/integration tests, live CVE/licence databases, exhaustive generated-code dependency resolution, clean-machine Pi loading and subagent execution. Do not publish claims that the whole pack works without setup or has passed security analysis.

@@ -4,7 +4,7 @@
 
 A collection of skills for engineering, DevOps, cybersecurity, and IT operations.
 
-Includes **89 skills/sub-skills**, organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
+Includes **90 skills/sub-skills**, organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
 
 ## 1. Prerequisites
 
@@ -72,7 +72,7 @@ Pi advertises skill names/descriptions and loads detailed instructions when need
 
 ## 3. Enable operational capabilities
 
-**Registering the pack above makes the 89 skills available.** Running their workflows may require additional setup:
+**Registering the pack above makes the 90 skills available.** Running their workflows may require additional setup:
 
 | Capability | Separate setup |
 |---|---|
@@ -86,6 +86,10 @@ Pi advertises skill names/descriptions and loads detailed instructions when need
 There is no single command that safely installs and authenticates everything. Do not recursively install every `package.json`: the pack contains test fixtures that are not applications to install.
 
 The [dependency guide](docs/DEPENDENCIES.md) distinguishes optional libraries, examples, external services, platform limitations, and checks already performed.
+
+### Building with Deep Agents
+
+The [deep-agents-core](skills/engineering-skills/deep-agents-core/SKILL.md) skill from the LangChain project guides development of Deep Agents applications. It does not install the framework or add subagents or memory to Pi. Read the [dependencies and example limitations](docs/DEPENDENCIES.md#deep-agents-core-langchain) before running code.
 
 ### What is not enabled/included
 

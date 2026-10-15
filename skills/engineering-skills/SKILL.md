@@ -1,11 +1,11 @@
 ---
 name: engineering-skills
-description: "Catalogue of 89 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
+description: "Catalogue of 90 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
 ---
 
 # Engineering Skills — Catalogue
 
-This catalogue lists **89 skills/sub-skills** included in this repository, excluding this index. All listed paths are relative to the directory containing this file. Test fixtures are not operational skills.
+This catalogue lists **90 skills/sub-skills** included in this repository, excluding this index. All listed paths are relative to the directory containing this file. Test fixtures are not operational skills.
 
 Copyright and licence notices are preserved in the repository's `LICENSE`, `THIRD_PARTY_NOTICES.md`, and nested licence files. Inclusion is not a security certification.
 
@@ -149,6 +149,14 @@ These specialists are installed directly in this catalogue's directory. All path
 | sql-database-assistant | `sql-database-assistant/SKILL.md` |
 | tc-tracker | `tc-tracker/SKILL.md` |
 | tech-debt-tracker | `tech-debt-tracker/SKILL.md` |
+
+## Agent application development (1)
+
+| Skill | Focus | File |
+|---|---|---|
+| deep-agents-core | Building LangChain Deep Agents applications; does not add runtime capabilities to Pi | `deep-agents-core/SKILL.md` |
+
+Optional framework dependencies and example limitations are documented in `../../docs/DEPENDENCIES.md`. Load this specialist only when developing Deep Agents applications.
 
 ## Known coverage gaps for hybrid IT
 

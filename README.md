@@ -4,7 +4,7 @@
 
 Pack de skills para engenharia, DevOps, cybersecurity e operações de IT.
 
-Inclui **89 skills/sub-skills**, organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
+Inclui **90 skills/sub-skills**, organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
 
 ## 1. Pré-requisitos
 
@@ -72,7 +72,7 @@ Pi anuncia os nomes/descrições das skills e carrega as instruções detalhadas
 
 ## 3. Ativar capacidades operacionais
 
-**As 89 skills ficam disponíveis com o registo acima.** Executar os seus workflows pode exigir preparação adicional:
+**As 90 skills ficam disponíveis com o registo acima.** Executar os seus workflows pode exigir preparação adicional:
 
 | Capacidade | Preparação separada |
 |---|---|
@@ -86,6 +86,10 @@ Pi anuncia os nomes/descrições das skills e carrega as instruções detalhadas
 Não há um comando que instale e autentique tudo com segurança. Não faças instalação recursiva de todos os `package.json`: há fixtures de teste que não são aplicações para instalar.
 
 O guia [DEPENDENCIES.md](docs/DEPENDENCIES.md) distingue bibliotecas opcionais, exemplos, serviços externos, limitações de plataforma e validações já realizadas.
+
+### Desenvolvimento com Deep Agents
+
+A skill [deep-agents-core](skills/engineering-skills/deep-agents-core/SKILL.md), do projeto LangChain, orienta o desenvolvimento de aplicações com Deep Agents. Não instala o framework nem acrescenta subagentes ou memória ao Pi. Consulta as [dependências e limites dos exemplos](docs/DEPENDENCIES.md#deep-agents-core-langchain) antes de executar código.
 
 ### O que não está ativado/incluído
 
