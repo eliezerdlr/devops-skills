@@ -107,6 +107,12 @@ Cada execução exige confirmação real pela UI, identifica o modelo/fornecedor
 
 Ver [instalação, utilização, desativação e limites](docs/ORCHESTRATION.md) e o [workflow sintético](workflows/network-review.json). **49 testes locais passaram**, incluindo o carregador/núcleo Pi real com transporte de modelo simulado; não é certificação de produção nem teste contra equipamentos reais.
 
+### Planeamento persistente — Planning with Files
+
+Integração **opcional**, com o pacote Pi upstream 3.24.0 preservado e licença MIT. Acrescenta `task_plan.md`, `findings.md` e `progress.md` para continuidade entre sessões. Não retoma automaticamente os workers nem substitui as aprovações do orquestrador.
+
+Ver [ativação, fluxo combinado e riscos dos hooks](integrations/planning-with-files/README.md). Não é carregada por defeito: regista o pacote opcional explicitamente e começa em `notify`. **11 testes adicionais passaram** no Pi 1.2.0; não houve chamadas reais a modelos nem alteração de configurações globais.
+
 ### O que não está ativado/incluído
 - Definições de agentes Markdown não se tornam subagentes Pi automaticamente.
 - Hooks originais de outros agentes não são ativados por este pack.

@@ -38,6 +38,12 @@ Pi can also discover skills in its conventional `.pi/skills` and `.agents/skills
 
 Do not copy another project's SYSTEM.md, AGENTS.md or lifecycle hooks into the global Pi configuration. A SYSTEM.md can replace the default system prompt. Listing agent definition Markdown files is not native subagent execution.
 
+## Optional Planning with Files package
+
+The pinned upstream Pi package lives in `integrations/planning-with-files/upstream/` and is **not selected by the main manifest**. Register it separately to add persistent planning and native Pi hooks; see the [integration guide](../integrations/planning-with-files/README.md) and [settings example](../examples/pi-planning-settings.json). It uses the host Pi SDK as a peer dependency. Do not install its nested Vitest development environment to use the extension.
+
+Its session-start recovery helper can spawn uv/Python; attestation helpers use sh or PowerShell. Start with `PWF_MODE=notify UV_OFFLINE=1 UV_PYTHON_DOWNLOADS=never` to avoid automatic end-of-turn continuation and implicit uv downloads. Explicit `/plan-loop` remains capable of periodic model calls even in notify mode. Plan activation is not infrastructure approval. Eleven targeted tests passed against Pi 1.2.0, plus strict type checking of its extension; this does not validate every bundled helper or operating system.
+
 ## Optional Python dependencies
 
 A static AST inventory parsed 171 bundled Python files without syntax errors on Python 3.14.8. This is not a claim of runtime compatibility with every Python version. Python 3.10+ is a provisional baseline for modern type syntax; supported runtime versions must be verified for the chosen scripts. One inherited invalid-escape warning occurs in `ms365-tenant-manager/scripts/powershell_generator.py`; script source has not been modified.

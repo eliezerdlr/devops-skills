@@ -107,6 +107,12 @@ Every run requires a real UI confirmation, identifies the model/provider and has
 
 See [activation, usage, disabling and limits](docs/ORCHESTRATION.md) and the [synthetic workflow](workflows/network-review.json). **49 local tests passed**, including the actual Pi loader/core with simulated model transport; this is not production certification or real-device validation.
 
+### Persistent planning — Planning with Files
+
+An **optional** integration preserves the upstream Pi package 3.24.0 and its MIT licence. It adds `task_plan.md`, `findings.md` and `progress.md` for continuity between sessions. It does not automatically resume workers or replace orchestration approvals.
+
+See [activation, combined workflow and hook risks](integrations/planning-with-files/README.md). It is not loaded by default: register the optional package explicitly and start in `notify` mode. **11 additional tests passed** on Pi 1.2.0; no live model calls or global configuration changes were made.
+
 ### What is not enabled/included
 - Markdown agent definitions do not automatically become Pi subagents.
 - Original hooks for other agent environments are not enabled by this pack.

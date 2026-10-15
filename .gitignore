@@ -30,6 +30,13 @@ test-results/
 *.bak
 *.before-catalog-update
 
+# Local project planning state (not the shipped templates)
+/.planning/
+/task_plan.md
+/findings.md
+/progress.md
+/.plan-attestation
+
 # Editor and OS metadata
 .idea/
 .vscode/

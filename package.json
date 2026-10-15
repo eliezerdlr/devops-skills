@@ -1,6 +1,6 @@
 {
   "name": "devops-skills",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "engines": { "node": ">=22.14.0" },
   "peerDependencies": {
@@ -10,7 +10,8 @@
   },
   "scripts": {
     "test": "node --test tests/ops-engine.test.mjs",
-    "test:pi": "node --test tests/ops-pi.test.mjs"
+    "test:pi": "node --test tests/ops-pi.test.mjs",
+    "test:planning": "node --test tests/planning-pi.test.mjs"
   },
   "description": "Curated DevOps skills, network subagents and bounded Pi analysis workflows.",
   "pi": {

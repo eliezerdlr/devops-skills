@@ -33,6 +33,15 @@ jobs:
           ln -s "$RUNNER_TEMP/pi-test/node_modules" node_modules
       - name: Actual Pi package, loader and core tests (simulated provider)
         run: npm run test:pi
+      - name: Optional Planning with Files integration tests
+        run: npm run test:planning
+      - name: Strict optional planning extension type checking
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/pi-test/node_modules/.bin/tsc" --noEmit --allowImportingTsExtensions \
+            --module nodenext --moduleResolution nodenext --target es2022 \
+            --skipLibCheck --strict --types node \
+            integrations/planning-with-files/upstream/extensions/planning-with-files/index.ts
       - name: Strict extension type checking
         shell: bash
         run: |

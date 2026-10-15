@@ -88,6 +88,16 @@ Record Pi version, registration method, discovered resources, warnings, each pro
 
 Live SSH/Netmiko, BGP, VLAN, firewall, Kubernetes and cloud actions need target/version verification, least-privilege access and appropriate approval. The UniFi helper remains unmodified under `integrations/` and must not be used unchanged for company administration.
 
+## Optional persistent planning integration
+
+The optional upstream package is not loaded by the base registration above. Follow [its activation guide](../integrations/planning-with-files/README.md) deliberately; use `notify` initially and keep each operations-workflow approval separate.
+
+```bash
+PI_SDK_ROOT="$(npm root -g)/@earendil-works/pi-coding-agent" npm run test:planning
+```
+
+Eleven additional tests passed using both the installed host SDK and a fresh temporary official Pi 1.2.0 SDK. Combined optional/base discovery returned 101 skill resources, three prompts and two extensions, without skill diagnostics or command collisions. Strict checking of the optional extension passed with TypeScript 5.9.3. No model calls, history recovery scripts, periodic ticks or global configuration edits were performed. This does not assert the full upstream Vitest suite passed.
+
 ## What has and has not been verified
 
 Local preparation verified metadata/catalogue paths, scoped licences, exact copies of the eight selected upstream skills, and manifest resources. An offline test using the installed Pi 1.2.0 package resolver and actual skill/prompt loaders discovered all 100 skill resources (99 specialists plus catalogue), including the subsequently added dsh-error-handling and exactly three network role prompts with no package diagnostics; all three commands substituted their task arguments correctly. The test used temporary/in-memory configuration, filtered out existing home resources, invoked no model, and contacted no infrastructure. An initial unfiltered test detected the existing home catalogue as a duplicate, which is why duplicate-install checks matter. The extension additionally passed 29 engine tests and 20 tests using the real Pi loader/core with synthetic provider streams, including a three-stage workflow, provider identity pinning, cancellation and shutdown. Strict TypeScript checking passed against Pi 1.2.0 declarations with TypeScript 5.9.3. These checks are not a full interactive clean-machine test, a model-quality assessment, live-provider authentication test, real-device validation or an independent Snyk/Gen security assessment.

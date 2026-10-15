@@ -99,6 +99,10 @@ The extension's registry stores status metadata only, is bounded to 30 records a
 - Cancellation signals reach the real Pi core worker. Cancellation of an external provider is best-effort: an in-process extension cannot force a remote service to stop billing or guarantee an uncooperative transport has terminated.
 - Structured worker findings remain untrusted model output, never authorisation to execute a recommendation.
 
+## Optional persistent planning
+
+[Planning with Files](../integrations/planning-with-files/README.md) can be registered separately to keep task plans, findings and progress in the project's filesystem. The parent session owns these files and records worker results through its normal tools. Workers remain tool-free; their run registry is not made durable or resumable. `/plan-execute` activates planning hooks only and does not replace the real approval dialog for `ops_agent`/`ops_workflow`. Start with `notify` and do not enable periodic loops without reviewing their cost and lifecycle.
+
 ## Tests and release evidence
 
 Run the dependency-free engine tests:

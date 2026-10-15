@@ -54,6 +54,14 @@ MIT License — Copyright (c) 2026 DeepSeek.
 
 Included unchanged at `skills/engineering-skills/dsh-error-handling/SKILL.md`. The original licence is retained alongside the skill and in `licenses/deepseek-MIT.txt`; the root notice preserves its copyright. Only this Markdown skill is redistributed, not runtime code, plugins, dependencies, sandboxing or other skills. Bibliographic references in the skill remain references, not bundled third-party works. Inclusion does not imply endorsement, production certification or an independent security audit.
 
+## Planning with Files — optional Pi package
+
+Source: https://github.com/OthmanAdi/planning-with-files, commit `96b79bf1d64f22ab5f68442e0a45704eef06ddfc`, package version 3.24.0.
+
+MIT License — Copyright (c) 2026 Ahmad Adi.
+
+The `.pi/skills/planning-with-files` package is copied unchanged to `integrations/planning-with-files/upstream/`, with the upstream repository LICENSE additionally included. The original license is also preserved in `licenses/planning-with-files-MIT.txt`. Local documentation, source metadata, integrity hashes and targeted tests are outside the snapshot. This optional package is not activated by the main manifest. Inclusion is not an endorsement, independent security assessment or infrastructure authorisation.
+
 ## Licence scope
 
 The root MIT notice consolidates the original copyright strings; it does not imply joint authorship of every file. Engineering content is attributed above and its original root licence is also preserved in `licenses/engineering-MIT.txt`. Nested licences retain the exact spelling `Reza Rezvani`; no assumption about legal identity with `Alireza Rezvani` is required. Do not replace or remove those notices when reorganising files.

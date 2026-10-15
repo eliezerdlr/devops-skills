@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/OthmanAdi/planning-with-files",
+  "commit": "96b79bf1d64f22ab5f68442e0a45704eef06ddfc",
+  "packageVersion": "3.24.0",
+  "sourceDirectory": ".pi/skills/planning-with-files",
+  "licenseSource": "LICENSE",
+  "copyright": "Copyright (c) 2026 Ahmad Adi",
+  "adaptations": "No upstream file content changed. Added the repository's MIT LICENSE to the package snapshot. Local integration documentation, integrity manifest and tests live outside upstream/.",
+  "defaultActivation": false
+}

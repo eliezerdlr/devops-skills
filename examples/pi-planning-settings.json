@@ -1,0 +1,9 @@
+{
+  "packages": [
+    "~/devops-skills",
+    "~/devops-skills/integrations/planning-with-files/upstream"
+  ],
+  "planningWithFiles": {
+    "mode": "notify"
+  }
+}
