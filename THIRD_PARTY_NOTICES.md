@@ -31,6 +31,16 @@ MIT License — Copyright (c) LangChain, Inc.
 
 Included at `skills/engineering-skills/deep-agents-core/SKILL.md`, unchanged from the reviewed source snapshot. The unmodified source licence is retained in `skills/engineering-skills/deep-agents-core/LICENSE` and `licenses/langchain-MIT.txt`; the root MIT notice includes the original copyright string. Local catalogue and dependency notes are separate additions, not LangChain-authored content. No framework source, model credentials or runtime installation is bundled.
 
+## UniFi Skills — optional original source under review
+
+Source: https://github.com/t3chnaztea/unifi-skills
+
+MIT License — Copyright (c) 2026 t3chnaztea.
+
+The original project is distributed in `integrations/unifi-skills/`, with its original LICENSE and README attribution retained. Its licence is also preserved in `licenses/unifi-MIT.txt`. It is not automatically loaded by the Pi manifest and is not approved for production use.
+
+The helper explicitly credits derivation from `dlewis7444/unifi-claude-skill` under MIT; that attribution is retained unchanged. Verification of the precise original helper copyright/licence remains outstanding; the derivative project's MIT notice is not a claim that upstream attribution requirements have been independently resolved.
+
 ## Licence scope
 
 The root MIT notice consolidates the original copyright strings; it does not imply joint authorship of every file. Engineering content is attributed above and its original root licence is also preserved in `licenses/engineering-MIT.txt`. Nested licences retain the exact spelling `Reza Rezvani`; no assumption about legal identity with `Alireza Rezvani` is required. Do not replace or remove those notices when reorganising files.

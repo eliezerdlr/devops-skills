@@ -99,6 +99,12 @@ A skill [deep-agents-core](skills/engineering-skills/deep-agents-core/SKILL.md),
 - Snyk Agent Scan e Sage não são distribuídos nem instalados pelo pack.
 - Não há credenciais, acesso automático à infraestrutura ou alteração de SYSTEM.md/AGENTS.md.
 
+### UniFi — integração opcional em revisão
+
+O projeto original está em [integrations/unifi-skills](integrations/unifi-skills/README.md), com cinco skills e um helper Python. **Não é carregado pelo manifesto Pi deste pack** e não entra na contagem das 90 skills principais.
+
+**Não utilizar sem revisão em produção:** o helper original desativa a verificação TLS, permite escritas por defeito e pode expor dados sensíveis em respostas/dry-run. As correções e os testes nos equipamentos reais ainda não foram realizados. Publicar os ficheiros não significa aprovação operacional. Não executar exemplos contra a rede empresarial com credenciais administrativas.
+
 ## 4. Atualizações
 
 Na pasta do checkout:
