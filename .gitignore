@@ -21,6 +21,9 @@ __pycache__/
 
 # Generated output and local reports
 coverage/
+# This directory is a shipped skill, not generated test coverage.
+!/skills/engineering-skills/playwright-pro/skills/coverage/
+!/skills/engineering-skills/playwright-pro/skills/coverage/SKILL.md
 htmlcov/
 playwright-report/
 test-results/
