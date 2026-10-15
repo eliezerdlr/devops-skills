@@ -1,0 +1,22 @@
+{
+  "evidence": "SYNTHETIC LAB DATA ONLY: two offices connected by a VPN. One switch uplink reports increasing CRC errors. No real inventory, credentials or production access is supplied.",
+  "steps": [
+    {
+      "id": "diagnosis",
+      "role": "network-troubleshooter",
+      "task": "Analyse the synthetic evidence, distinguish observations from hypotheses and list missing evidence. Do not claim any device was tested."
+    },
+    {
+      "id": "design",
+      "role": "network-architect",
+      "dependsOn": ["diagnosis"],
+      "task": "Based on the diagnosis, propose a staged network improvement plan with assumptions, risks, verification and rollback requirements. No actions are authorised."
+    },
+    {
+      "id": "review",
+      "role": "network-config-reviewer",
+      "dependsOn": ["design"],
+      "task": "Review the proposed plan critically for management lockout, overbroad access and missing evidence. No device configuration is supplied: do not invent a syntax validation result or approve deployment."
+    }
+  ]
+}

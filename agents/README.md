@@ -20,6 +20,12 @@ The package manifest registers only these three Markdown files. Register the rep
 
 Os argumentos são inseridos no prompt como a tarefa. O modelo usa as ferramentas já disponíveis na sessão; este ficheiro não cria um sandbox nem restringe tecnicamente essas ferramentas. Não forneças configurações com passwords, tokens, chaves ou outros segredos.
 
+## Separate worker execution / Execução separada
+
+The package also includes a locally authored executable extension. Use `ops_agent` with one of these role names for an independent Pi core worker, or `ops_workflow` for a dependency-based analysis workflow. Every run requires real UI confirmation; workers have **zero tools** and receive only supplied task/evidence and selected dependency results. The slash prompts above remain same-session templates, with the parent's normal tools.
+
+A completed analysis is not infrastructure-change approval. See [ORCHESTRATION.md](../docs/ORCHESTRATION.md) and [workflows/network-review.json](../workflows/network-review.json).
+
 ## Related skills
 
 `network-config-validation`, `network-bgp-diagnostics`, `network-interface-health`, `cisco-ios-patterns`, `netmiko-ssh-automation`, `homelab-network-readiness`, `homelab-network-setup`. Kubernetes workload guidance is separately available as `kubernetes-patterns`.

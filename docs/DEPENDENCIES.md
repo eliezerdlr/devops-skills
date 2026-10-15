@@ -4,7 +4,9 @@
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares skills and three adapted ECC network role prompts. It has no runtime dependencies, install scripts, extensions or automatic hooks. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares skills, three adapted ECC network role prompts and the locally authored ops-orchestrator extension. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+
+See [ORCHESTRATION.md](ORCHESTRATION.md) for the executable integration, approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 
 This is not a full workstation bootstrap. Credentials, network access, cloud subscriptions, target software and permissions must be provided separately. Do not install every dependency globally or run `npm install` recursively over all manifests.
 
@@ -61,7 +63,7 @@ There is no reviewed, reproducible global Python lockfile in this pack. Do not a
 - Those MCP integrations are separate programs, not loaded or started by the root Pi manifest. Review their example MCP configuration and actual build output before registering them with the host. Do not blindly copy an old Claude-specific configuration into Pi.
 - `dependency-auditor/test-project/package.json` is an audit fixture with deliberately old sample dependencies and an incomplete sample app, not an application to install. Its packages are NOT dependencies of this pack.
 
-No npm dependency installation or live advisory query was performed during this review. No claim of a clean CVE result is made.
+No live advisory query was performed during this review. A temporary TypeScript 5.9.3 compiler was installed with lifecycle scripts disabled for orchestration type-checking, outside this repository. This does not install the skills' optional integrations or establish a clean CVE result.
 
 ## deep-agents-core (LangChain)
 
@@ -111,11 +113,11 @@ The selected skills are bundled, not its entire development environment. Its roo
 
 ### ECC
 
-Eight selected skills are now included unchanged, plus three network agents adapted as same-session Pi prompts. Those Markdown resources do not require installing the ECC framework merely to read them. The manifest explicitly lists the three prompt files; no agent README or licence is loaded as a command. Adapted frontmatter does not select a Claude model or impose tool permissions. No autonomous subagent extension is bundled. Netmiko collection examples need their separate Python dependencies; kubectl/Linux/network commands are task-specific.
+Eight selected skills are now included unchanged, plus three network agents adapted as same-session Pi prompts. Those Markdown resources do not require installing the ECC framework merely to read them. The manifest explicitly lists the three prompt files; no agent README or licence is loaded as a command. Adapted frontmatter does not select a Claude model or impose tool permissions. The locally authored orchestration extension can run these roles as separate tool-free Pi core workers; it is not the upstream ECC adapter. Netmiko collection examples need their separate Python dependencies; kubectl/Linux/network commands are task-specific.
 
 The complete ECC repository declares a Node runtime, npm dependencies, a Python LLM abstraction package (Python >=3.11 with anthropic/openai), a prepack build, Pi extension code, hooks, rules and commands. Do not inherit that root manifest for a small curated subset.
 
-ECC has an actual Pi adapter under `.pi/extensions/`. It depends on ECC hook scripts/rules and does not implement subagent conversion itself. Its README was verified against an older Pi release; some MCP statements differ from current Pi documentation. Copying the adapter alone would not provide a complete tested integration. No adapter or agent execution extension is included in this pack.
+ECC has an actual Pi adapter under `.pi/extensions/`. It depends on ECC hook scripts/rules and does not implement subagent conversion itself. Its README was verified against an older Pi release; some MCP statements differ from current Pi documentation. Copying the adapter alone would not provide a complete tested integration. No upstream ECC adapter is included in this pack; see the separate locally authored [orchestration implementation](ORCHESTRATION.md).
 
 ### Snyk Agent Scan
 

@@ -20,7 +20,7 @@ pi install /absolute/path/to/devops-skills
 pi list
 ```
 
-Do not also register the same paths through manual settings. The package loads 99 specialists plus their catalogue and three network role prompts. Optional UniFi integration source is NOT loaded.
+Do not also register the same paths through manual settings. The package loads 99 specialists plus their catalogue, three network role prompts and the ops-orchestrator extension. Optional UniFi integration source is NOT loaded. Orchestration requires Pi 1.2.0 / Node 22.14+; startup makes no worker/provider calls.
 
 ### Existing manual settings users
 
@@ -69,7 +69,20 @@ Expected:
 
 Model output is not deterministic. Resource discovery and prompt expansion are necessary checks, not proof of technical correctness or safe production behaviour.
 
-## 6. Record results before live use
+## 6. Test the executable orchestration separately
+
+```bash
+npm test
+PI_SDK_ROOT="$(npm root -g)/@earendil-works/pi-coding-agent" npm run test:pi
+```
+
+Expected: **29 engine tests + 20 actual Pi loader/core tests**, using simulated model transport only. No provider authentication, infrastructure or SDK installation into the pack is required. For a non-npm Pi installation, set PI_SDK_ROOT to the actual installed SDK directory.
+
+For an explicitly authorised live-model smoke test, ask the parent to submit `workflows/network-review.json` to `ops_workflow`. This uses synthetic evidence, requires a real confirmation and may incur provider charges. Refuse the first confirmation and verify zero workers start; repeat and approve only if the displayed provider/model and scope are correct. Check `/ops-status`. Do not claim device tests happened.
+
+This live UI/provider test has **not** been performed automatically. See [ORCHESTRATION.md](ORCHESTRATION.md) for boundaries, failure semantics and unsupported cases.
+
+## 7. Record results before live use
 
 Record Pi version, registration method, discovered resources, warnings, each prompt used and observed behaviour. If a resource is missing, capture the diagnostic (without credentials). Test actual OS/vendor commands and task dependencies separately in a lab with explicit authorisation.
 
@@ -77,4 +90,4 @@ Live SSH/Netmiko, BGP, VLAN, firewall, Kubernetes and cloud actions need target/
 
 ## What has and has not been verified
 
-Local preparation verified metadata/catalogue paths, scoped licences, exact copies of the eight selected upstream skills, and manifest resources. An offline test using the installed Pi 1.2.0 package resolver and actual skill/prompt loaders discovered all 100 skill resources (99 specialists plus catalogue), including the subsequently added dsh-error-handling and exactly three network role prompts with no package diagnostics; all three commands substituted their task arguments correctly. The test used temporary/in-memory configuration, filtered out existing home resources, invoked no model, and contacted no infrastructure. An initial unfiltered test detected the existing home catalogue as a duplicate, which is why duplicate-install checks matter. This is not a full interactive clean-machine test, a model-quality assessment, real-device validation or an independent Snyk/Gen security assessment.
+Local preparation verified metadata/catalogue paths, scoped licences, exact copies of the eight selected upstream skills, and manifest resources. An offline test using the installed Pi 1.2.0 package resolver and actual skill/prompt loaders discovered all 100 skill resources (99 specialists plus catalogue), including the subsequently added dsh-error-handling and exactly three network role prompts with no package diagnostics; all three commands substituted their task arguments correctly. The test used temporary/in-memory configuration, filtered out existing home resources, invoked no model, and contacted no infrastructure. An initial unfiltered test detected the existing home catalogue as a duplicate, which is why duplicate-install checks matter. The extension additionally passed 29 engine tests and 20 tests using the real Pi loader/core with synthetic provider streams, including a three-stage workflow, provider identity pinning, cancellation and shutdown. Strict TypeScript checking passed against Pi 1.2.0 declarations with TypeScript 5.9.3. These checks are not a full interactive clean-machine test, a model-quality assessment, live-provider authentication test, real-device validation or an independent Snyk/Gen security assessment.

@@ -10,7 +10,7 @@ credentials.json
 secrets.json
 
 # Dependencies and environments
-node_modules/
+node_modules
 .venv/
 venv/
 __pycache__/

@@ -4,15 +4,15 @@
 
 Pack de skills para engenharia, DevOps, cybersecurity e operações de IT.
 
-Inclui **99 skills/sub-skills**, organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
+Inclui **99 skills/sub-skills**, três prompts de rede e uma extensão com **subagentes reais e workflows declarativos de análise**. As skills estão organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
 
 ## 1. Pré-requisitos
 
-- Pi instalado e fornecedor/modelo autenticado.
+- Pi **1.2.0** e Node.js **22.14+** para a orquestração; fornecedor/modelo autenticado.
 - Git, para obter e atualizar o repositório.
 - Ferramentas específicas apenas para as tarefas que fores executar; consultar [dependências e compatibilidade](docs/DEPENDENCIES.md).
 
-As skills não são executáveis nem serviços. Ativá-las disponibiliza instruções ao agente; não instala Terraform, kubectl, Python, browsers ou credenciais.
+As skills são instruções, não serviços. O pacote também carrega uma extensão executável de orquestração; revê o [âmbito, aprovações e limites](docs/ORCHESTRATION.md). Não instala Terraform, kubectl, Python, browsers ou credenciais.
 
 ## 2. Ativar as skills no Pi
 
@@ -30,7 +30,7 @@ Edita `~/.pi/agent/settings.json` e acrescenta o checkout como pacote local à l
 
 Substitui o caminho pelo local real do checkout. **Não substituas o ficheiro inteiro** se já contém configurações: preserva os restantes campos e caminhos.
 
-O [exemplo de configuração](examples/pi-settings.json) usa `~/devops-skills`; ajusta-o se clonaste para outra pasta. O manifesto do pacote seleciona explicitamente todos os SKILL.md e os três prompts de rede. Não registes apenas a pasta do índice em `skills`: o carregador Pi para de descer ao encontrar um SKILL.md numa pasta.
+O [exemplo de configuração](examples/pi-settings.json) usa `~/devops-skills`; ajusta-o se clonaste para outra pasta. O manifesto do pacote seleciona explicitamente todos os SKILL.md, os três prompts de rede e a extensão de orquestração. Não registes apenas a pasta do índice em `skills`: o carregador Pi para de descer ao encontrar um SKILL.md numa pasta.
 
 ### Opção B — Instalar o checkout como pacote Pi
 
@@ -39,7 +39,7 @@ pi install /caminho/absoluto/devops-skills
 pi list
 ```
 
-O manifesto `package.json` regista skills e três prompts de agentes de rede. Não inclui extensões, hooks, temas nem scripts de instalação. Não é necessário executar `npm install` na raiz para carregar as skills.
+O manifesto `package.json` regista skills, três prompts e a extensão `ops-orchestrator`. Não inclui hooks, temas nem scripts de instalação. O Pi fornece as dependências da extensão; não é necessário executar `npm install` na raiz.
 
 Depois da publicação, podes instalar diretamente a partir do GitHub:
 
@@ -99,6 +99,14 @@ Incluímos oito skills ECC e três agentes adaptados como prompts Pi: `/network-
 
 São papéis na sessão atual, **não subagentes autónomos nem isolamento de permissões**. Consulta o [índice dos agentes](agents/README.md) e o [teste após o pull](docs/TESTING.md).
 
+### Subagentes reais e workflows de análise
+
+As ferramentas `ops_agent` e `ops_workflow` executam os papéis ECC em instâncias independentes do núcleo Pi, com contexto próprio e **sem ferramentas de shell, ficheiros, MCP ou infraestrutura**. Workflows encadeiam diagnóstico → proposta → revisão; não executam alterações.
+
+Cada execução exige confirmação real pela UI, identifica o modelo/fornecedor e tem limites de concorrência, tempo e saída. Sem UI, a execução é recusada. Usa `/ops-status` e `/ops-cancel <id>` para acompanhar/cancelar. Não há chamadas a modelos no arranque.
+
+Ver [instalação, utilização, desativação e limites](docs/ORCHESTRATION.md) e o [workflow sintético](workflows/network-review.json). **49 testes locais passaram**, incluindo o carregador/núcleo Pi real com transporte de modelo simulado; não é certificação de produção nem teste contra equipamentos reais.
+
 ### O que não está ativado/incluído
 - Definições de agentes Markdown não se tornam subagentes Pi automaticamente.
 - Hooks originais de outros agentes não são ativados por este pack.
@@ -129,7 +137,7 @@ Para cópias geridas diretamente por uma origem Git em `pi install`, usa o mecan
 
 ## 5. Segurança e estado de validação
 
-As skills incluídas **não passaram por análise oficial de segurança**. Verificação de estrutura, sintaxe ou licença não garante segurança nem funcionamento completo. O carregamento numa instalação limpa do Pi e os workflows com dependências reais ainda precisam de testes.
+As skills incluídas **não passaram por análise oficial de segurança**. Verificação de estrutura, sintaxe ou licença não garante segurança nem funcionamento completo. A descoberta de recursos e a orquestração com transporte simulado foram testadas no Pi 1.2.0; fornecedores reais, instalação limpa interativa e workflows de infraestrutura com dependências reais ainda precisam de validação autorizada.
 
 Antes de executar scripts ou ações: revê o conteúdo, confirma ferramentas e âmbito, começa por diagnóstico só de leitura e exige aprovação, plano de rollback e janela apropriada para alterações de produção. Não guardes segredos nas skills ou neste Git.
 

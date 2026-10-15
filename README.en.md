@@ -4,15 +4,15 @@
 
 A collection of skills for engineering, DevOps, cybersecurity, and IT operations.
 
-Includes **99 skills/sub-skills**, organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
+Includes **99 skills/sub-skills**, three network prompts and an extension with **real subagents and declarative analysis workflows**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
 
 ## 1. Prerequisites
 
-- Pi installed, with an authenticated model/provider.
+- Pi **1.2.0** and Node.js **22.14+** for orchestration, with an authenticated model/provider.
 - Git to obtain and update the repository.
 - Task-specific tools only for the workflows you intend to run; see [dependencies and compatibility](docs/DEPENDENCIES.md).
 
-Skills are not executables or services. Enabling them makes instructions available to the agent; it does not install Terraform, kubectl, Python, browsers, or credentials.
+Skills are instructions, not services. The package also loads an executable orchestration extension; review its [scope, approvals and limits](docs/ORCHESTRATION.md). It does not install Terraform, kubectl, Python, browsers or credentials.
 
 ## 2. Enable skills in Pi
 
@@ -30,7 +30,7 @@ Edit `~/.pi/agent/settings.json` and add the checkout to the existing `packages`
 
 Replace the path with your actual checkout location. **Do not replace the entire settings file** if it already contains configuration: preserve other fields and paths.
 
-The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The package manifest explicitly selects all SKILL.md files and the three network prompts. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
+The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The package manifest explicitly selects all SKILL.md files, the three network prompts and the orchestration extension. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
 
 ### Option B — Install the checkout as a Pi package
 
@@ -39,7 +39,7 @@ pi install /absolute/path/devops-skills
 pi list
 ```
 
-The `package.json` manifest registers skills and three network role prompts. It does not include extensions, hooks, themes, or installation scripts. You do not need to run `npm install` at the repository root to load the skills.
+The `package.json` manifest registers skills, three network role prompts and the `ops-orchestrator` extension. It includes no hooks, themes or installation scripts. Pi supplies the extension's peer dependencies; no root `npm install` is needed.
 
 You can also install directly from GitHub:
 
@@ -99,6 +99,14 @@ Eight ECC skills and three agents adapted as Pi prompts are included: `/network-
 
 These are roles in the current session, **not autonomous subagents or permission isolation**. See the [agent index](agents/README.md) and [post-pull testing guide](docs/TESTING.md).
 
+### Real subagents and analysis workflows
+
+The `ops_agent` and `ops_workflow` tools run ECC roles in independent Pi core instances with their own context and **no shell, file, MCP or infrastructure tools**. Workflows link diagnosis → proposal → review; they do not execute changes.
+
+Every run requires a real UI confirmation, identifies the model/provider and has concurrency, time and output limits. Without UI, execution is refused. Use `/ops-status` and `/ops-cancel <id>` to monitor/cancel. No model calls occur at startup.
+
+See [activation, usage, disabling and limits](docs/ORCHESTRATION.md) and the [synthetic workflow](workflows/network-review.json). **49 local tests passed**, including the actual Pi loader/core with simulated model transport; this is not production certification or real-device validation.
+
 ### What is not enabled/included
 - Markdown agent definitions do not automatically become Pi subagents.
 - Original hooks for other agent environments are not enabled by this pack.
@@ -129,7 +137,7 @@ For copies managed directly through a Git source in `pi install`, use the packag
 
 ## 5. Security and validation status
 
-The included skills **have not undergone an official security assessment**. Structural, syntax, or licence checks do not guarantee security or complete functionality. Loading in a clean Pi installation and workflows with real dependencies still require testing.
+The included skills **have not undergone an official security assessment**. Structural, syntax, or licence checks do not guarantee security or complete functionality. Resource discovery and orchestration with simulated model transport were tested on Pi 1.2.0; live providers, interactive clean-machine setup and infrastructure workflows with real dependencies still require authorised validation.
 
 Before executing scripts or actions, review the content, confirm tools and scope, start with read-only diagnosis, and require approval, a rollback plan, and an appropriate maintenance window for production changes. Do not store secrets in skills or this repository.
 

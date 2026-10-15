@@ -1,11 +1,21 @@
 {
   "name": "devops-skills",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Curated DevOps, security, infrastructure and engineering skills for Pi.",
+  "engines": { "node": ">=22.14.0" },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-agent-core": "*",
+    "typebox": "*"
+  },
+  "scripts": {
+    "test": "node --test tests/ops-engine.test.mjs",
+    "test:pi": "node --test tests/ops-pi.test.mjs"
+  },
+  "description": "Curated DevOps skills, network subagents and bounded Pi analysis workflows.",
   "pi": {
     "skills": ["./skills/engineering-skills/**/SKILL.md"],
-    "extensions": [],
+    "extensions": ["./extensions/ops-orchestrator/index.ts"],
     "prompts": [
       "./agents/network-architect.md",
       "./agents/network-troubleshooter.md",
