@@ -84,6 +84,10 @@ Example limitations to review before implementation:
 
 The upstream SKILL.md is preserved unchanged. These local notes qualify example usage; inclusion is not an independent security assessment or endorsement.
 
+## dsh-error-handling (DeepSeek)
+
+This included Markdown skill has no executable files, package dependencies or required model provider. It teaches error contracts, recovery responsibility, bounded retries, containment and observable outcomes. It can be read in Pi without DeepSeek Harness. The runtime, plugins, shell commands, project hooks and sandbox from that repository are not included or activated. Following the guidance is not an independent security assessment and does not implement recovery controls automatically.
+
 ## External tools and services by workflow
 
 | Workflow | Tools / access needed when actually performing it |
@@ -131,7 +135,7 @@ Completed without running bundled scripts:
 - Python AST parsing: 171 files; no syntax errors on the review interpreter, one inherited escape warning.
 - JavaScript syntax checks: standalone JS/MJS files passed Node 22.23.1 `--check`; TypeScript modules were not compiled.
 - Bash syntax checks: three bundled hook scripts passed `bash -n`; they are not Pi hooks and were not activated.
-- The original 90 SKILL.md frontmatters (89 specialists plus index) passed safe YAML/name/description checks. After adding deep-agents-core and eight ECC skills, all 99 entrypoints (98 specialists plus index) were rechecked for metadata and catalogue coverage, along with three role prompt files; examples were not executed.
+- The original 90 SKILL.md frontmatters (89 specialists plus index) passed safe YAML/name/description checks. After adding deep-agents-core, eight ECC skills and dsh-error-handling, all 100 entrypoints (99 specialists plus index) were rechecked for metadata and catalogue coverage, along with three role prompt files; examples were not executed.
 - Three npm manifests classified: two optional MCP integrations and one fixture, not root pack dependencies.
 
 Not completed: dependency installation/resolution, build/integration tests, live CVE/licence databases, exhaustive generated-code dependency resolution, clean-machine Pi loading and subagent execution. Do not publish claims that the whole pack works without setup or has passed security analysis.

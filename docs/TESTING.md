@@ -20,7 +20,7 @@ pi install /absolute/path/to/devops-skills
 pi list
 ```
 
-Do not also register the same paths through manual settings. The package loads 98 specialists plus their catalogue and three network role prompts. Optional UniFi integration source is NOT loaded.
+Do not also register the same paths through manual settings. The package loads 99 specialists plus their catalogue and three network role prompts. Optional UniFi integration source is NOT loaded.
 
 ### Existing manual settings users
 
@@ -77,4 +77,4 @@ Live SSH/Netmiko, BGP, VLAN, firewall, Kubernetes and cloud actions need target/
 
 ## What has and has not been verified
 
-Local preparation verified metadata/catalogue paths, scoped licences, exact copies of the eight selected upstream skills, and manifest resources. An offline test using the installed Pi 1.2.0 package resolver and actual skill/prompt loaders discovered all 99 skill resources (98 specialists plus catalogue) and exactly three network role prompts with no package diagnostics; all three commands substituted their task arguments correctly. The test used temporary/in-memory configuration, filtered out existing home resources, invoked no model, and contacted no infrastructure. An initial unfiltered test detected the existing home catalogue as a duplicate, which is why duplicate-install checks matter. This is not a full interactive clean-machine test, a model-quality assessment, real-device validation or an independent Snyk/Gen security assessment.
+Local preparation verified metadata/catalogue paths, scoped licences, exact copies of the eight selected upstream skills, and manifest resources. An offline test using the installed Pi 1.2.0 package resolver and actual skill/prompt loaders discovered all 100 skill resources (99 specialists plus catalogue), including the subsequently added dsh-error-handling and exactly three network role prompts with no package diagnostics; all three commands substituted their task arguments correctly. The test used temporary/in-memory configuration, filtered out existing home resources, invoked no model, and contacted no infrastructure. An initial unfiltered test detected the existing home catalogue as a duplicate, which is why duplicate-install checks matter. This is not a full interactive clean-machine test, a model-quality assessment, real-device validation or an independent Snyk/Gen security assessment.

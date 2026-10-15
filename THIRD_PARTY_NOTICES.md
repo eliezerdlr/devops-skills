@@ -45,6 +45,15 @@ The original project is distributed in `integrations/unifi-skills/`, with its or
 
 The helper explicitly credits derivation from `dlewis7444/unifi-claude-skill` under MIT; that attribution is retained unchanged. Verification of the precise original helper copyright/licence remains outstanding; the derivative project's MIT notice is not a claim that upstream attribution requirements have been independently resolved.
 
+## DeepSeek Harness — error-handling skill only
+
+Source: https://github.com/deepseek-ai/deepseek-harness
+Source file: `.agents/skills/dsh-error-handling/SKILL.md`.
+
+MIT License — Copyright (c) 2026 DeepSeek.
+
+Included unchanged at `skills/engineering-skills/dsh-error-handling/SKILL.md`. The original licence is retained alongside the skill and in `licenses/deepseek-MIT.txt`; the root notice preserves its copyright. Only this Markdown skill is redistributed, not runtime code, plugins, dependencies, sandboxing or other skills. Bibliographic references in the skill remain references, not bundled third-party works. Inclusion does not imply endorsement, production certification or an independent security audit.
+
 ## Licence scope
 
 The root MIT notice consolidates the original copyright strings; it does not imply joint authorship of every file. Engineering content is attributed above and its original root licence is also preserved in `licenses/engineering-MIT.txt`. Nested licences retain the exact spelling `Reza Rezvani`; no assumption about legal identity with `Alireza Rezvani` is required. Do not replace or remove those notices when reorganising files.

@@ -4,7 +4,7 @@
 
 Pack de skills para engenharia, DevOps, cybersecurity e operações de IT.
 
-Inclui **98 skills/sub-skills**, organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
+Inclui **99 skills/sub-skills**, organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
 
 ## 1. Pré-requisitos
 
@@ -70,7 +70,7 @@ Pi anuncia os nomes/descrições das skills e carrega as instruções detalhadas
 
 ## 3. Ativar capacidades operacionais
 
-**As 98 skills ficam disponíveis com o registo acima.** Executar os seus workflows pode exigir preparação adicional:
+**As 99 skills ficam disponíveis com o registo acima.** Executar os seus workflows pode exigir preparação adicional:
 
 | Capacidade | Preparação separada |
 |---|---|
@@ -89,6 +89,10 @@ O guia [DEPENDENCIES.md](docs/DEPENDENCIES.md) distingue bibliotecas opcionais, 
 
 A skill [deep-agents-core](skills/engineering-skills/deep-agents-core/SKILL.md), do projeto LangChain, orienta o desenvolvimento de aplicações com Deep Agents. Não instala o framework nem acrescenta subagentes ou memória ao Pi. Consulta as [dependências e limites dos exemplos](docs/DEPENDENCIES.md#deep-agents-core-langchain) antes de executar código.
 
+### Fiabilidade e tratamento de erros
+
+A skill [dsh-error-handling](skills/engineering-skills/dsh-error-handling/SKILL.md), do DeepSeek Harness, acrescenta orientação para falhas estruturadas, recuperação, retries seguros e resultados verificáveis. Incluímos apenas as instruções Markdown, sem instalar o runtime DeepSeek ou alterar as ferramentas do Pi.
+
 ### Agentes de rede ECC
 
 Incluímos oito skills ECC e três agentes adaptados como prompts Pi: `/network-architect`, `/network-troubleshooter` e `/network-config-reviewer`. O método `pi install` e a entrada `packages` no `settings.json` registam ambos através do manifesto.
@@ -103,7 +107,7 @@ São papéis na sessão atual, **não subagentes autónomos nem isolamento de pe
 
 ### UniFi — integração opcional em revisão
 
-O projeto original está em [integrations/unifi-skills](integrations/unifi-skills/README.md), com cinco skills e um helper Python. **Não é carregado pelo manifesto Pi deste pack** e não entra na contagem das 98 skills principais.
+O projeto original está em [integrations/unifi-skills](integrations/unifi-skills/README.md), com cinco skills e um helper Python. **Não é carregado pelo manifesto Pi deste pack** e não entra na contagem das 99 skills principais.
 
 **Não utilizar sem revisão em produção:** o helper original desativa a verificação TLS, permite escritas por defeito e pode expor dados sensíveis em respostas/dry-run. As correções e os testes nos equipamentos reais ainda não foram realizados. Publicar os ficheiros não significa aprovação operacional. Não executar exemplos contra a rede empresarial com credenciais administrativas.
 

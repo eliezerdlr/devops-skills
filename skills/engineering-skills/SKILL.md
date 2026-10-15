@@ -1,11 +1,11 @@
 ---
 name: engineering-skills
-description: "Catalogue of 98 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
+description: "Catalogue of 99 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
 ---
 
 # Engineering Skills — Catalogue
 
-This catalogue lists **98 skills/sub-skills** included in this repository, excluding this index. All listed paths are relative to the directory containing this file. Test fixtures are not operational skills.
+This catalogue lists **99 skills/sub-skills** included in this repository, excluding this index. All listed paths are relative to the directory containing this file. Test fixtures are not operational skills.
 
 Copyright and licence notices are preserved in the repository's `LICENSE`, `THIRD_PARTY_NOTICES.md`, and nested licence files. Inclusion is not a security certification.
 
@@ -172,6 +172,12 @@ Optional framework dependencies and example limitations are documented in `../..
 | kubernetes-patterns | `kubernetes-patterns/SKILL.md` |
 
 The three adapted ECC network role prompts are indexed in `../../agents/README.md`. They run in the current Pi session, not isolated subagents. Network guidance is vendor/version-dependent; host syntax and permissions must be verified.
+
+## Reliability and error handling (1)
+
+| Skill | Focus | File |
+|---|---|---|
+| dsh-error-handling | Structured failures, recovery ownership, safe retries and verified outcomes; instructions only, no DeepSeek runtime | `dsh-error-handling/SKILL.md` |
 
 ## Known coverage gaps for hybrid IT
 
