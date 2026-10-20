@@ -113,6 +113,12 @@ An **optional** integration preserves the upstream Pi package 3.24.0 and its MIT
 
 See [activation, combined workflow and hook risks](integrations/planning-with-files/README.md). It is not loaded by default: register the optional package explicitly and start in `notify` mode. **11 additional tests passed** on Pi 1.2.0; no live model calls or global configuration changes were made.
 
+### Project context — optional Graphify
+
+An [adapted Graphify skill](integrations/graphify/README.md) provides bounded-query, explicit-memory and incremental-update references, plus mapping/resume workflows. **It is not loaded by default** and does not change the 99 core skills. No agents, subagents, Python runtime, guard, hooks or automatic session collection are bundled.
+
+Prepare the external dependency manually; no automatic installation or implicit semantic extraction is enabled. Reuse existing planning/TC handoffs for task continuity. Adapted content retains Apache-2.0, provenance and notices. Structural tests do not establish end-to-end functionality or token savings.
+
 ### What is not enabled/included
 - Markdown agent definitions do not automatically become Pi subagents.
 - Original hooks for other agent environments are not enabled by this pack.
@@ -149,6 +155,6 @@ Before executing scripts or actions, review the content, confirm tools and scope
 
 ## 6. Licence and attribution
 
-Upstream content is redistributed under MIT, with notices preserved in [LICENSE](LICENSE), nested licence files, and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). This is a curated/adapted collection, not a claim of exclusive authorship or official affiliation with upstream authors, Snyk, or Gen Digital.
+Upstream content is redistributed mainly under MIT; the adapted Graphify integration retains Apache-2.0 and its own notices. Notices are preserved in [LICENSE](LICENSE), nested licence files, and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). This is a curated/adapted collection, not a claim of exclusive authorship or official affiliation with upstream authors, Snyk, or Gen Digital.
 
-New local contributions are also distributed under MIT, as authorised by the maintainer. Original component copyright notices remain preserved.
+New independent local contributions are also distributed under MIT, as authorised by the maintainer; Graphify adaptations retain the licence stated in that integration. Original component copyright notices remain preserved.

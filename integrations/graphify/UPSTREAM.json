@@ -1,0 +1,25 @@
+{
+  "repository": "https://github.com/Graphify-Labs/graphify",
+  "commit": "b90b9df7949bd04a15b40a1624af85d0a9cfdf04",
+  "version": "0.9.93",
+  "distribution": "Selected instructions adapted; no Python runtime, Pi guard or agents bundled.",
+  "source_files": [
+    "graphify/skill-pi.md",
+    "graphify/skills/pi/references/query.md",
+    "graphify/skills/pi/references/update.md",
+    "graphify/ingest.py",
+    "graphify/reflect.py"
+  ],
+  "license": "Apache-2.0",
+  "preserved_notices": [
+    "LICENSE",
+    "LICENSE-MIT",
+    "NOTICE"
+  ],
+  "modifications": [
+    "Rewritten skill and references for explicit, optional local use.",
+    "Removed auto-installation, implicit semantic extraction, graph-first enforcement and subagent requirements.",
+    "Added task-scoped handoff using existing planning files; no automatic session capture.",
+    "No executable wrapper: safeguards are instructions, not enforced sandbox controls."
+  ]
+}

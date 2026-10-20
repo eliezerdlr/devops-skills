@@ -113,6 +113,12 @@ Integração **opcional**, com o pacote Pi upstream 3.24.0 preservado e licença
 
 Ver [ativação, fluxo combinado e riscos dos hooks](integrations/planning-with-files/README.md). Não é carregada por defeito: regista o pacote opcional explicitamente e começa em `notify`. **11 testes adicionais passaram** no Pi 1.2.0; não houve chamadas reais a modelos nem alteração de configurações globais.
 
+### Contexto de projeto — Graphify opcional
+
+Incluímos uma [skill Graphify adaptada](integrations/graphify/README.md), com referências de consultas, memória explícita e atualização incremental, mais dois workflows de mapeamento/retoma. **Não é carregada por defeito** e não altera as 99 skills principais. Não inclui agents, sub-agents, runtime Python, guard, hooks nem captura automática de sessões.
+
+A dependência externa é preparada manualmente; não há instalação automática nem extração semântica implícita. Para continuidade, reutiliza os handoffs existentes de planeamento/TC. Conteúdo adaptado sob Apache-2.0, com proveniência e avisos preservados. Os testes estruturais não equivalem a validação fim a fim nem comprovam poupança de tokens.
+
 ### O que não está ativado/incluído
 - Definições de agentes Markdown não se tornam subagentes Pi automaticamente.
 - Hooks originais de outros agentes não são ativados por este pack.
@@ -149,6 +155,6 @@ Antes de executar scripts ou ações: revê o conteúdo, confirma ferramentas e 
 
 ## 6. Licença e atribuições
 
-O conteúdo original é redistribuído sob MIT, com avisos preservados em [LICENSE](LICENSE), nas licenças das subpastas e em [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Este é um pack curado/adaptado, não uma declaração de autoria exclusiva nem de associação oficial aos autores, à Snyk ou à Gen Digital.
+O conteúdo original é redistribuído principalmente sob MIT; a integração Graphify adaptada mantém Apache-2.0 e avisos próprios. Os avisos estão preservados em [LICENSE](LICENSE), nas licenças das subpastas e em [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Este é um pack curado/adaptado, não uma declaração de autoria exclusiva nem de associação oficial aos autores, à Snyk ou à Gen Digital.
 
-As novas contribuições locais são também disponibilizadas sob MIT, por decisão do mantenedor. Os copyrights dos componentes originais permanecem preservados.
+As novas contribuições locais independentes são também disponibilizadas sob MIT, por decisão do mantenedor; as adaptações Graphify conservam a licença indicada na integração. Os copyrights dos componentes originais permanecem preservados.

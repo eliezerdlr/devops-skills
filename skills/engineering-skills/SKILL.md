@@ -18,6 +18,7 @@ Copyright and licence notices are preserved in the repository's `LICENSE`, `THIR
 5. Start operational diagnosis with read-only checks. Obtain explicit approval for production changes, disruptive commands or security testing; define scope and rollback.
 6. Never expose credentials, tokens or personal data in output. Memory skills must not persist secrets.
 7. Loading instructions does not establish access, authorisation or successful execution. Report verified results separately from recommendations.
+8. When evaluating external skill packs, start with reusable skills, agents/prompts and workflows: identify value, duplication, adaptation needs and exclusions. Keep the review scoped and token-conscious; do not default to a codebase-wide audit unless requested. Before integrating selected content, check its provenance, licence and relevant safety boundaries. Critical review does not authorise offensive security testing.
 
 ## Cloud, DevOps and IT (7)
 
@@ -178,6 +179,14 @@ The three adapted ECC network role prompts are indexed in `../../agents/README.m
 | Skill | Focus | File |
 |---|---|---|
 | dsh-error-handling | Structured failures, recovery ownership, safe retries and verified outcomes; instructions only, no DeepSeek runtime | `dsh-error-handling/SKILL.md` |
+
+## Optional project context — Graphify (not in the 99 core skills)
+
+| Skill | Purpose | File |
+|---|---|---|
+| graphify | Explicit project maps, bounded queries and saved findings; no automatic session capture | [SKILL.md](../../integrations/graphify/skills/graphify/SKILL.md) |
+
+This adapted Apache-2.0 skill is **not loaded by the main manifest**. Register its optional package separately; see [activation, dependencies and limits](../../integrations/graphify/README.md). It adds no agents, subagents, guard or hooks. Do not install the external Graphify runtime or send documents to a model automatically. For task continuity, reuse the existing planning/TC handoff rather than duplicating memory.
 
 ## Known coverage gaps for hybrid IT
 

@@ -44,6 +44,14 @@ The pinned upstream Pi package lives in `integrations/planning-with-files/upstre
 
 Its session-start recovery helper can spawn uv/Python; attestation helpers use sh or PowerShell. Start with `PWF_MODE=notify UV_OFFLINE=1 UV_PYTHON_DOWNLOADS=never` to avoid automatic end-of-turn continuation and implicit uv downloads. Explicit `/plan-loop` remains capable of periodic model calls even in notify mode. Plan activation is not infrastructure approval. Eleven targeted tests passed against Pi 1.2.0, plus strict type checking of its extension; this does not validate every bundled helper or operating system.
 
+## Optional Graphify instructions
+
+The separately registered [Graphify package](../integrations/graphify/README.md) contains only an adapted skill and Markdown workflows/references; it is outside the main manifest. No executable wrapper, agents, subagents or extension are bundled. Loading it does not install Python packages or collect Pi sessions.
+
+CLI examples target the externally prepared `graphifyy==0.9.93` distribution (`graphify` executable). Its core requires Python and NetworkX/NumPy/RapidFuzz/tree-sitter grammars; extras such as Terraform require separate review. This pack does not install those dependencies. Do not invoke upstream installers/guards or assume the host subagent API matches upstream examples. Structural checks here do not validate a clean installation or the complete runtime.
+
+The adapted instructions require child-process settings `GRAPHIFY_BACKEND=none`, `GRAPHIFY_NO_AUTO_REFRESH=1` and `GRAPHIFY_QUERY_LOG_DISABLE=1`, plus an approved project output root. These are workflow guidance, not network/filesystem isolation. Markdown structure is available in the update path, whereas `extract --code-only` skips documents; YAML infrastructure is not automatically modeled structurally. Remote semantic processing needs separate approval of corpus, provider and budget.
+
 ## Optional Python dependencies
 
 A static AST inventory parsed 171 bundled Python files without syntax errors on Python 3.14.8. This is not a claim of runtime compatibility with every Python version. Python 3.10+ is a provisional baseline for modern type syntax; supported runtime versions must be verified for the chosen scripts. One inherited invalid-escape warning occurs in `ms365-tenant-manager/scripts/powershell_generator.py`; script source has not been modified.

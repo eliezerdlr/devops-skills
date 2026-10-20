@@ -62,13 +62,23 @@ MIT License — Copyright (c) 2026 Ahmad Adi.
 
 The `.pi/skills/planning-with-files` package is copied unchanged to `integrations/planning-with-files/upstream/`, with the upstream repository LICENSE additionally included. The original license is also preserved in `licenses/planning-with-files-MIT.txt`. Local documentation, source metadata, integrity hashes and targeted tests are outside the snapshot. This optional package is not activated by the main manifest. Inclusion is not an endorsement, independent security assessment or infrastructure authorisation.
 
+## Graphify — optional adapted instructions
+
+Source: https://github.com/Graphify-Labs/graphify, commit `b90b9df7949bd04a15b40a1624af85d0a9cfdf04`, version 0.9.93.
+
+Apache License 2.0 — Copyright 2026 Safi Shamsi and the Graphify contributors.
+
+Selected Pi skill/query/update guidance and the explicit save-result/reflect workflow are adapted in `integrations/graphify/`; each adapted instruction file identifies the modifications. The full upstream `LICENSE`, `NOTICE` and historical `LICENSE-MIT` are preserved there. Source paths and changes are recorded in `UPSTREAM.json`. Earlier MIT portions do not make the current Graphify distribution exclusively MIT.
+
+Local changes remove automatic installation/upgrades, implicit provider dispatch, mandatory graph-first behavior and subagent requirements; add bounded queries, optional local use and existing planning/TC handoff integration. The package contains instructions only: no Graphify Python runtime, guard, agents, hooks or session collector. It is not enabled by the root manifest and is not officially affiliated with Graphify Labs. Runtime dependencies and end-to-end operation remain separately validated requirements.
+
 ## Licence scope
 
 The root MIT notice consolidates the original copyright strings; it does not imply joint authorship of every file. Engineering content is attributed above and its original root licence is also preserved in `licenses/engineering-MIT.txt`. Nested licences retain the exact spelling `Reza Rezvani`; no assumption about legal identity with `Alireza Rezvani` is required. Do not replace or remove those notices when reorganising files.
 
 ## Local modifications and additions
 
-New local contributions are distributed under the MIT terms in the root LICENSE, as authorised by the maintainer. This does not replace or transfer upstream copyrights.
+New independent local contributions are distributed under the MIT terms in the root LICENSE, as authorised by the maintainer. Graphify-derived instructions retain the Apache-2.0 terms indicated in their integration. This does not replace or transfer upstream copyrights.
 
 - The combined engineering index is locally rewritten and adapted for this distribution.
 - Repository README and packaging documentation are local additions.
