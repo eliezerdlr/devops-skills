@@ -12,10 +12,12 @@ Use the existing plan/TC record for goal, decisions, blockers and next actions. 
 
 Confirm the project and approved `graphify-out/memory/` destination, with the same output/symlink checks and child-process environment as [querying.md](querying.md). Saving writes plaintext Markdown; check permissions/retention before proceeding.
 
-Pass arguments as a list, not interpolated shell text. Prefer an already approved, redacted answer file:
+Pass arguments as a list, not interpolated shell text. Use exact node IDs from the graph for `--nodes`, not shorthand search terms. If using labels, they must match exactly: `calculate_total` may find `calculate_total()` in a query but will not match that source during reflection. An unresolved citation may be omitted from lessons even when saving succeeds. Verify the saved finding appears after reflection.
+
+Prefer an already approved, redacted answer file (replace `NODE_ID_FROM_GRAPH` with a real ID):
 
 ```text
-graphify save-result --question "Where is release validation?" --answer-file /approved/redacted-finding.md --nodes ReleaseValidator --outcome useful
+graphify save-result --question "Where is release validation?" --answer-file /approved/redacted-finding.md --nodes NODE_ID_FROM_GRAPH --outcome useful
 ```
 
 Choose the outcome from evidence, not model confidence:
