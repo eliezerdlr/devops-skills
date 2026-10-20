@@ -1,0 +1,20 @@
+{
+  "name": "devops-skills-web-quality",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Optional web quality and technical SEO guidance; no browser/MCP installation or automatic audit.",
+  "pi": {
+    "skills": [
+      "./skills/web-quality-audit/SKILL.md",
+      "./skills/web-performance/SKILL.md",
+      "./skills/core-web-vitals/SKILL.md",
+      "./skills/web-accessibility/SKILL.md",
+      "./skills/web-seo/SKILL.md",
+      "./skills/web-best-practices/SKILL.md"
+    ],
+    "prompts": [],
+    "extensions": [],
+    "themes": []
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "repository": "https://github.com/addyosmani/web-quality-skills",
+  "commit": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 Addy Osmani",
+  "snapshot": "upstream/",
+  "integrity": "SHA256SUMS",
+  "source_files": [
+    "LICENSE",
+    "skills/accessibility/SKILL.md",
+    "skills/best-practices/SKILL.md",
+    "skills/core-web-vitals/SKILL.md",
+    "skills/performance/SKILL.md",
+    "skills/seo/SKILL.md",
+    "skills/web-quality-audit/SKILL.md",
+    "skills/accessibility/references/WCAG.md",
+    "skills/accessibility/references/A11Y-PATTERNS.md",
+    "skills/best-practices/references/SECURITY.md",
+    "skills/core-web-vitals/references/LCP.md",
+    "skills/core-web-vitals/references/INP.md",
+    "skills/core-web-vitals/references/CLS.md",
+    "skills/performance/references/RUM.md",
+    "skills/performance/references/MEASUREMENT.md",
+    "skills/seo/references/STRUCTURED-DATA.md",
+    "skills/web-quality-audit/scripts/analyze.sh"
+  ],
+  "skill_mapping": {
+    "web-quality-audit": "web-quality-audit",
+    "web-performance": "performance",
+    "core-web-vitals": "core-web-vitals",
+    "web-accessibility": "accessibility",
+    "web-seo": "seo",
+    "web-best-practices": "best-practices"
+  },
+  "modifications": [
+    "Six short adapted Pi entrypoints with explicit evidence, consent and manual-validation requirements.",
+    "Namespaced generic upstream performance/accessibility/seo/best-practices names to avoid ambiguous routing.",
+    "Preserved all six source skills, their supporting references and static analyzer unchanged.",
+    "Added interpretation cautions for pagination/canonical SEO, crawl controls, structured data, browser metrics and security checklists.",
+    "No automatic browser/MCP/CLI setup, global configuration, site audit, production change or marketing integration."
+  ]
+}

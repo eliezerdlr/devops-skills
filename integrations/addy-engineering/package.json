@@ -1,0 +1,21 @@
+{
+  "name": "devops-skills-addy-engineering",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Selected Addy Osmani engineering guidance and two same-session personas; no automation hooks.",
+  "pi": {
+    "skills": [
+      "./skills/constraint-driven-development/SKILL.md",
+      "./skills/context-engineering/SKILL.md",
+      "./skills/source-driven-development/SKILL.md",
+      "./skills/code-simplification/SKILL.md"
+    ],
+    "prompts": [
+      "./prompts/test-engineer.md",
+      "./prompts/web-performance-auditor.md"
+    ],
+    "extensions": [],
+    "themes": []
+  }
+}

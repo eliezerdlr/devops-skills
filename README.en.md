@@ -113,6 +113,15 @@ An **optional** integration preserves the upstream Pi package 3.24.0 and its MIT
 
 See [activation, combined workflow and hook risks](integrations/planning-with-files/README.md). It is not loaded by default: register the optional package explicitly and start in `notify` mode. **11 additional tests passed** on Pi 1.2.0; no live model calls or global configuration changes were made.
 
+### Engineering and web quality/SEO — optional Addy Osmani selections
+
+Two MIT packages outside the main manifest:
+
+- [Addy Engineering](integrations/addy-engineering/README.md): four adapted constraint/context/official-source/simplification skills and two same-session personas, not autonomous subagents. ADR/adversarial-review material is supplementary.
+- [Web Quality & SEO](integrations/web-quality/README.md): six skills for web audits, performance, Core Web Vitals, accessibility, technical/on-page SEO and browser best practices, with product/structured-data/internationalisation references.
+
+The 99 core skills are unchanged. No tools, hooks, browsers/MCP or analytics are installed. Complete selected references do not establish enforcement, measured metrics, WCAG conformance or ranking gains. Web quality is not a complete marketing/advertising platform; the guides qualify tool dependencies and non-universal examples.
+
 ### Security auditing — optional integration
 
 The [Security Audit integration](integrations/security-audit/README.md), adapted from Cloudflare under MIT, adds an evidence-led review skill, progressive domain references and three optional prompts: hunter, verifier and coverage critic. The schema, dependency-free validators and upstream tests are preserved.

@@ -113,6 +113,15 @@ Integração **opcional**, com o pacote Pi upstream 3.24.0 preservado e licença
 
 Ver [ativação, fluxo combinado e riscos dos hooks](integrations/planning-with-files/README.md). Não é carregada por defeito: regista o pacote opcional explicitamente e começa em `notify`. **11 testes adicionais passaram** no Pi 1.2.0; não houve chamadas reais a modelos nem alteração de configurações globais.
 
+### Engenharia e qualidade web/SEO — seleções opcionais Addy Osmani
+
+Dois pacotes MIT, fora do manifesto principal:
+
+- [Addy Engineering](integrations/addy-engineering/README.md): quatro skills adaptadas de constraints, contexto, fontes oficiais e simplificação; duas personas como prompts, não sub-agents autónomos. ADRs e revisão adversarial ficam como referências complementares.
+- [Web Quality & SEO](integrations/web-quality/README.md): seis skills para auditoria web, performance, Core Web Vitals, acessibilidade, SEO técnico/on-page e boas práticas. Inclui referências de produto/dados estruturados/internacionalização úteis ao marketing.
+
+As 99 skills base não mudam. Não instala ferramentas, hooks, browsers/MCP ou analytics. Referências completas da seleção não significam enforcement, métricas medidas, certificação WCAG ou resultados de ranking. A integração web não é uma plataforma completa de marketing/anúncios; os limites e exemplos que exigem cautela estão nos guias.
+
 ### Auditoria de segurança — integração opcional
 
 A [integração Security Audit](integrations/security-audit/README.md), adaptada do projeto Cloudflare sob MIT, acrescenta uma skill de revisão baseada em evidências, referências por domínio e três prompts opcionais: hunter, verifier e coverage critic. Inclui schema, validadores sem dependências externas e testes upstream preservados.

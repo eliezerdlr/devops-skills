@@ -180,6 +180,25 @@ The three adapted ECC network role prompts are indexed in `../../agents/README.m
 |---|---|---|
 | dsh-error-handling | Structured failures, recovery ownership, safe retries and verified outcomes; instructions only, no DeepSeek runtime | `dsh-error-handling/SKILL.md` |
 
+## Optional Addy Osmani engineering and web quality (not in the 99 core skills)
+
+These two MIT packages are registered separately, never by the main manifest. [Engineering setup and limits](../../integrations/addy-engineering/README.md) and [web/SEO setup and limits](../../integrations/web-quality/README.md) distinguish instructions from executable checks and measured outcomes.
+
+| Skill | Purpose | File |
+|---|---|---|
+| constraint-driven-development | Agreed quality rules and measured/enforced gates, no automatic tools | [SKILL.md](../../integrations/addy-engineering/skills/constraint-driven-development/SKILL.md) |
+| context-engineering | Selective context and existing task handoffs | [SKILL.md](../../integrations/addy-engineering/skills/context-engineering/SKILL.md) |
+| source-driven-development | Version-specific official documentation and bounded verification | [SKILL.md](../../integrations/addy-engineering/skills/source-driven-development/SKILL.md) |
+| code-simplification | Scoped contract-preserving refactoring | [SKILL.md](../../integrations/addy-engineering/skills/code-simplification/SKILL.md) |
+| web-quality-audit | Selected web categories with explicit evidence and verification gaps | [SKILL.md](../../integrations/web-quality/skills/web-quality-audit/SKILL.md) |
+| web-performance | Field/lab web loading and runtime diagnosis | [SKILL.md](../../integrations/web-quality/skills/web-performance/SKILL.md) |
+| core-web-vitals | Measured LCP, INP and CLS | [SKILL.md](../../integrations/web-quality/skills/core-web-vitals/SKILL.md) |
+| web-accessibility | Rendered/manual web accessibility, complements a11y-audit | [SKILL.md](../../integrations/web-quality/skills/web-accessibility/SKILL.md) |
+| web-seo | Technical/on-page/product/localised SEO, no ranking guarantees | [SKILL.md](../../integrations/web-quality/skills/web-seo/SKILL.md) |
+| web-best-practices | Browser compatibility/hygiene, not a full security audit | [SKILL.md](../../integrations/web-quality/skills/web-best-practices/SKILL.md) |
+
+Engineering also provides two optional same-session prompts, test-engineer and web-performance-auditor, not an autonomous subagent runtime. ADR/doubt material is reference-only. Do not copy hooks, install measurement tools, collect analytics, invoke external models or auto-commit from upstream examples. Web completeness requires actual tools/manual checks; SEO is not a complete marketing/advertising platform.
+
 ## Optional source-first security audit (not in the 99 core skills)
 
 | Skill | Purpose | File |

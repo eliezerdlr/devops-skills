@@ -62,6 +62,16 @@ MIT License — Copyright (c) 2026 Ahmad Adi.
 
 The `.pi/skills/planning-with-files` package is copied unchanged to `integrations/planning-with-files/upstream/`, with the upstream repository LICENSE additionally included. The original license is also preserved in `licenses/planning-with-files-MIT.txt`. Local documentation, source metadata, integrity hashes and targeted tests are outside the snapshot. This optional package is not activated by the main manifest. Inclusion is not an endorsement, independent security assessment or infrastructure authorisation.
 
+## Addy Osmani — optional engineering and web quality selections
+
+Sources:
+- https://github.com/addyosmani/agent-skills, commit `aeac41d4d005999432bb7312f7ff06383a91d59d`. MIT License — Copyright (c) 2025 Addy Osmani.
+- https://github.com/addyosmani/web-quality-skills, commit `afa8da942115f2961fdbfa80807ea0b232ff6c00`. MIT License — Copyright (c) 2026 Addy Osmani.
+
+Selected source documents are preserved unchanged under `integrations/addy-engineering/upstream/` (20 files) and `integrations/web-quality/upstream/` (17 files). Each integration retains its original LICENSE at both the snapshot and package roots, with provenance/source inventory in UPSTREAM.json and SHA-256 integrity records in SHA256SUMS. Existing inspiration/source links inside the original documents remain intact.
+
+Local MIT adaptations provide four engineering entrypoints, six web entrypoints, two same-session prompts and supporting interpretation/safety guidance. They are labelled as adaptations. Upstream hooks, lifecycle commands, autonomous build loops, global instructions and installers are not included. Reference personas/skills in snapshots are not additional registered resources. Neither package is activated by the root manifest; no official affiliation or production certification is claimed.
+
 ## Cloudflare — optional Security Audit skill and prompts
 
 Source: https://github.com/cloudflare/security-audit-skill, commit `c1c8a8c1471069fb0e188eeaff69b8e8db6564a8`.

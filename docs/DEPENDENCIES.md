@@ -44,6 +44,16 @@ The pinned upstream Pi package lives in `integrations/planning-with-files/upstre
 
 Its session-start recovery helper can spawn uv/Python; attestation helpers use sh or PowerShell. Start with `PWF_MODE=notify UV_OFFLINE=1 UV_PYTHON_DOWNLOADS=never` to avoid automatic end-of-turn continuation and implicit uv downloads. Explicit `/plan-loop` remains capable of periodic model calls even in notify mode. Plan activation is not infrastructure approval. Eleven targeted tests passed against Pi 1.2.0, plus strict type checking of its extension; this does not validate every bundled helper or operating system.
 
+## Optional Addy Engineering and Web Quality packages
+
+[Addy Engineering](../integrations/addy-engineering/README.md) adds four adapted skills and two same-session prompts; [Web Quality & SEO](../integrations/web-quality/README.md) adds six adapted skills. Both are explicitly registered optional packages, with source snapshots and MIT attribution. Neither adds extensions, autonomous workers, hooks or root dependencies. Reading instructions needs no extra tools.
+
+Quality constraints need actual project checks before being called enforced. The upstream floor-guard remains an illustrative Markdown example, not an installed guard. No automatic scanner installation, external-model escalation or commits are enabled. Context uses existing planning/TC handoffs instead of another memory runtime.
+
+Web measurements need approved existing browser/CLI/report capabilities. Chrome DevTools MCP is optional and is not installed/registered by this pack; discover current host tools rather than assuming upstream tool names exist. Lighthouse/axe need compatible tooling and an authorised target; CrUX/RUM need real eligible data. Never substitute static source patterns for measured CWV or claim automated checks prove WCAG/SEO outcomes. PSI/CrUX can disclose URLs to third parties; analytics/RUM collection needs its own authorisation/privacy policy.
+
+The preserved optional HTML smoke test uses Bash, grep, find and jq, reads small trusted local fixtures, and needs an external timeout/corpus limit. It is a pattern checker with known false positives/negatives and no global resource bound, not a browser, security scanner or marketing score. Do not install missing tools or run code snippets from the snapshot automatically. See package guides for limitations and corrections to generic SEO/security examples.
+
 ## Optional Security Audit package
 
 The [Cloudflare-derived Security Audit integration](../integrations/security-audit/README.md) is registered separately. It adds one adapted skill and three same-session prompts, no extension or agent runtime. Reading the guidance requires no extra tools; the preserved findings/coverage validators and their synthetic tests use Node built-ins only (use the pack's Node 22.14+ baseline). No npm install, scanner installation, model API setup or target builds are performed when loading it.
