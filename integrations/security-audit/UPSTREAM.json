@@ -1,0 +1,27 @@
+{
+  "repository": "https://github.com/cloudflare/security-audit-skill",
+  "commit": "c1c8a8c1471069fb0e188eeaff69b8e8db6564a8",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2025-2026 Cloudflare, Inc.",
+  "snapshot": "upstream/",
+  "integrity": "SHA256SUMS",
+  "included_source_paths": [
+    "README.md",
+    "LICENSE",
+    "skills/security-audit/"
+  ],
+  "adapted_files": [
+    "skills/security-audit/SKILL.md",
+    "references/focused-review.md",
+    "references/full-audit.md",
+    "prompts/security-hunter.md",
+    "prompts/security-verifier.md",
+    "prompts/security-coverage-critic.md"
+  ],
+  "modifications": [
+    "Added a short Pi entrypoint with guidance as default and progressive domain selection.",
+    "Preserved the full upstream workflow, companion documents, schema, validators and tests unchanged in a separately indexed snapshot.",
+    "Added read-only role prompts; same-session prompts do not constitute independent verification.",
+    "No automatic workers, target execution, hooks, sandbox installation or changes to the core manifest."
+  ]
+}

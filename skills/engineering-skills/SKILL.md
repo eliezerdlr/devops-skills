@@ -180,6 +180,14 @@ The three adapted ECC network role prompts are indexed in `../../agents/README.m
 |---|---|---|
 | dsh-error-handling | Structured failures, recovery ownership, safe retries and verified outcomes; instructions only, no DeepSeek runtime | `dsh-error-handling/SKILL.md` |
 
+## Optional source-first security audit (not in the 99 core skills)
+
+| Skill | Purpose | File |
+|---|---|---|
+| security-audit | Evidence-led focused reviews and explicitly requested full audits; independent validation and coverage | [SKILL.md](../../integrations/security-audit/skills/security-audit/SKILL.md) |
+
+This Cloudflare-derived MIT integration is **not loaded by the main manifest**. See [activation, roles and limits](../../integrations/security-audit/README.md). It provides three optional same-session prompts, not a subagent runtime. Guidance is the default; full audits need scope/profile/budget and real independent workers. Target execution requires OS-enforced isolation that the pack does not supply. Prefer supply-chain/release and cloud/deployment companions for DevOps; load other domains only when relevant.
+
 ## Optional project context — Graphify (not in the 99 core skills)
 
 | Skill | Purpose | File |

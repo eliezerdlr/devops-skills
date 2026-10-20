@@ -1,0 +1,19 @@
+{
+  "name": "devops-skills-security-audit",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Optional source-first security audit skill and role prompts; no agent runtime or sandbox.",
+  "pi": {
+    "skills": [
+      "./skills/security-audit/SKILL.md"
+    ],
+    "prompts": [
+      "./prompts/security-hunter.md",
+      "./prompts/security-verifier.md",
+      "./prompts/security-coverage-critic.md"
+    ],
+    "extensions": [],
+    "themes": []
+  }
+}

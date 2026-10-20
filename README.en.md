@@ -113,6 +113,12 @@ An **optional** integration preserves the upstream Pi package 3.24.0 and its MIT
 
 See [activation, combined workflow and hook risks](integrations/planning-with-files/README.md). It is not loaded by default: register the optional package explicitly and start in `notify` mode. **11 additional tests passed** on Pi 1.2.0; no live model calls or global configuration changes were made.
 
+### Security auditing — optional integration
+
+The [Security Audit integration](integrations/security-audit/README.md), adapted from Cloudflare under MIT, adds an evidence-led review skill, progressive domain references and three optional prompts: hunter, verifier and coverage critic. The schema, dependency-free validators and upstream tests are preserved.
+
+**Focused guidance is the default**; full audits require explicit intent, scope, profile and budget. Prompts run in the current session and do not create subagents. Target-code execution requires an OS-enforced sandbox, which this integration does not provide. It is outside the main manifest and does not change the 99 core skills.
+
 ### Project context — optional Graphify
 
 An [adapted Graphify skill](integrations/graphify/README.md) provides bounded-query, explicit-memory and incremental-update references, plus mapping/resume workflows. **It is not loaded by default** and does not change the 99 core skills. No agents, subagents, Python runtime, guard, hooks or automatic session collection are bundled.

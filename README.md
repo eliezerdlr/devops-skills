@@ -113,6 +113,12 @@ Integração **opcional**, com o pacote Pi upstream 3.24.0 preservado e licença
 
 Ver [ativação, fluxo combinado e riscos dos hooks](integrations/planning-with-files/README.md). Não é carregada por defeito: regista o pacote opcional explicitamente e começa em `notify`. **11 testes adicionais passaram** no Pi 1.2.0; não houve chamadas reais a modelos nem alteração de configurações globais.
 
+### Auditoria de segurança — integração opcional
+
+A [integração Security Audit](integrations/security-audit/README.md), adaptada do projeto Cloudflare sob MIT, acrescenta uma skill de revisão baseada em evidências, referências por domínio e três prompts opcionais: hunter, verifier e coverage critic. Inclui schema, validadores sem dependências externas e testes upstream preservados.
+
+**Orientação focada é o padrão**; auditorias completas exigem pedido explícito, âmbito, perfil e orçamento. Os prompts correm na sessão atual, não criam sub-agents. Execução de código do alvo exige sandbox imposto pelo SO; a integração não fornece esse isolamento. Não é carregada pelo manifesto principal nem altera as 99 skills base.
+
 ### Contexto de projeto — Graphify opcional
 
 Incluímos uma [skill Graphify adaptada](integrations/graphify/README.md), com referências de consultas, memória explícita e atualização incremental, mais dois workflows de mapeamento/retoma. **Não é carregada por defeito** e não altera as 99 skills principais. Não inclui agents, sub-agents, runtime Python, guard, hooks nem captura automática de sessões.

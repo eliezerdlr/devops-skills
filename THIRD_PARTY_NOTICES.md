@@ -62,6 +62,16 @@ MIT License — Copyright (c) 2026 Ahmad Adi.
 
 The `.pi/skills/planning-with-files` package is copied unchanged to `integrations/planning-with-files/upstream/`, with the upstream repository LICENSE additionally included. The original license is also preserved in `licenses/planning-with-files-MIT.txt`. Local documentation, source metadata, integrity hashes and targeted tests are outside the snapshot. This optional package is not activated by the main manifest. Inclusion is not an endorsement, independent security assessment or infrastructure authorisation.
 
+## Cloudflare — optional Security Audit skill and prompts
+
+Source: https://github.com/cloudflare/security-audit-skill, commit `c1c8a8c1471069fb0e188eeaff69b8e8db6564a8`.
+
+MIT License — Copyright (c) 2025-2026 Cloudflare, Inc.
+
+The source README, licence and complete `skills/security-audit/` directory are preserved unchanged under `integrations/security-audit/upstream/`. The original licence is also retained at the integration root. The 22 snapshot files are recorded in `SHA256SUMS`; provenance and local changes are in `UPSTREAM.json`.
+
+The local entrypoint, focused/full workflow bridge and three role prompts are adapted for optional Pi loading, guidance-first use, progressive context and explicit independence/execution boundaries. They identify the adaptation and are distributed under MIT with the retained upstream notice. No Cloudflare harness, sandbox, autonomous agent runtime, live-testing authorisation or official affiliation is included. The root manifest does not activate the integration.
+
 ## Graphify — optional adapted instructions
 
 Source: https://github.com/Graphify-Labs/graphify, commit `b90b9df7949bd04a15b40a1624af85d0a9cfdf04`, version 0.9.93.

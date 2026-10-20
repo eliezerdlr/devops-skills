@@ -44,6 +44,12 @@ The pinned upstream Pi package lives in `integrations/planning-with-files/upstre
 
 Its session-start recovery helper can spawn uv/Python; attestation helpers use sh or PowerShell. Start with `PWF_MODE=notify UV_OFFLINE=1 UV_PYTHON_DOWNLOADS=never` to avoid automatic end-of-turn continuation and implicit uv downloads. Explicit `/plan-loop` remains capable of periodic model calls even in notify mode. Plan activation is not infrastructure approval. Eleven targeted tests passed against Pi 1.2.0, plus strict type checking of its extension; this does not validate every bundled helper or operating system.
 
+## Optional Security Audit package
+
+The [Cloudflare-derived Security Audit integration](../integrations/security-audit/README.md) is registered separately. It adds one adapted skill and three same-session prompts, no extension or agent runtime. Reading the guidance requires no extra tools; the preserved findings/coverage validators and their synthetic tests use Node built-ins only (use the pack's Node 22.14+ baseline). No npm install, scanner installation, model API setup or target builds are performed when loading it.
+
+Full audit delegation must use genuinely independent host-supported workers; the upstream research/general names are roles, not guaranteed Pi templates. Target execution is blocked unless the upstream OS-enforced sandbox, empty allowlisted environment, offline/write/resource limits and safe artifact-promotion controls are actually available. This package does not implement those controls; a temporary directory or tool-free network worker is not a replacement. Validators check parent-owned JSON structure and consistency, not vulnerability truth or completeness.
+
 ## Optional Graphify instructions
 
 The separately registered [Graphify package](../integrations/graphify/README.md) contains only an adapted skill and Markdown workflows/references; it is outside the main manifest. No executable wrapper, agents, subagents or extension are bundled. Loading it does not install Python packages or collect Pi sessions.
