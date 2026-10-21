@@ -38,5 +38,6 @@
     "Preserved all six source skills, their supporting references and static analyzer unchanged.",
     "Added interpretation cautions for pagination/canonical SEO, crawl controls, structured data, browser metrics and security checklists.",
     "No automatic browser/MCP/CLI setup, global configuration, site audit, production change or marketing integration."
-  ]
+  ],
+  "registration": "Included by the devops-skills root manifest. The nested package manifest is retained as a legacy component inventory; do not register it alongside the root."
 }

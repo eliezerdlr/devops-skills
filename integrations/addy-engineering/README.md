@@ -1,4 +1,4 @@
-# Addy Engineering — seleção opcional
+# Addy Engineering — incluída no DevOps Skills
 
 Quatro skills e duas personas adaptadas de [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills), sob MIT. A seleção complementa o pack; não substitui os nossos especialistas nem instala a totalidade das 25 skills upstream.
 
@@ -18,7 +18,7 @@ As personas são **prompts na sessão atual**, não sub-agents executáveis. Del
 ## Ativar
 
 ```bash
-pi install /caminho/absoluto/devops-skills/integrations/addy-engineering
+pi install /caminho/absoluto/devops-skills
 ```
 
 No Pi:
@@ -30,7 +30,7 @@ No Pi:
 /test-engineer Identificar testes de regressão em falta neste diff, sem executar código.
 ```
 
-Não registar outra cópia com os mesmos nomes. O manifesto principal permanece inalterado: **99 skills base**; este pacote acrescenta quatro skills apenas quando registado separadamente.
+As quatro skills e os dois prompts são carregados pelo manifesto principal, dentro dos **111 especialistas e 8 prompts**. Não registar este módulo separadamente nem outra cópia com os mesmos nomes. Para registos antigos, segue a [migração](../../docs/UNIFIED-PACKAGE.md).
 
 ## Referências e completude
 
@@ -58,12 +58,8 @@ node --test tests/addy-integrations.test.mjs
 
 Testes estruturais e fixtures, não certificação de qualidade de código, eficácia de agentes ou testes de browser. Origem e integridade: [UPSTREAM.json](UPSTREAM.json), [SHA256SUMS](SHA256SUMS), [LICENSE](LICENSE).
 
-```bash
-pi remove /caminho/absoluto/devops-skills/integrations/addy-engineering
-```
-
-Recarregar o Pi. Não apagar planos, ADRs ou estado de trabalho ao desativar a integração.
+Para desativar recursos específicos, usa `pi config` no pacote principal e recarrega o Pi. Não apagar planos, ADRs ou estado de trabalho ao desativar recursos.
 
 ## English summary
 
-Optional MIT-licensed Addy Osmani guidance: four adapted engineering skills and two same-session personas. Supporting references are preserved, but no hooks, guards, automatic installs/commits or subagent runtime are enabled. Gates require real approved checks; examples are not universal transformations. Existing task state and approval boundaries take precedence.
+MIT-licensed Addy Osmani guidance included by the root package: four adapted engineering skills and two same-session personas. Supporting references are preserved, but no hooks, guards, automatic installs/commits or subagent runtime are enabled. Gates require real approved checks; examples are not universal transformations. Existing task state and approval boundaries take precedence.

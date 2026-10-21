@@ -62,7 +62,7 @@ MIT License — Copyright (c) 2026 Ahmad Adi.
 
 The `.pi/skills/planning-with-files` package is copied unchanged to `integrations/planning-with-files/upstream/`, with the upstream repository LICENSE additionally included. The original license is also preserved in `licenses/planning-with-files-MIT.txt`. Local documentation, source metadata, integrity hashes and targeted tests are outside the snapshot. This optional package is not activated by the main manifest. Inclusion is not an endorsement, independent security assessment or infrastructure authorisation.
 
-## Addy Osmani — optional engineering and web quality selections
+## Addy Osmani — engineering and web quality selections
 
 Sources:
 - https://github.com/addyosmani/agent-skills, commit `aeac41d4d005999432bb7312f7ff06383a91d59d`. MIT License — Copyright (c) 2025 Addy Osmani.
@@ -70,9 +70,9 @@ Sources:
 
 Selected source documents are preserved unchanged under `integrations/addy-engineering/upstream/` (20 files) and `integrations/web-quality/upstream/` (17 files). Each integration retains its original LICENSE at both the snapshot and package roots, with provenance/source inventory in UPSTREAM.json and SHA-256 integrity records in SHA256SUMS. Existing inspiration/source links inside the original documents remain intact.
 
-Local MIT adaptations provide four engineering entrypoints, six web entrypoints, two same-session prompts and supporting interpretation/safety guidance. They are labelled as adaptations. Upstream hooks, lifecycle commands, autonomous build loops, global instructions and installers are not included. Reference personas/skills in snapshots are not additional registered resources. Neither package is activated by the root manifest; no official affiliation or production certification is claimed.
+Local MIT adaptations provide four engineering entrypoints, six web entrypoints, two same-session prompts and supporting interpretation/safety guidance. They are labelled as adaptations. Upstream hooks, lifecycle commands, autonomous build loops, global instructions and installers are not included. Reference personas/skills in snapshots are not additional registered resources. The adapted entrypoints and two role prompts are included by the root manifest; no official affiliation or production certification is claimed.
 
-## Cloudflare — optional Security Audit skill and prompts
+## Cloudflare — Security Audit skill and prompts
 
 Source: https://github.com/cloudflare/security-audit-skill, commit `c1c8a8c1471069fb0e188eeaff69b8e8db6564a8`.
 
@@ -80,9 +80,9 @@ MIT License — Copyright (c) 2025-2026 Cloudflare, Inc.
 
 The source README, licence and complete `skills/security-audit/` directory are preserved unchanged under `integrations/security-audit/upstream/`. The original licence is also retained at the integration root. The 22 snapshot files are recorded in `SHA256SUMS`; provenance and local changes are in `UPSTREAM.json`.
 
-The local entrypoint, focused/full workflow bridge and three role prompts are adapted for optional Pi loading, guidance-first use, progressive context and explicit independence/execution boundaries. They identify the adaptation and are distributed under MIT with the retained upstream notice. No Cloudflare harness, sandbox, autonomous agent runtime, live-testing authorisation or official affiliation is included. The root manifest does not activate the integration.
+The local entrypoint, focused/full workflow bridge and three role prompts are adapted for unified Pi package loading, guidance-first use, progressive context and explicit independence/execution boundaries. They identify the adaptation and are distributed under MIT with the retained upstream notice. No Cloudflare harness, sandbox, autonomous agent runtime, live-testing authorisation or official affiliation is included. The root manifest includes the adapted skill and three prompts, not the original snapshot skill or an execution harness.
 
-## Graphify — optional adapted instructions
+## Graphify — adapted instructions
 
 Source: https://github.com/Graphify-Labs/graphify, commit `b90b9df7949bd04a15b40a1624af85d0a9cfdf04`, version 0.9.93.
 
@@ -90,7 +90,7 @@ Apache License 2.0 — Copyright 2026 Safi Shamsi and the Graphify contributors.
 
 Selected Pi skill/query/update guidance and the explicit save-result/reflect workflow are adapted in `integrations/graphify/`; each adapted instruction file identifies the modifications. The full upstream `LICENSE`, `NOTICE` and historical `LICENSE-MIT` are preserved there. Source paths and changes are recorded in `UPSTREAM.json`. Earlier MIT portions do not make the current Graphify distribution exclusively MIT.
 
-Local changes remove automatic installation/upgrades, implicit provider dispatch, mandatory graph-first behavior and subagent requirements; add bounded queries, optional local use and existing planning/TC handoff integration. The package contains instructions only: no Graphify Python runtime, guard, agents, hooks or session collector. It is not enabled by the root manifest and is not officially affiliated with Graphify Labs. Runtime dependencies and end-to-end operation remain separately validated requirements.
+Local changes remove automatic installation/upgrades, implicit provider dispatch, mandatory graph-first behavior and subagent requirements; add bounded queries, optional local use and existing planning/TC handoff integration. The package contains instructions only: no Graphify Python runtime, guard, agents, hooks or session collector. The adapted skill is included by the root manifest; the external Python CLI is not bundled. This is not officially affiliated with Graphify Labs. Runtime dependencies and end-to-end operation remain separately validated requirements.
 
 ## Licence scope
 

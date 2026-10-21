@@ -4,7 +4,7 @@
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares skills, three adapted ECC network role prompts and the locally authored ops-orchestrator extension. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares all 111 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator extension. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
 See [ORCHESTRATION.md](ORCHESTRATION.md) for the executable integration, approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 
@@ -24,7 +24,7 @@ Clone to a chosen directory, then merge a `packages` entry into the existing `~/
 }
 ```
 
-Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's `**/SKILL.md` glob selects every specialist even though their parent contains the catalogue. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
+Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 12 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
 
 ### Register the checkout as a local Pi package
 
@@ -44,9 +44,9 @@ The pinned upstream Pi package lives in `integrations/planning-with-files/upstre
 
 Its session-start recovery helper can spawn uv/Python; attestation helpers use sh or PowerShell. Start with `PWF_MODE=notify UV_OFFLINE=1 UV_PYTHON_DOWNLOADS=never` to avoid automatic end-of-turn continuation and implicit uv downloads. Explicit `/plan-loop` remains capable of periodic model calls even in notify mode. Plan activation is not infrastructure approval. Eleven targeted tests passed against Pi 1.2.0, plus strict type checking of its extension; this does not validate every bundled helper or operating system.
 
-## Optional Addy Engineering and Web Quality packages
+## Included engineering and web quality modules
 
-[Addy Engineering](../integrations/addy-engineering/README.md) adds four adapted skills and two same-session prompts; [Web Quality & SEO](../integrations/web-quality/README.md) adds six adapted skills. Both are explicitly registered optional packages, with source snapshots and MIT attribution. Neither adds extensions, autonomous workers, hooks or root dependencies. Reading instructions needs no extra tools.
+[Addy Engineering](../integrations/addy-engineering/README.md) adds four adapted skills and two same-session prompts; [Web Quality & SEO](../integrations/web-quality/README.md) adds six adapted skills. Both are included by the root manifest, with source snapshots and MIT attribution; do not register the modules separately. Neither adds extensions, autonomous workers, hooks or root dependencies. Reading instructions needs no extra tools.
 
 Quality constraints need actual project checks before being called enforced. The upstream floor-guard remains an illustrative Markdown example, not an installed guard. No automatic scanner installation, external-model escalation or commits are enabled. Context uses existing planning/TC handoffs instead of another memory runtime.
 
@@ -54,15 +54,15 @@ Web measurements need approved existing browser/CLI/report capabilities. Chrome 
 
 The preserved optional HTML smoke test uses Bash, grep, find and jq, reads small trusted local fixtures, and needs an external timeout/corpus limit. It is a pattern checker with known false positives/negatives and no global resource bound, not a browser, security scanner or marketing score. Do not install missing tools or run code snippets from the snapshot automatically. See package guides for limitations and corrections to generic SEO/security examples.
 
-## Optional Security Audit package
+## Included Security Audit module
 
-The [Cloudflare-derived Security Audit integration](../integrations/security-audit/README.md) is registered separately. It adds one adapted skill and three same-session prompts, no extension or agent runtime. Reading the guidance requires no extra tools; the preserved findings/coverage validators and their synthetic tests use Node built-ins only (use the pack's Node 22.14+ baseline). No npm install, scanner installation, model API setup or target builds are performed when loading it.
+The [Cloudflare-derived Security Audit integration](../integrations/security-audit/README.md) is included by the root manifest. It adds one adapted skill and three same-session prompts, no extension or agent runtime. Reading the guidance requires no extra tools; the preserved findings/coverage validators and their synthetic tests use Node built-ins only (use the pack's Node 22.14+ baseline). No npm install, scanner installation, model API setup or target builds are performed when loading it.
 
 Full audit delegation must use genuinely independent host-supported workers; the upstream research/general names are roles, not guaranteed Pi templates. Target execution is blocked unless the upstream OS-enforced sandbox, empty allowlisted environment, offline/write/resource limits and safe artifact-promotion controls are actually available. This package does not implement those controls; a temporary directory or tool-free network worker is not a replacement. Validators check parent-owned JSON structure and consistency, not vulnerability truth or completeness.
 
-## Optional Graphify instructions
+## Included Graphify instructions; external CLI dependency
 
-The separately registered [Graphify package](../integrations/graphify/README.md) contains only an adapted skill and Markdown workflows/references; it is outside the main manifest. No executable wrapper, agents, subagents or extension are bundled. Loading it does not install Python packages or collect Pi sessions.
+The [Graphify module](../integrations/graphify/README.md) contributes an adapted skill and Markdown workflows/references to the root manifest. No additional Pi package registration is needed. No executable wrapper, agents, subagents or extension are bundled. Loading it does not install Python packages or collect Pi sessions.
 
 CLI examples target the externally prepared `graphifyy==0.9.93` distribution (`graphify` executable). Its core requires Python and NetworkX/NumPy/RapidFuzz/tree-sitter grammars; extras such as Terraform require separate review. This pack does not install those dependencies. Do not invoke upstream installers/guards or assume the host subagent API matches upstream examples. Structural checks here do not validate a clean installation or the complete runtime.
 

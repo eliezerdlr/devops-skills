@@ -2,7 +2,7 @@
   "name": "devops-skills-graphify",
   "version": "0.1.0",
   "private": true,
-  "description": "Optional adapted Graphify skill; instructions only, no runtime or hooks.",
+  "description": "Internal graphify resource inventory for unified devops-skills; retained for legacy registration compatibility. Install only the repository root.",
   "license": "Apache-2.0",
   "pi": {
     "skills": [

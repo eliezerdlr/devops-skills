@@ -42,5 +42,6 @@
     "Preserved selected source documents and shared references unchanged; extra personas/ADR/doubt documents in the snapshot are reference material only.",
     "Removed implicit installation, hooks, auto-commits and mandatory cross-model reviews from the activated workflows.",
     "Added explicit approval, context-budget, evidence and example-correctness qualifications; no claim of executable quality gates or autonomous subagents."
-  ]
+  ],
+  "registration": "Included by the devops-skills root manifest. The nested package manifest is retained as a legacy component inventory; do not register it alongside the root."
 }

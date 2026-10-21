@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { skillResourceCount, promptCount } from './package-contract.mjs';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { createHash } from 'node:crypto';
@@ -67,9 +68,9 @@ test('optional package adds one skill and one extension without changing base di
   try {
     const paths = await new DefaultPackageManager({ cwd, agentDir: cwd, settingsManager: SettingsManager.inMemory({ packages: [root, upstream] }) }).resolve();
     const selected = group => paths[group].filter(p => p.enabled && p.path.startsWith(`${root}/`)).map(p => p.path);
-    assert.equal(selected('skills').length, 101); assert.equal(selected('extensions').length, 2); assert.equal(selected('prompts').length, 3);
+    assert.equal(selected('skills').length, skillResourceCount + 1); assert.equal(selected('extensions').length, 2); assert.equal(selected('prompts').length, promptCount);
     const skills = loadSkills({ cwd, agentDir: cwd, skillPaths: selected('skills'), includeDefaults: false });
-    assert.equal(skills.skills.length, 101); assert.deepEqual(skills.diagnostics, []);
+    assert.equal(skills.skills.length, skillResourceCount + 1); assert.deepEqual(skills.diagnostics, []);
   } finally { await rm(cwd, { recursive: true, force: true }); }
 });
 test('both real Pi extensions load together without tool or command collisions', async () => {

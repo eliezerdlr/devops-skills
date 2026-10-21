@@ -12,7 +12,7 @@ Task: $ARGUMENTS
 
 This is a **same-session prompt**, not an isolated subagent, enforced tool policy or sandbox. Actual separate workers require the host's delegation capability, explicit scope/tools and agreed cost. This package does not install them or modify ops_agent.
 
-Use [web-quality evidence and safety](../../web-quality/references/evidence-and-safety.md) and selected [source persona](../upstream/agents/web-performance-auditor.md) guidance. The optional web-quality package need not be registered to read the bundled reference.
+Use [web-quality evidence and safety](../../web-quality/references/evidence-and-safety.md) and selected [source persona](../upstream/agents/web-performance-auditor.md) guidance. Web-quality skills and this persona are included by the same root package; no separate registration is required.
 
 Without measurements, report source hypotheses and mark all scorecard values not measured. With supplied data, distinguish field CrUX/RUM from laboratory Lighthouse/trace measurements; record URL/origin, device, sample period, tool versions and conditions. No origin-wide inference about one route.
 

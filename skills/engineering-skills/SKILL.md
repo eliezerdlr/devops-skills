@@ -1,11 +1,11 @@
 ---
 name: engineering-skills
-description: "Catalogue of 99 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
+description: "Catalogue of 111 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
 ---
 
 # Engineering Skills — Catalogue
 
-This catalogue lists **99 skills/sub-skills** included in this repository, excluding this index. All listed paths are relative to the directory containing this file. Test fixtures are not operational skills.
+This catalogue lists **111 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
 
 Copyright and licence notices are preserved in the repository's `LICENSE`, `THIRD_PARTY_NOTICES.md`, and nested licence files. Inclusion is not a security certification.
 
@@ -180,9 +180,9 @@ The three adapted ECC network role prompts are indexed in `../../agents/README.m
 |---|---|---|
 | dsh-error-handling | Structured failures, recovery ownership, safe retries and verified outcomes; instructions only, no DeepSeek runtime | `dsh-error-handling/SKILL.md` |
 
-## Optional Addy Osmani engineering and web quality (not in the 99 core skills)
+## Engineering, task context and web quality — Addy Osmani (10)
 
-These two MIT packages are registered separately, never by the main manifest. [Engineering setup and limits](../../integrations/addy-engineering/README.md) and [web/SEO setup and limits](../../integrations/web-quality/README.md) distinguish instructions from executable checks and measured outcomes.
+These MIT skills are part of the main package. [Engineering capabilities and limits](../../integrations/addy-engineering/README.md) and [web/SEO capabilities and limits](../../integrations/web-quality/README.md) distinguish available instructions from executable checks and measured outcomes.
 
 | Skill | Purpose | File |
 |---|---|---|
@@ -197,23 +197,23 @@ These two MIT packages are registered separately, never by the main manifest. [E
 | web-seo | Technical/on-page/product/localised SEO, no ranking guarantees | [SKILL.md](../../integrations/web-quality/skills/web-seo/SKILL.md) |
 | web-best-practices | Browser compatibility/hygiene, not a full security audit | [SKILL.md](../../integrations/web-quality/skills/web-best-practices/SKILL.md) |
 
-Engineering also provides two optional same-session prompts, test-engineer and web-performance-auditor, not an autonomous subagent runtime. ADR/doubt material is reference-only. Do not copy hooks, install measurement tools, collect analytics, invoke external models or auto-commit from upstream examples. Web completeness requires actual tools/manual checks; SEO is not a complete marketing/advertising platform.
+The main package also provides the same-session prompts test-engineer and web-performance-auditor, not an autonomous subagent runtime. ADR/doubt material is reference-only. Do not copy hooks, install measurement tools, collect analytics, invoke external models or auto-commit from upstream examples. Web completeness requires actual tools/manual checks; SEO is not a complete marketing/advertising platform.
 
-## Optional source-first security audit (not in the 99 core skills)
+## Source-first security audit — Cloudflare (1)
 
 | Skill | Purpose | File |
 |---|---|---|
 | security-audit | Evidence-led focused reviews and explicitly requested full audits; independent validation and coverage | [SKILL.md](../../integrations/security-audit/skills/security-audit/SKILL.md) |
 
-This Cloudflare-derived MIT integration is **not loaded by the main manifest**. See [activation, roles and limits](../../integrations/security-audit/README.md). It provides three optional same-session prompts, not a subagent runtime. Guidance is the default; full audits need scope/profile/budget and real independent workers. Target execution requires OS-enforced isolation that the pack does not supply. Prefer supply-chain/release and cloud/deployment companions for DevOps; load other domains only when relevant.
+This Cloudflare-derived MIT skill and its three same-session role prompts are included in the main package. See [roles and limits](../../integrations/security-audit/README.md). The prompts are not a subagent runtime. Guidance is the default; full audits need scope/profile/budget and real independent workers. Target execution requires OS-enforced isolation that the pack does not supply. Prefer supply-chain/release and cloud/deployment companions for DevOps; load other domains only when relevant.
 
-## Optional project context — Graphify (not in the 99 core skills)
+## Project context — Graphify (1)
 
 | Skill | Purpose | File |
 |---|---|---|
 | graphify | Explicit project maps, bounded queries and saved findings; no automatic session capture | [SKILL.md](../../integrations/graphify/skills/graphify/SKILL.md) |
 
-This adapted Apache-2.0 skill is **not loaded by the main manifest**. Register its optional package separately; see [activation, dependencies and limits](../../integrations/graphify/README.md). It adds no agents, subagents, guard or hooks. Do not install the external Graphify runtime or send documents to a model automatically. For task continuity, reuse the existing planning/TC handoff rather than duplicating memory.
+This adapted Apache-2.0 skill is included in the main package; see [external tool requirements and limits](../../integrations/graphify/README.md). Installing its external CLI is separate from making the skill available. It adds no agents, subagents, guard or hooks. Do not install the external Graphify runtime or send documents to a model automatically. For task continuity, reuse the existing planning/TC handoff rather than duplicating memory.
 
 ## Known coverage gaps for hybrid IT
 

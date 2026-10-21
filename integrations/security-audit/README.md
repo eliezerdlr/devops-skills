@@ -1,4 +1,4 @@
-# Security Audit — integração opcional
+# Security Audit — incluída no DevOps Skills
 
 Adaptação da skill [Cloudflare security-audit-skill](https://github.com/cloudflare/security-audit-skill), fixada no commit `c1c8a8c1471069fb0e188eeaff69b8e8db6564a8`, sob MIT. Não é integração oficial nem certificação de segurança.
 
@@ -10,15 +10,17 @@ Adaptação da skill [Cloudflare security-audit-skill](https://github.com/cloudf
 - Workflow completo de seis fases preservado, com cobertura explícita, verificação independente e estados `confirmed`, `needs_validation` e `rejected`.
 - Schema, dois validadores Node sem dependências externas e os seus testes.
 
-O pacote é separado das 99 skills base. **Não é carregado pelo manifesto principal.** A instalação não executa uma auditoria, não instala ferramentas nem cria agentes/sandbox.
+A skill e os três prompts fazem parte do pacote principal: **111 especialistas e 8 prompts numa única instalação**. O módulo conserva referências e proveniência; não requer instalação adicional. O carregamento não executa uma auditoria, não instala ferramentas nem cria agentes/sandbox.
 
 ## Ativar no Pi
 
-Depois de rever o conteúdo, executar manualmente:
+Depois de rever o conteúdo, registar apenas a raiz:
 
 ```bash
-pi install /caminho/absoluto/devops-skills/integrations/security-audit
+pi install /caminho/absoluto/devops-skills
 ```
+
+Se já tinhas registado módulos separados, segue a [migração](../../docs/UNIFIED-PACKAGE.md).
 
 No Pi:
 
@@ -84,14 +86,10 @@ node --test tests/security-audit-integration.test.mjs integrations/security-audi
 
 Incluem testes estruturais locais e os testes upstream dos validadores com dados sintéticos/temporários. Não fazem auditoria de nenhum alvo, não lançam agentes/modelos e não demonstram eficácia de descoberta nem sandbox real. Licença, origem e integridade estão em [LICENSE](LICENSE), [UPSTREAM.json](UPSTREAM.json) e [SHA256SUMS](SHA256SUMS). Os 22 ficheiros do snapshot são preservados sem alterações.
 
-## Desativar
+## Gerir recursos
 
-```bash
-pi remove /caminho/absoluto/devops-skills/integrations/security-audit
-```
-
-Recarregar o Pi. Não apagar automaticamente relatórios/evidências: aplicar a política de retenção e confirmar o destino. Nenhuma configuração de produção é alterada pela integração.
+Usa `pi config` para desativar a skill ou prompts específicos do pacote principal, depois recarrega o Pi. Não apagar automaticamente relatórios/evidências: aplicar a política de retenção e confirmar o destino. Nenhuma configuração de produção é alterada pela integração.
 
 ## English summary
 
-Optional MIT-licensed Cloudflare-derived security audit instructions: one adapted skill, three same-session role prompts, progressive domain references and a pinned unmodified snapshot with schema/validators/tests. Guidance is the default. Full audits require explicit scope/budget and genuinely independent workers; target execution requires the upstream OS-enforced sandbox and artifact-promotion controls, which this package does not implement. No hooks, agent runtime, live probing or automatic audits.
+MIT-licensed Cloudflare-derived security audit instructions included in the root package: one adapted skill, three same-session role prompts, progressive domain references and a pinned unmodified snapshot with schema/validators/tests. Guidance is the default. Full audits require explicit scope/budget and genuinely independent workers; target execution requires the upstream OS-enforced sandbox and artifact-promotion controls, which this package does not implement. No hooks, agent runtime, live probing or automatic audits.

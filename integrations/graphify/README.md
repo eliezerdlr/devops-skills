@@ -1,4 +1,4 @@
-# Graphify — integração opcional
+# Graphify — contexto incluído no DevOps Skills
 
 Uma **skill adaptada**, três referências e dois workflows para mapear projetos, consultar relações e reutilizar descobertas. Não inclui agents, sub-agents, runtime Python, guard Pi, hooks ou watcher. Não é integração oficial da Graphify Labs.
 
@@ -10,28 +10,22 @@ Uma **skill adaptada**, três referências e dois workflows para mapear projetos
 
 **Não captura todas as sessões nem carrega contexto automaticamente numa janela nova.** A retoma exige invocar a skill ou pedir a leitura do handoff selecionado. Não há promessa de poupança percentual de tokens.
 
-## Ativar apenas as instruções no Pi
+## Uma instalação do pacote principal
 
-O manifesto principal não carrega esta integração; as 99 skills base não mudam. Regista este pacote separadamente, após rever o conteúdo:
+A skill Graphify faz parte das 111 skills do pacote e é registada pelo manifesto principal. A pasta deste módulo mantém origem, referências e licença; não é uma instalação adicional.
 
 ```bash
-pi install /caminho/absoluto/devops-skills/integrations/graphify
+pi install /caminho/absoluto/devops-skills
 ```
 
-Este registo não instala o Graphify Python. Não registes outra skill chamada `graphify` ao mesmo tempo. Depois, no Pi:
+Este registo não instala o Graphify Python. Se tinhas registado módulos individualmente, segue a [migração para instalação única](../../docs/UNIFIED-PACKAGE.md). Depois, no Pi:
 
 ```text
 /reload
 /skill:graphify Retomar a tarefa selecionada ou consultar o mapa deste projeto.
 ```
 
-Para remover só o pacote de instruções:
-
-```bash
-pi remove /caminho/absoluto/devops-skills/integrations/graphify
-```
-
-Recarrega o Pi. A remoção não apaga planos, notas, grafos ou o Graphify instalado separadamente.
+Para desativar apenas esta skill, usa o filtro de recursos do pacote principal em `pi config`; não é necessário remover o pacote inteiro. A desativação não apaga planos, notas, grafos ou o CLI instalado separadamente.
 
 ## Dependência externa — preparação manual
 
@@ -102,4 +96,4 @@ Executar da raiz do pack. Os testes verificam estrutura, links, proveniência e 
 
 ## English summary
 
-Optional, adapted Graphify instructions for scoped project maps, bounded queries and explicit work memory. No agents, subagents, runtime, hooks or automatic session capture. Register this directory separately; install the pinned external Python tool only after operator approval. Safeguards are guidance, not an executable sandbox. Apache-2.0 attribution is preserved.
+Graphify instructions are included in the unified root package for scoped project maps, bounded queries and explicit work memory. No agents, subagents, runtime, hooks or automatic session capture. Register only the repository root; install the pinned external Python tool only after operator approval. Safeguards are guidance, not an executable sandbox. Apache-2.0 attribution is preserved.

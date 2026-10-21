@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "description": "Optional web quality and technical SEO guidance; no browser/MCP installation or automatic audit.",
+  "description": "Internal web-quality resource inventory for unified devops-skills; retained for legacy registration compatibility. Install only the repository root.",
   "pi": {
     "skills": [
       "./skills/web-quality-audit/SKILL.md",

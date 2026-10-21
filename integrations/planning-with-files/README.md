@@ -2,7 +2,7 @@
 
 Snapshot do pacote Pi oficial de [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files), versão **3.24.0**, commit **96b79bf1d64f22ab5f68442e0a45704eef06ddfc**. Os 46 ficheiros em `upstream/` preservam o conteúdo original; apenas acrescentámos a licença MIT do repositório ao pacote. Proveniência em [UPSTREAM.json](UPSTREAM.json), integridade em [SHA256SUMS](SHA256SUMS), licença em [upstream/LICENSE](upstream/LICENSE).
 
-**Não é carregado pelo manifesto principal.** Ativação explícita evita instalar hooks, ler planos ou iniciar processos por surpresa ao atualizar o pack. A contagem principal mantém-se em 99 skills; a instalação opcional acrescenta uma skill e uma extensão. Não registes simultaneamente outra cópia npm/global de planning-with-files.
+**Não é carregado pelo manifesto principal.** Ativação explícita evita instalar hooks, ler planos ou iniciar processos por surpresa ao atualizar o pack. O pacote principal inclui 111 skills; a instalação opcional acrescenta uma skill e uma extensão. Não registes simultaneamente outra cópia npm/global de planning-with-files.
 
 ## Ativar no Pi 1.2.0
 
@@ -67,7 +67,7 @@ Os workers do nosso orquestrador continuam sem ferramentas e **não escrevem nes
 PI_SDK_ROOT="$(npm root -g)/@earendil-works/pi-coding-agent" npm run test:planning
 ```
 
-**11 testes locais passaram** com o SDK real do Pi 1.2.0: integridade dos 46 ficheiros, descoberta combinada (101 recursos de skills / 3 prompts / 2 extensões), ausência de colisões, leitura persistente de planos, modo passivo, `notify`, ativação/reset, ausência de continuação após erro/abort, revogação no shutdown, deteção de alteração e seletor inválido. A suíte anterior de 49 testes mantém-se separada. A extensão opcional também passou verificação estrita de tipos com TypeScript 5.9.3 contra as declarações do Pi 1.2.0.
+A suíte de **11 testes locais** cobre integridade dos 46 ficheiros, descoberta combinada, ausência de colisões, leitura persistente de planos, modo passivo, `notify`, ativação/reset, ausência de continuação após erro/abort, revogação no shutdown, deteção de alteração e seletor inválido. Na validação do pacote unificado com o SDK Pi 1.3.0, os 11 passaram com **113 recursos de skills / 8 prompts / 2 extensões**. Houve validação anterior do addon no Pi 1.2.0 com a composição antiga. As suítes do pacote principal e do planeamento mantêm-se separadas. A extensão opcional também passou verificação estrita de tipos com TypeScript 5.9.3 contra as declarações do Pi 1.2.0.
 
 Não executámos a suíte Vitest upstream completa, os helpers de shell/PowerShell, recuperação de histórico, temporizadores periódicos ou chamadas a fornecedores reais. Os testes não certificam Windows/macOS, segurança independente ou uso irrestrito em produção. Nenhuma configuração global ou infraestrutura foi alterada.
 

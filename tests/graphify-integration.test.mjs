@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { assertUnifiedManifest } from './package-contract.mjs';
 import assert from 'node:assert/strict';
 import { readFile, readdir, access } from 'node:fs/promises';
 import { dirname, resolve, relative, extname } from 'node:path';
@@ -20,7 +21,7 @@ async function files(dir = integration) {
   return result;
 }
 
-test('optional package registers exactly one skill and no executable resources', async () => {
+test('Graphify component inventory selects exactly one skill and no executable resources', async () => {
   const pkg = await json('package.json');
   assert.equal(pkg.private, true);
   assert.equal(pkg.license, 'Apache-2.0');
@@ -35,12 +36,9 @@ test('optional package registers exactly one skill and no executable resources',
   assert.equal(paths.filter(p => /\.(py|ts|js|mjs|sh|ps1)$/.test(p)).length, 0);
 });
 
-test('base manifest remains scoped to core skills and its existing extension', async () => {
-  const pkg = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
-  assert.deepEqual(pkg.pi.skills, ['./skills/engineering-skills/**/SKILL.md']);
-  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts']);
-  assert.equal(pkg.pi.prompts.length, 3);
-  assert.equal(JSON.stringify(pkg.pi).includes('graphify'), false);
+test('main manifest includes Graphify and all approved resources without adding startup extensions', async () => {
+  const pkg = await assertUnifiedManifest();
+  assert.ok(pkg.pi.skills.includes('./integrations/graphify/skills/graphify/SKILL.md'));
 });
 
 test('skill has bounded scope, valid frontmatter and an explicit adaptation notice', async () => {
@@ -77,7 +75,7 @@ test('provenance and upstream licence notices are retained', async () => {
   assert.match(await read('NOTICE'), /Copyright 2026 Safi Shamsi and the Graphify contributors/);
   assert.match(await read('LICENSE-MIT'), /Copyright \(c\) 2026 Safi Shamsi/);
   const notices = await readFile(resolve(root, 'THIRD_PARTY_NOTICES.md'), 'utf8');
-  assert.match(notices, /Graphify — optional adapted instructions/);
+  assert.match(notices, /Graphify — adapted instructions/);
   for (const path of (await files()).filter(p => p.includes('/skills/') || p.includes('/workflows/'))) {
     if (!path.endsWith('.md')) continue;
     const text = await readFile(path, 'utf8');
@@ -86,11 +84,11 @@ test('provenance and upstream licence notices are retained', async () => {
   }
 });
 
-test('catalogue references the optional skill without changing the core count', async () => {
+test('catalogue includes Graphify in the unified specialist count', async () => {
   const catalogue = await readFile(resolve(root, 'skills/engineering-skills/SKILL.md'), 'utf8');
-  assert.match(catalogue, /Catalogue of 99 engineering skills/);
+  assert.match(catalogue, /Catalogue of 111 engineering skills/);
   assert.match(catalogue, /\]\(\.\.\/\.\.\/integrations\/graphify\/skills\/graphify\/SKILL\.md\)/);
-  assert.match(catalogue, /not loaded by the main manifest/);
+  assert.match(catalogue, /All specialists below are included by the main package manifest/);
 });
 
 test('references preserve local-only defaults and explicit, task-scoped memory', async () => {

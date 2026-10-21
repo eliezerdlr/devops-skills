@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "description": "Selected Addy Osmani engineering guidance and two same-session personas; no automation hooks.",
+  "description": "Internal addy-engineering resource inventory for unified devops-skills; retained for legacy registration compatibility. Install only the repository root.",
   "pi": {
     "skills": [
       "./skills/constraint-driven-development/SKILL.md",

@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { assertUnifiedManifest } from './package-contract.mjs';
 import assert from 'node:assert/strict';
 import { readFile, readdir, access, mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -33,7 +34,7 @@ function frontmatterName(text) {
   return match[1];
 }
 
-test('optional manifest selects one adapted skill and three prompts, never the upstream skill', async () => {
+test('security component inventory selects one adapted skill and three prompts, never the upstream skill', async () => {
   const pkg = await json('package.json');
   assert.equal(pkg.private, true);
   assert.equal(pkg.license, 'MIT');
@@ -49,16 +50,11 @@ test('optional manifest selects one adapted skill and three prompts, never the u
   for (const path of [...pkg.pi.skills, ...pkg.pi.prompts]) await access(resolve(integration, path));
 });
 
-test('base resources remain unchanged and optional skill/prompt names do not collide', async () => {
-  const base = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
-  assert.deepEqual(base.pi.skills, ['./skills/engineering-skills/**/SKILL.md']);
-  assert.deepEqual(base.pi.extensions, ['./extensions/ops-orchestrator/index.ts']);
-  assert.equal(base.pi.prompts.length, 3);
-  assert.equal(JSON.stringify(base.pi).includes('security-audit'), false);
-  const optional = await json('package.json');
+test('main package includes security skill/prompts with unique command names', async () => {
+  const base = await assertUnifiedManifest();
+  assert.ok(base.pi.skills.includes('./integrations/security-audit/skills/security-audit/SKILL.md'));
   const promptNames = [];
   for (const path of base.pi.prompts) promptNames.push(frontmatterName(await readFile(resolve(root, path), 'utf8')));
-  for (const path of optional.pi.prompts) promptNames.push(frontmatterName(await read(path)));
   assert.equal(new Set(promptNames).size, promptNames.length);
   assert.equal(frontmatterName(await read('skills/security-audit/SKILL.md')), 'security-audit');
   assert.equal(frontmatterName(await readFile(resolve(root, 'integrations/graphify/skills/graphify/SKILL.md'), 'utf8')), 'graphify');
@@ -133,12 +129,12 @@ test('role prompts disclose same-session execution and prohibit target-code exec
   assert.match(verifier, /Do not invent execution evidence/);
 });
 
-test('catalogue and notices describe optional MIT integration without changing base count', async () => {
+test('catalogue and notices include the MIT security component in the unified package', async () => {
   const catalogue = await readFile(resolve(root, 'skills/engineering-skills/SKILL.md'), 'utf8');
-  assert.match(catalogue, /Catalogue of 99 engineering skills/);
+  assert.match(catalogue, /Catalogue of 111 engineering skills/);
   assert.match(catalogue, /\]\(\.\.\/\.\.\/integrations\/security-audit\/skills\/security-audit\/SKILL\.md\)/);
   const notices = await readFile(resolve(root, 'THIRD_PARTY_NOTICES.md'), 'utf8');
-  assert.match(notices, /Cloudflare — optional Security Audit/);
+  assert.match(notices, /Cloudflare — Security Audit/);
   assert.match(notices, /Copyright \(c\) 2025-2026 Cloudflare, Inc\./);
 });
 

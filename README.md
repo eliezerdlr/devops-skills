@@ -4,7 +4,7 @@
 
 Pack de skills para engenharia, DevOps, cybersecurity e operações de IT.
 
-Inclui **99 skills/sub-skills**, três prompts de rede e uma extensão com **subagentes reais e workflows declarativos de análise**. As skills estão organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
+Um único pacote com **111 skills/sub-skills**, **8 prompts** de rede, segurança, testes e performance, e uma extensão com **subagentes reais e workflows declarativos de análise**. As skills estão organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
 
 ## 1. Pré-requisitos
 
@@ -30,7 +30,7 @@ Edita `~/.pi/agent/settings.json` e acrescenta o checkout como pacote local à l
 
 Substitui o caminho pelo local real do checkout. **Não substituas o ficheiro inteiro** se já contém configurações: preserva os restantes campos e caminhos.
 
-O [exemplo de configuração](examples/pi-settings.json) usa `~/devops-skills`; ajusta-o se clonaste para outra pasta. O manifesto do pacote seleciona explicitamente todos os SKILL.md, os três prompts de rede e a extensão de orquestração. Não registes apenas a pasta do índice em `skills`: o carregador Pi para de descer ao encontrar um SKILL.md numa pasta.
+O [exemplo de configuração](examples/pi-settings.json) usa `~/devops-skills`; ajusta-o se clonaste para outra pasta. O manifesto principal seleciona as 111 skills, o catálogo, os 8 prompts e a extensão de orquestração, incluindo todos os módulos aprovados sob integrations/. Não registes apenas a pasta do índice em `skills`: o carregador Pi para de descer ao encontrar um SKILL.md numa pasta.
 
 ### Opção B — Instalar o checkout como pacote Pi
 
@@ -39,7 +39,7 @@ pi install /caminho/absoluto/devops-skills
 pi list
 ```
 
-O manifesto `package.json` regista skills, três prompts e a extensão `ops-orchestrator`. Não inclui hooks, temas nem scripts de instalação. O Pi fornece as dependências da extensão; não é necessário executar `npm install` na raiz.
+O manifesto `package.json` regista todas as skills aprovadas, os 8 prompts e a extensão `ops-orchestrator`, numa única instalação. Não inclui hooks, temas nem scripts de instalação. O Pi fornece as dependências da extensão; não é necessário executar `npm install` na raiz.
 
 Depois da publicação, podes instalar diretamente a partir do GitHub:
 
@@ -68,12 +68,15 @@ Confirma os avisos de carregamento. Se faltar uma skill, verifica caminho, permi
 
 Pi anuncia os nomes/descrições das skills e carrega as instruções detalhadas conforme a tarefa. Não é necessário carregar todas as instruções de uma vez.
 
+**Já tinhas registado módulos separadamente?** Segue a [migração para o pacote único](docs/UNIFIED-PACKAGE.md). Não precisas de instalar Graphify, Security Audit, Addy Engineering ou Web Quality como pacotes Pi adicionais.
+
 ## 3. Ativar capacidades operacionais
 
-**As 99 skills ficam disponíveis com o registo acima.** Executar os seus workflows pode exigir preparação adicional:
+**As 111 skills ficam disponíveis com o único registo acima.** Executar os seus workflows pode exigir preparação adicional:
 
 | Capacidade | Preparação separada |
 |---|---|
+| Mapas Graphify | CLI externo `graphifyy==0.9.93` preparado manualmente; a skill já está incluída |
 | Scripts Python | Interpretador compatível; bibliotecas opcionais em ambiente isolado, conforme o script |
 | Terraform/cloud | CLI escolhida, autenticação, conta/projeto correto e permissões |
 | Kubernetes/containers | kubectl ou Docker/Compose, configuração e acesso ao ambiente pretendido |
@@ -105,7 +108,7 @@ As ferramentas `ops_agent` e `ops_workflow` executam os papéis ECC em instânci
 
 Cada execução exige confirmação real pela UI, identifica o modelo/fornecedor e tem limites de concorrência, tempo e saída. Sem UI, a execução é recusada. Usa `/ops-status` e `/ops-cancel <id>` para acompanhar/cancelar. Não há chamadas a modelos no arranque.
 
-Ver [instalação, utilização, desativação e limites](docs/ORCHESTRATION.md) e o [workflow sintético](workflows/network-review.json). **49 testes locais passaram**, incluindo o carregador/núcleo Pi real com transporte de modelo simulado; não é certificação de produção nem teste contra equipamentos reais.
+Ver [instalação, utilização, desativação e limites](docs/ORCHESTRATION.md) e o [workflow sintético](workflows/network-review.json). Os testes locais incluem o carregador/núcleo Pi real com transporte de modelo simulado; não é certificação de produção nem teste contra equipamentos reais.
 
 ### Planeamento persistente — Planning with Files
 
@@ -113,24 +116,24 @@ Integração **opcional**, com o pacote Pi upstream 3.24.0 preservado e licença
 
 Ver [ativação, fluxo combinado e riscos dos hooks](integrations/planning-with-files/README.md). Não é carregada por defeito: regista o pacote opcional explicitamente e começa em `notify`. **11 testes adicionais passaram** no Pi 1.2.0; não houve chamadas reais a modelos nem alteração de configurações globais.
 
-### Engenharia e qualidade web/SEO — seleções opcionais Addy Osmani
+### Engenharia e qualidade web/SEO — incluídas no pacote
 
-Dois pacotes MIT, fora do manifesto principal:
+Dois módulos MIT já registados pelo manifesto principal; não exigem instalação Pi separada:
 
 - [Addy Engineering](integrations/addy-engineering/README.md): quatro skills adaptadas de constraints, contexto, fontes oficiais e simplificação; duas personas como prompts, não sub-agents autónomos. ADRs e revisão adversarial ficam como referências complementares.
 - [Web Quality & SEO](integrations/web-quality/README.md): seis skills para auditoria web, performance, Core Web Vitals, acessibilidade, SEO técnico/on-page e boas práticas. Inclui referências de produto/dados estruturados/internacionalização úteis ao marketing.
 
-As 99 skills base não mudam. Não instala ferramentas, hooks, browsers/MCP ou analytics. Referências completas da seleção não significam enforcement, métricas medidas, certificação WCAG ou resultados de ranking. A integração web não é uma plataforma completa de marketing/anúncios; os limites e exemplos que exigem cautela estão nos guias.
+As dez skills e os dois prompts fazem parte dos 111 especialistas e 8 prompts do pacote. O carregamento não instala ferramentas, hooks, browsers/MCP ou analytics. Referências completas da seleção não significam enforcement, métricas medidas, certificação WCAG ou resultados de ranking. A integração web não é uma plataforma completa de marketing/anúncios; os limites e exemplos que exigem cautela estão nos guias.
 
-### Auditoria de segurança — integração opcional
+### Auditoria de segurança — incluída no pacote
 
-A [integração Security Audit](integrations/security-audit/README.md), adaptada do projeto Cloudflare sob MIT, acrescenta uma skill de revisão baseada em evidências, referências por domínio e três prompts opcionais: hunter, verifier e coverage critic. Inclui schema, validadores sem dependências externas e testes upstream preservados.
+A [integração Security Audit](integrations/security-audit/README.md), adaptada do projeto Cloudflare sob MIT, acrescenta uma skill de revisão baseada em evidências, referências por domínio e três prompts incluídos: hunter, verifier e coverage critic. Inclui schema, validadores sem dependências externas e testes upstream preservados.
 
-**Orientação focada é o padrão**; auditorias completas exigem pedido explícito, âmbito, perfil e orçamento. Os prompts correm na sessão atual, não criam sub-agents. Execução de código do alvo exige sandbox imposto pelo SO; a integração não fornece esse isolamento. Não é carregada pelo manifesto principal nem altera as 99 skills base.
+**Orientação focada é o padrão**; auditorias completas exigem pedido explícito, âmbito, perfil e orçamento. Os prompts correm na sessão atual, não criam sub-agents. Execução de código do alvo exige sandbox imposto pelo SO; a integração não fornece esse isolamento. A skill e os prompts são carregados pelo manifesto principal; não requerem registo separado.
 
-### Contexto de projeto — Graphify opcional
+### Contexto de projeto — skill Graphify incluída
 
-Incluímos uma [skill Graphify adaptada](integrations/graphify/README.md), com referências de consultas, memória explícita e atualização incremental, mais dois workflows de mapeamento/retoma. **Não é carregada por defeito** e não altera as 99 skills principais. Não inclui agents, sub-agents, runtime Python, guard, hooks nem captura automática de sessões.
+Incluímos uma [skill Graphify adaptada](integrations/graphify/README.md), com referências de consultas, memória explícita e atualização incremental, mais dois workflows de mapeamento/retoma. **A skill é carregada pelo manifesto principal**, sem registo Pi adicional. Não inclui agents, sub-agents, runtime Python, guard, hooks nem captura automática de sessões.
 
 A dependência externa é preparada manualmente; não há instalação automática nem extração semântica implícita. Para continuidade, reutiliza os handoffs existentes de planeamento/TC. Conteúdo adaptado sob Apache-2.0, com proveniência e avisos preservados. Os testes estruturais não equivalem a validação fim a fim nem comprovam poupança de tokens.
 
@@ -142,7 +145,7 @@ A dependência externa é preparada manualmente; não há instalação automáti
 
 ### UniFi — integração opcional em revisão
 
-O projeto original está em [integrations/unifi-skills](integrations/unifi-skills/README.md), com cinco skills e um helper Python. **Não é carregado pelo manifesto Pi deste pack** e não entra na contagem das 99 skills principais.
+O projeto original está em [integrations/unifi-skills](integrations/unifi-skills/README.md), com cinco skills e um helper Python. **Não é carregado pelo manifesto Pi deste pack** e não entra na contagem das 111 skills principais.
 
 **Não utilizar sem revisão em produção:** o helper original desativa a verificação TLS, permite escritas por defeito e pode expor dados sensíveis em respostas/dry-run. As correções e os testes nos equipamentos reais ainda não foram realizados. Publicar os ficheiros não significa aprovação operacional. Não executar exemplos contra a rede empresarial com credenciais administrativas.
 

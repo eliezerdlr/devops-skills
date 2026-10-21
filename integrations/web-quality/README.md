@@ -1,4 +1,4 @@
-# Web Quality & SEO — integração opcional
+# Web Quality & SEO — incluídas no DevOps Skills
 
 Seis skills adaptadas de [addyosmani/web-quality-skills](https://github.com/addyosmani/web-quality-skills), sob MIT. Para sites públicos, páginas de produtos Hi-Fi, campanhas/landing pages e interfaces web — sem confundir qualidade técnica com resultados comerciais.
 
@@ -20,7 +20,7 @@ Não é um pacote completo de marketing: não cobre gestão de anúncios, CRM/em
 ## Ativar
 
 ```bash
-pi install /caminho/absoluto/devops-skills/integrations/web-quality
+pi install /caminho/absoluto/devops-skills
 ```
 
 No Pi:
@@ -32,7 +32,7 @@ No Pi:
 /skill:core-web-vitals Analisar estes dados de LCP, INP e CLS, sem inventar valores em falta.
 ```
 
-O pacote é opcional e não altera o manifesto principal ou as 99 skills base. Evitar outra cópia com nomes iguais. Os nomes genéricos upstream foram adaptados para `web-performance`, `web-accessibility`, `web-seo` e `web-best-practices`.
+As seis skills são carregadas pelo manifesto principal, dentro dos **111 especialistas**. Regista apenas a raiz do repositório; evita outra cópia com nomes iguais. Para instalações antigas, segue a [migração](../../docs/UNIFIED-PACKAGE.md). Os nomes genéricos upstream foram adaptados para `web-performance`, `web-accessibility`, `web-seo` e `web-best-practices`.
 
 ## Ferramentas e privacidade
 
@@ -66,12 +66,8 @@ node --test tests/addy-integrations.test.mjs
 
 Os testes verificam empacotamento, referências, hashes e o analisador sobre HTML sintético quando ferramentas existem. Não executam auditorias de sites reais nem demonstram resultados de SEO/performance/acessibilidade.
 
-```bash
-pi remove /caminho/absoluto/devops-skills/integrations/web-quality
-```
-
-Recarregar o Pi; preservar relatórios autorizados segundo a retenção acordada. Licença e origem: [LICENSE](LICENSE), [UPSTREAM.json](UPSTREAM.json), [SHA256SUMS](SHA256SUMS). Não é integração oficial.
+Para desativar apenas recursos específicos, usa `pi config` no pacote principal e recarrega o Pi; preserva relatórios autorizados segundo a retenção acordada. Licença e origem: [LICENSE](LICENSE), [UPSTREAM.json](UPSTREAM.json), [SHA256SUMS](SHA256SUMS). Não é integração oficial.
 
 ## English summary
 
-Six optional MIT-licensed web-quality/technical-SEO entrypoints with complete selected source references and an optional static HTML smoke test. Measurement tools, human accessibility testing and search validation remain external. No automatic browser/MCP installs, live audits, analytics, publication or ranking guarantees. Not a full marketing/advertising platform.
+Six MIT-licensed web-quality/technical-SEO entrypoints included by the root package with complete selected source references and an optional static HTML smoke test. Measurement tools, human accessibility testing and search validation remain external. No automatic browser/MCP installs, live audits, analytics, publication or ranking guarantees. Not a full marketing/advertising platform.

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "description": "Optional source-first security audit skill and role prompts; no agent runtime or sandbox.",
+  "description": "Internal security-audit resource inventory for unified devops-skills; retained for legacy registration compatibility. Install only the repository root.",
   "pi": {
     "skills": [
       "./skills/security-audit/SKILL.md"

@@ -21,5 +21,6 @@
     "Removed auto-installation, implicit semantic extraction, graph-first enforcement and subagent requirements.",
     "Added task-scoped handoff using existing planning files; no automatic session capture.",
     "No executable wrapper: safeguards are instructions, not enforced sandbox controls."
-  ]
+  ],
+  "registration": "Included by the devops-skills root manifest. The nested package manifest is retained as a legacy component inventory; do not register it alongside the root."
 }

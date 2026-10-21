@@ -1,26 +1,50 @@
 {
   "name": "devops-skills",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
-  "engines": { "node": ">=22.14.0" },
+  "engines": {
+    "node": ">=22.14.0"
+  },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
     "@earendil-works/pi-agent-core": "*",
     "typebox": "*"
   },
   "scripts": {
-    "test": "node --test tests/ops-engine.test.mjs",
+    "test": "node --test tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
     "test:pi": "node --test tests/ops-pi.test.mjs",
-    "test:planning": "node --test tests/planning-pi.test.mjs"
+    "test:planning": "node --test tests/planning-pi.test.mjs",
+    "test:package": "node --test tests/unified-package.test.mjs"
   },
-  "description": "Curated DevOps skills, network subagents and bounded Pi analysis workflows.",
+  "description": "Unified engineering, DevOps, security, project context and web/SEO skills with bounded network analysis workflows.",
   "pi": {
-    "skills": ["./skills/engineering-skills/**/SKILL.md"],
-    "extensions": ["./extensions/ops-orchestrator/index.ts"],
+    "skills": [
+      "./skills/engineering-skills/**/SKILL.md",
+      "./integrations/graphify/skills/graphify/SKILL.md",
+      "./integrations/security-audit/skills/security-audit/SKILL.md",
+      "./integrations/addy-engineering/skills/constraint-driven-development/SKILL.md",
+      "./integrations/addy-engineering/skills/context-engineering/SKILL.md",
+      "./integrations/addy-engineering/skills/source-driven-development/SKILL.md",
+      "./integrations/addy-engineering/skills/code-simplification/SKILL.md",
+      "./integrations/web-quality/skills/web-quality-audit/SKILL.md",
+      "./integrations/web-quality/skills/web-performance/SKILL.md",
+      "./integrations/web-quality/skills/core-web-vitals/SKILL.md",
+      "./integrations/web-quality/skills/web-accessibility/SKILL.md",
+      "./integrations/web-quality/skills/web-seo/SKILL.md",
+      "./integrations/web-quality/skills/web-best-practices/SKILL.md"
+    ],
+    "extensions": [
+      "./extensions/ops-orchestrator/index.ts"
+    ],
     "prompts": [
       "./agents/network-architect.md",
       "./agents/network-troubleshooter.md",
-      "./agents/network-config-reviewer.md"
+      "./agents/network-config-reviewer.md",
+      "./integrations/security-audit/prompts/security-hunter.md",
+      "./integrations/security-audit/prompts/security-verifier.md",
+      "./integrations/security-audit/prompts/security-coverage-critic.md",
+      "./integrations/addy-engineering/prompts/test-engineer.md",
+      "./integrations/addy-engineering/prompts/web-performance-auditor.md"
     ],
     "themes": []
   }

@@ -23,5 +23,6 @@
     "Preserved the full upstream workflow, companion documents, schema, validators and tests unchanged in a separately indexed snapshot.",
     "Added read-only role prompts; same-session prompts do not constitute independent verification.",
     "No automatic workers, target execution, hooks, sandbox installation or changes to the core manifest."
-  ]
+  ],
+  "registration": "Included by the devops-skills root manifest. The nested package manifest is retained as a legacy component inventory; do not register it alongside the root."
 }

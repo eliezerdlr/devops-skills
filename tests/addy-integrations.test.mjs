@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { assertUnifiedManifest } from './package-contract.mjs';
 import assert from 'node:assert/strict';
 import { readFile, readdir, access, mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -36,7 +37,7 @@ async function files(dir) {
 
 for (const config of configs) {
   const base = resolve(integrations, config.name);
-  test(`${config.name}: explicit optional manifest, no extensions, dependencies or install scripts`, async () => {
+  test(`${config.name}: component inventory, no extensions, dependencies or install scripts`, async () => {
     const pkg = await json(resolve(base, 'package.json'));
     assert.equal(pkg.private, true);
     assert.equal(pkg.license, 'MIT');
@@ -99,11 +100,7 @@ for (const config of configs) {
 }
 
 test('all 10 new skill names and two prompts avoid existing registered resources', async () => {
-  const base = await json(resolve(root, 'package.json'));
-  assert.deepEqual(base.pi.skills, ['./skills/engineering-skills/**/SKILL.md']);
-  assert.deepEqual(base.pi.extensions, ['./extensions/ops-orchestrator/index.ts']);
-  assert.equal(base.pi.prompts.length, 3);
-  assert.doesNotMatch(JSON.stringify(base.pi), /addy-engineering|web-quality/);
+  const base = await assertUnifiedManifest();
   const names = [];
   for (const path of (await files(resolve(root, 'skills/engineering-skills'))).filter(p => p.endsWith('/SKILL.md'))) {
     names.push(resourceName(await read(path)));
@@ -116,10 +113,6 @@ test('all 10 new skill names and two prompts avoid existing registered resources
   assert.equal(new Set(names).size, names.length, 'duplicate skill name');
   const prompts = [];
   for (const path of base.pi.prompts) prompts.push(resourceName(await read(resolve(root, path))));
-  for (const name of ['security-audit', 'addy-engineering']) {
-    const dir = resolve(integrations, name), pkg = await json(resolve(dir, 'package.json'));
-    for (const path of pkg.pi.prompts) prompts.push(resourceName(await read(resolve(dir, path))));
-  }
   assert.equal(new Set(prompts).size, prompts.length, 'duplicate prompt name');
 });
 
@@ -155,9 +148,9 @@ test('web adaptation qualifies SEO, field/lab, accessibility and browser consent
   assert.match(seo, /not paid-media management or complete marketing strategy/);
 });
 
-test('catalogue and notices expose optional selection and preserve core count', async () => {
+test('catalogue and notices expose the integrated selection and unified count', async () => {
   const catalogue = await read(resolve(root, 'skills/engineering-skills/SKILL.md'));
-  assert.match(catalogue, /Catalogue of 99 engineering skills/);
+  assert.match(catalogue, /Catalogue of 111 engineering skills/);
   for (const config of configs) {
     const base = resolve(integrations, config.name), pkg = await json(resolve(base, 'package.json'));
     for (const path of pkg.pi.skills) assert.ok(catalogue.includes(`../../integrations/${config.name}/${path.slice(2)}`), path);

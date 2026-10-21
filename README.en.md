@@ -4,7 +4,7 @@
 
 A collection of skills for engineering, DevOps, cybersecurity, and IT operations.
 
-Includes **99 skills/sub-skills**, three network prompts and an extension with **real subagents and declarative analysis workflows**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
+One package includes **111 skills/sub-skills**, **8 prompts** for network/security/testing/performance, and an extension with **real subagents and declarative analysis workflows**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
 
 ## 1. Prerequisites
 
@@ -30,7 +30,7 @@ Edit `~/.pi/agent/settings.json` and add the checkout to the existing `packages`
 
 Replace the path with your actual checkout location. **Do not replace the entire settings file** if it already contains configuration: preserve other fields and paths.
 
-The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The package manifest explicitly selects all SKILL.md files, the three network prompts and the orchestration extension. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
+The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 111 specialists, the catalogue, eight prompts and the orchestration extension, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
 
 ### Option B — Install the checkout as a Pi package
 
@@ -39,7 +39,7 @@ pi install /absolute/path/devops-skills
 pi list
 ```
 
-The `package.json` manifest registers skills, three network role prompts and the `ops-orchestrator` extension. It includes no hooks, themes or installation scripts. Pi supplies the extension's peer dependencies; no root `npm install` is needed.
+The root `package.json` registers all approved skills, eight prompts and the `ops-orchestrator` extension in one installation. It includes no hooks, themes or installation scripts. Pi supplies the extension's peer dependencies; no root `npm install` is needed.
 
 You can also install directly from GitHub:
 
@@ -68,12 +68,15 @@ Check loading warnings. If a skill is missing, check paths, permissions, duplica
 
 Pi advertises skill names/descriptions and loads detailed instructions when needed. You do not need to load every skill's full instructions at once.
 
+Already registered individual modules? Follow the [single-package migration guide](docs/UNIFIED-PACKAGE.md). Do not install Graphify, Security Audit, Addy Engineering or Web Quality as additional Pi packages.
+
 ## 3. Enable operational capabilities
 
-**Registering the pack above makes the 99 skills available.** Running their workflows may require additional setup:
+**Registering the single root package makes all 111 skills available.** Running their workflows may require additional setup:
 
 | Capability | Separate setup |
 |---|---|
+| Graphify maps | Manually prepared external `graphifyy==0.9.93` CLI; the skill is already included |
 | Python scripts | Compatible interpreter; optional libraries in an isolated environment, depending on the script |
 | Terraform/cloud | Selected CLI, authentication, correct account/project, and permissions |
 | Kubernetes/containers | kubectl or Docker/Compose, configuration, and access to the intended environment |
@@ -105,7 +108,7 @@ The `ops_agent` and `ops_workflow` tools run ECC roles in independent Pi core in
 
 Every run requires a real UI confirmation, identifies the model/provider and has concurrency, time and output limits. Without UI, execution is refused. Use `/ops-status` and `/ops-cancel <id>` to monitor/cancel. No model calls occur at startup.
 
-See [activation, usage, disabling and limits](docs/ORCHESTRATION.md) and the [synthetic workflow](workflows/network-review.json). **49 local tests passed**, including the actual Pi loader/core with simulated model transport; this is not production certification or real-device validation.
+See [activation, usage, disabling and limits](docs/ORCHESTRATION.md) and the [synthetic workflow](workflows/network-review.json). Local tests include the actual Pi loader/core with simulated model transport; this is not production certification or real-device validation.
 
 ### Persistent planning — Planning with Files
 
@@ -113,24 +116,24 @@ An **optional** integration preserves the upstream Pi package 3.24.0 and its MIT
 
 See [activation, combined workflow and hook risks](integrations/planning-with-files/README.md). It is not loaded by default: register the optional package explicitly and start in `notify` mode. **11 additional tests passed** on Pi 1.2.0; no live model calls or global configuration changes were made.
 
-### Engineering and web quality/SEO — optional Addy Osmani selections
+### Engineering and web quality/SEO — included in the package
 
-Two MIT packages outside the main manifest:
+Two MIT modules already registered by the root manifest; no separate Pi installation:
 
 - [Addy Engineering](integrations/addy-engineering/README.md): four adapted constraint/context/official-source/simplification skills and two same-session personas, not autonomous subagents. ADR/adversarial-review material is supplementary.
 - [Web Quality & SEO](integrations/web-quality/README.md): six skills for web audits, performance, Core Web Vitals, accessibility, technical/on-page SEO and browser best practices, with product/structured-data/internationalisation references.
 
-The 99 core skills are unchanged. No tools, hooks, browsers/MCP or analytics are installed. Complete selected references do not establish enforcement, measured metrics, WCAG conformance or ranking gains. Web quality is not a complete marketing/advertising platform; the guides qualify tool dependencies and non-universal examples.
+Their ten skills and two prompts are part of the package's 111 specialists and eight prompts. Loading them installs no tools, hooks, browsers/MCP or analytics. Complete selected references do not establish enforcement, measured metrics, WCAG conformance or ranking gains. Web quality is not a complete marketing/advertising platform; the guides qualify tool dependencies and non-universal examples.
 
-### Security auditing — optional integration
+### Security auditing — included in the package
 
-The [Security Audit integration](integrations/security-audit/README.md), adapted from Cloudflare under MIT, adds an evidence-led review skill, progressive domain references and three optional prompts: hunter, verifier and coverage critic. The schema, dependency-free validators and upstream tests are preserved.
+The [Security Audit integration](integrations/security-audit/README.md), adapted from Cloudflare under MIT, adds an evidence-led review skill, progressive domain references and three included prompts: hunter, verifier and coverage critic. The schema, dependency-free validators and upstream tests are preserved.
 
-**Focused guidance is the default**; full audits require explicit intent, scope, profile and budget. Prompts run in the current session and do not create subagents. Target-code execution requires an OS-enforced sandbox, which this integration does not provide. It is outside the main manifest and does not change the 99 core skills.
+**Focused guidance is the default**; full audits require explicit intent, scope, profile and budget. Prompts run in the current session and do not create subagents. Target-code execution requires an OS-enforced sandbox, which this integration does not provide. The root manifest includes the skill and prompts; no separate registration is needed.
 
-### Project context — optional Graphify
+### Project context — Graphify skill included
 
-An [adapted Graphify skill](integrations/graphify/README.md) provides bounded-query, explicit-memory and incremental-update references, plus mapping/resume workflows. **It is not loaded by default** and does not change the 99 core skills. No agents, subagents, Python runtime, guard, hooks or automatic session collection are bundled.
+An [adapted Graphify skill](integrations/graphify/README.md) provides bounded-query, explicit-memory and incremental-update references, plus mapping/resume workflows. **The root manifest loads this skill**, without additional Pi registration. No agents, subagents, Python runtime, guard, hooks or automatic session collection are bundled.
 
 Prepare the external dependency manually; no automatic installation or implicit semantic extraction is enabled. Reuse existing planning/TC handoffs for task continuity. Adapted content retains Apache-2.0, provenance and notices. Structural tests do not establish end-to-end functionality or token savings.
 
@@ -142,7 +145,7 @@ Prepare the external dependency manually; no automatic installation or implicit 
 
 ### UniFi — optional integration under review
 
-The original project is available in [integrations/unifi-skills](integrations/unifi-skills/README.md), including five skills and a Python helper. **It is not loaded by this pack's Pi manifest** and is not part of the 99 main skills.
+The original project is available in [integrations/unifi-skills](integrations/unifi-skills/README.md), including five skills and a Python helper. **It is not loaded by this pack's Pi manifest** and is not part of the 111 main skills.
 
 **Do not use unchanged in production:** the original helper disables TLS verification, permits writes by default, and may expose sensitive data in responses/dry-run output. Corrections and real-device tests have not been completed. Publication is not operational approval. Do not run examples against a company network with administrative credentials.
 
