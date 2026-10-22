@@ -110,3 +110,11 @@ New independent local contributions are distributed under the MIT terms in the r
 ## External tools
 
 Snyk Agent Scan source and Sage source are not distributed in this repository. Links and usage guidance do not relicense those projects or grant API access.
+
+## OmniRoute integration (external runtime)
+
+Integration references OmniRoute 3.8.53, MIT, commit bdcd6c0088f7a68bb0d18b258fcdc1d6cd44c9ce, https://github.com/cheaper-inference/OmniRoute. The MIT text is preserved in integrations/omniroute/LICENSE; provenance in UPSTREAM.json. Gateway code, accounts and credentials are not vendored. The Pi resilience transport is locally authored; source review/runtime tests do not verify the external service.
+
+## Archify integration (external runtime)
+
+Adapted from Archify 3.2.0, commit 25cf37080fc8b1dbe758a4efc3935b55f3327083. Preserve Copyright (c) 2026 tt-a1i and Copyright (c) 2025 Cocoon and their MIT notices in integrations/archify/LICENSE and NOTICE, plus its THIRD_PARTY_NOTICES.md. Runtime assets/fonts/logos are not copied into this package. MIT does not supersede third-party font/icon/logo licences or trademarks; the default business/marketing profile refuses third-party branding and uses generic symbols. See UPSTREAM.json and runtime-lock.json for provenance/pinning.

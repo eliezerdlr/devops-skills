@@ -1,11 +1,11 @@
 ---
 name: engineering-skills
-description: "Catalogue of 111 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
+description: "Catalogue of 113 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
 ---
 
 # Engineering Skills — Catalogue
 
-This catalogue lists **111 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
+This catalogue lists **113 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
 
 Copyright and licence notices are preserved in the repository's `LICENSE`, `THIRD_PARTY_NOTICES.md`, and nested licence files. Inclusion is not a security certification.
 
@@ -228,3 +228,10 @@ For these areas, use vendor documentation and approved local runbooks. Add speci
 3. Copy approved specialist directories with their scripts, references and assets; do not execute installation hooks automatically.
 4. Rebuild the inventory from local `SKILL.md` files, excluding this index. Verify every listed path exists and every installed specialist is listed.
 5. Update this catalogue and review coverage gaps after changes. Updates are not automatic.
+
+## Visual communication and model availability
+
+| Skill | Use | Path |
+|---|---|---|
+| archify | On-demand native interactive diagrams with pinned external runtime; generic symbols by default, no automatic browser/network/update | [SKILL.md](../../integrations/archify/skills/archify/SKILL.md) |
+| model-resilience | Explicit bounded fallback between existing Pi API/OAuth providers and an approved OmniRoute gateway; no automatic install/start/login changes | [SKILL.md](../../integrations/omniroute/skills/model-resilience/SKILL.md) |

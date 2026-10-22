@@ -31,7 +31,7 @@ If not already registered:
 pi install /absolute/path/to/devops-skills
 ```
 
-Restart Pi or run `/reload`. The manifest now loads `extensions/ops-orchestrator/index.ts` in addition to 111 specialist skills, the catalogue and eight same-session role prompts (three network, three security, two testing/performance). It registers tools but starts no model calls, background processes or infrastructure connections at startup.
+Restart Pi or run `/reload`. The manifest now loads `extensions/ops-orchestrator/index.ts` in addition to 113 specialist skills, the catalogue and eight same-session role prompts (three network, three security, two testing/performance). It registers tools but starts no model calls, background processes or infrastructure connections at startup.
 
 If you previously registered only skill directories manually, use a single local `packages` entry instead (see examples/pi-settings.json) so extensions and prompts are discovered too. Resolve duplicate older copies under ~/.agents/skills deliberately.
 
@@ -126,3 +126,11 @@ The same integration suite and type check also passed using a fresh official Pi 
 The extension also passed strict TypeScript checking with TypeScript 5.9.3 against the installed Pi 1.2.0 declarations. Its shared JavaScript engine is covered by runtime tests; TypeScript checking does not claim full static proof of that module.
 
 These results validate the scoped implementation, **not universal production readiness or independent security certification**. Live provider authentication/error modes, RPC approval UI, Windows/macOS runtime behaviour and real network operations have not been certified here. Before granting operational use, confirm your provider/data policy and perform an approved real-model run with synthetic evidence. No production credentials are required for that first run.
+
+## Approved fallback recipients (0.5.0)
+
+When the selected model is the configured DevOps router, the real approval dialog lists **all** recipient provider/model/origin/billing routes, policy hash and logical-attempt limit. The approval fingerprint binds the plan, pinned selection and disclosed immutable policy. Changing the policy file/ID prevents a new worker approval until reload. Unknown virtual routers are refused for workers.
+
+One worker registry request may perform up to the disclosed routing maxAttempts physical dispatches (each with SDK maxRetries=0 where honored); provider/gateway-internal behavior and actual billable requests can differ. Hard provider billing caps remain external. Evidence must be approved for every recipient, not just the initial model. No failed tool execution is replayed. Router metadata is distinct from the worker's in-memory status registry. [Routing contract](../integrations/omniroute/references/policy.md).
+
+The initial routing model is text-only/thinking off. Direct workers exceeding its conservative input byte guard fail closed; they do not gain automatic compaction or permission to discard evidence.

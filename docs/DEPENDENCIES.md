@@ -4,7 +4,7 @@
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares all 111 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator extension. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares all 113 specialist skills plus their catalogue, eight same-session role prompts and locally authored ops-orchestrator/model-resilience extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core, pi-ai and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
 See [ORCHESTRATION.md](ORCHESTRATION.md) for the executable integration, approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 
@@ -24,7 +24,7 @@ Clone to a chosen directory, then merge a `packages` entry into the existing `~/
 }
 ```
 
-Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 12 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
+Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 14 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
 
 ### Register the checkout as a local Pi package
 
@@ -171,3 +171,11 @@ Completed without running bundled scripts:
 - Three npm manifests classified: two optional MCP integrations and one fixture, not root pack dependencies.
 
 Not completed: dependency installation/resolution, build/integration tests, live CVE/licence databases, exhaustive generated-code dependency resolution, clean-machine Pi loading and subagent execution. Do not publish claims that the whole pack works without setup or has passed security analysis.
+
+## Model resilience and Archify (0.5.0)
+
+The unified root adds two skills and the locally authored model-resilience extension. Routing requires **Pi 1.3.0** and the host's **pi-ai** peer; no root dependency install is needed. Without DEVOPS_MODEL_POLICY it registers only an informational command. A valid operator policy still requires explicit virtual-model selection. Native registry authentication retains OAuth in Pi; no token export to gateways. See [setup, limits and rollback](../integrations/omniroute/README.md).
+
+OmniRoute **3.8.53** is optional external infrastructure, not embedded code. No service/account is provisioned by this pack. Its analyzed Pi config writer is incompatible; merge the documented provider fragment manually instead. Server-side recipient restrictions, inference auth, retry/billing/retention controls need separate verification.
+
+Archify **3.2.0** is an explicit external trusted runtime selected through DEVOPS_ARCHIFY_DIR. The adapter verifies 203 file hashes, uses Node built-ins, and supports ten native diagram types. It does not copy assets/fonts, install dependencies, run updates or open a browser. No explainer/JS candidate execution or full browser/perceptual validation is claimed. See [operations](../integrations/archify/README.md).

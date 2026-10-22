@@ -1,0 +1,27 @@
+{
+  "providers": {
+    "omniroute": {
+      "baseUrl": "http://127.0.0.1:20128/v1",
+      "api": "openai-completions",
+      "apiKey": "$OMNIROUTE_API_KEY",
+      "models": [
+        {
+          "id": "REPLACE_WITH_APPROVED_EXPLICIT_GATEWAY_MODEL_ID",
+          "name": "Approved OmniRoute model",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "contextWindow": 32000,
+          "maxTokens": 4096,
+          "cost": {
+            "input": 3,
+            "output": 15,
+            "cacheRead": 3,
+            "cacheWrite": 3
+          }
+        }
+      ]
+    }
+  }
+}

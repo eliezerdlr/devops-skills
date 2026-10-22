@@ -4,7 +4,7 @@
 
 Pack de skills para engenharia, DevOps, cybersecurity e operações de IT.
 
-Um único pacote com **111 skills/sub-skills**, **8 prompts** de rede, segurança, testes e performance, e uma extensão com **subagentes reais e workflows declarativos de análise**. As skills estão organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
+Um único pacote com **113 skills/sub-skills**, **8 prompts** de rede, segurança, testes e performance, e duas extensões, incluindo **subagentes reais e workflows declarativos de análise**. As skills estão organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
 
 ## 1. Pré-requisitos
 
@@ -12,7 +12,7 @@ Um único pacote com **111 skills/sub-skills**, **8 prompts** de rede, seguranç
 - Git, para obter e atualizar o repositório.
 - Ferramentas específicas apenas para as tarefas que fores executar; consultar [dependências e compatibilidade](docs/DEPENDENCIES.md).
 
-As skills são instruções, não serviços. O pacote também carrega uma extensão executável de orquestração; revê o [âmbito, aprovações e limites](docs/ORCHESTRATION.md). Não instala Terraform, kubectl, Python, browsers ou credenciais.
+As skills são instruções, não serviços. O pacote carrega as extensões de orquestração e routing opt-in; revê o [âmbito, aprovações e limites](docs/ORCHESTRATION.md). Não instala Terraform, kubectl, Python, browsers ou credenciais.
 
 ## 2. Ativar as skills no Pi
 
@@ -30,7 +30,7 @@ Edita `~/.pi/agent/settings.json` e acrescenta o checkout como pacote local à l
 
 Substitui o caminho pelo local real do checkout. **Não substituas o ficheiro inteiro** se já contém configurações: preserva os restantes campos e caminhos.
 
-O [exemplo de configuração](examples/pi-settings.json) usa `~/devops-skills`; ajusta-o se clonaste para outra pasta. O manifesto principal seleciona as 111 skills, o catálogo, os 8 prompts e a extensão de orquestração, incluindo todos os módulos aprovados sob integrations/. Não registes apenas a pasta do índice em `skills`: o carregador Pi para de descer ao encontrar um SKILL.md numa pasta.
+O [exemplo de configuração](examples/pi-settings.json) usa `~/devops-skills`; ajusta-o se clonaste para outra pasta. O manifesto principal seleciona as 113 skills, o catálogo, os 8 prompts e duas extensões, incluindo todos os módulos aprovados sob integrations/. Não registes apenas a pasta do índice em `skills`: o carregador Pi para de descer ao encontrar um SKILL.md numa pasta.
 
 ### Opção B — Instalar o checkout como pacote Pi
 
@@ -39,7 +39,7 @@ pi install /caminho/absoluto/devops-skills
 pi list
 ```
 
-O manifesto `package.json` regista todas as skills aprovadas, os 8 prompts e a extensão `ops-orchestrator`, numa única instalação. Não inclui hooks, temas nem scripts de instalação. O Pi fornece as dependências da extensão; não é necessário executar `npm install` na raiz.
+O manifesto `package.json` regista todas as skills aprovadas, os 8 prompts e as extensões `ops-orchestrator` e `model-resilience`, numa única instalação. Não inclui hooks, temas nem scripts de instalação. O Pi fornece as dependências da extensão; não é necessário executar `npm install` na raiz.
 
 Depois da publicação, podes instalar diretamente a partir do GitHub:
 
@@ -72,7 +72,7 @@ Pi anuncia os nomes/descrições das skills e carrega as instruções detalhadas
 
 ## 3. Ativar capacidades operacionais
 
-**As 111 skills ficam disponíveis com o único registo acima.** Executar os seus workflows pode exigir preparação adicional:
+**As 113 skills ficam disponíveis com o único registo acima.** Executar os seus workflows pode exigir preparação adicional:
 
 | Capacidade | Preparação separada |
 |---|---|
@@ -123,7 +123,7 @@ Dois módulos MIT já registados pelo manifesto principal; não exigem instalaç
 - [Addy Engineering](integrations/addy-engineering/README.md): quatro skills adaptadas de constraints, contexto, fontes oficiais e simplificação; duas personas como prompts, não sub-agents autónomos. ADRs e revisão adversarial ficam como referências complementares.
 - [Web Quality & SEO](integrations/web-quality/README.md): seis skills para auditoria web, performance, Core Web Vitals, acessibilidade, SEO técnico/on-page e boas práticas. Inclui referências de produto/dados estruturados/internacionalização úteis ao marketing.
 
-As dez skills e os dois prompts fazem parte dos 111 especialistas e 8 prompts do pacote. O carregamento não instala ferramentas, hooks, browsers/MCP ou analytics. Referências completas da seleção não significam enforcement, métricas medidas, certificação WCAG ou resultados de ranking. A integração web não é uma plataforma completa de marketing/anúncios; os limites e exemplos que exigem cautela estão nos guias.
+As dez skills e os dois prompts fazem parte dos 113 especialistas e 8 prompts do pacote. O carregamento não instala ferramentas, hooks, browsers/MCP ou analytics. Referências completas da seleção não significam enforcement, métricas medidas, certificação WCAG ou resultados de ranking. A integração web não é uma plataforma completa de marketing/anúncios; os limites e exemplos que exigem cautela estão nos guias.
 
 ### Auditoria de segurança — incluída no pacote
 
@@ -145,7 +145,7 @@ A dependência externa é preparada manualmente; não há instalação automáti
 
 ### UniFi — integração opcional em revisão
 
-O projeto original está em [integrations/unifi-skills](integrations/unifi-skills/README.md), com cinco skills e um helper Python. **Não é carregado pelo manifesto Pi deste pack** e não entra na contagem das 111 skills principais.
+O projeto original está em [integrations/unifi-skills](integrations/unifi-skills/README.md), com cinco skills e um helper Python. **Não é carregado pelo manifesto Pi deste pack** e não entra na contagem das 113 skills principais.
 
 **Não utilizar sem revisão em produção:** o helper original desativa a verificação TLS, permite escritas por defeito e pode expor dados sensíveis em respostas/dry-run. As correções e os testes nos equipamentos reais ainda não foram realizados. Publicar os ficheiros não significa aprovação operacional. Não executar exemplos contra a rede empresarial com credenciais administrativas.
 
@@ -176,3 +176,10 @@ Antes de executar scripts ou ações: revê o conteúdo, confirma ferramentas e 
 O conteúdo original é redistribuído principalmente sob MIT; a integração Graphify adaptada mantém Apache-2.0 e avisos próprios. Os avisos estão preservados em [LICENSE](LICENSE), nas licenças das subpastas e em [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Este é um pack curado/adaptado, não uma declaração de autoria exclusiva nem de associação oficial aos autores, à Snyk ou à Gen Digital.
 
 As novas contribuições locais independentes são também disponibilizadas sob MIT, por decisão do mantenedor; as adaptações Graphify conservam a licença indicada na integração. Os copyrights dos componentes originais permanecem preservados.
+
+## Disponibilidade de modelos e comunicação visual
+
+- **[Model resilience / OmniRoute](integrations/omniroute/README.md):** fallback explícito entre providers API e subscrições `/login` existentes. Pi **1.3.0**, política privada e seleção do modelo virtual são necessários; sem política, a extensão permanece inativa. Nenhum token OAuth é exportado. Gateway externo, loopback + chave e destinatários/custos aprovados.
+- **[Archify](integrations/archify/README.md):** diagramas HTML interativos sob pedido, com adaptador plan/execute e runtime externo **3.2.0** pinado. Símbolos genéricos por defeito; sem logos empresariais/marketing sem direitos confirmados. Sem abrir browser ou executar JavaScript fornecido como candidato.
+
+Ambas as skills já estão incluídas na única instalação raiz. Os testes de integração usam mocks; ativação de contas/gateway, pedidos pagos e execução real Archify são passos separados, mediante aprovação. O fallback inicial é text-only, thinking off, e não garante tokens infinitos nem um teto financeiro real.

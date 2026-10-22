@@ -1,0 +1,20 @@
+Archify integration — adapted for DevOps Skills
+
+Derived authoring guidance: Archify commit 25cf37080fc8b1dbe758a4efc3935b55f3327083,
+runtime archify/ 3.2.0, MIT, copyright 2026 tt-a1i (Archify) and 2025 Cocoon AI.
+See LICENSE and UPSTREAM.json. Adapter and local mock tests are integration code.
+
+THIRD_PARTY_NOTICES.md is preserved verbatim from the runtime for awareness;
+its descriptions of bundled assets refer to the EXTERNAL Archify runtime,
+not to this integration. No logos, vector data, font files, upstream renderers,
+Pele code or templates are copied here. runtime-lock.json contains hashes only.
+
+External runtime artifacts can embed JetBrains Mono (SIL OFL 1.1); retain the
+license carried in the rendered artifact. The external runtime also contains
+Simple Icons metadata, individual trademark/license restrictions, and Pele
+(MIT) for explainer rendering, which this adapter does not expose.
+Vue (CC-BY-NC-SA-4.0), Jenkins (CC-BY-SA-3.0), Rust (CC-BY-SA-4.0) and other
+marks must not be assumed cleared by Archify's MIT license or Simple Icons CC0.
+This integration prohibits third-party logos by default, including enterprise
+and marketing materials; use generic semantic icons. No brand exception switch
+is provided. A separately reviewed licensing workflow would be needed.

@@ -18,7 +18,7 @@ pi list
 
 Se já estiver registada, atualizar e recarregar é suficiente. Não registar módulos internos adicionalmente. Ver [pacote único e migração de configurações antigas](UNIFIED-PACKAGE.md); preservar configurações não relacionadas e filtros intencionais.
 
-A raiz expõe **111 especialistas + 1 catálogo = 112 recursos de skills**, **8 prompts** e **1 extensão**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
+A raiz expõe **113 especialistas + 1 catálogo = 114 recursos de skills**, **8 prompts** e **2 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
 
 ## 2. Recarregar e conferir
 
@@ -71,17 +71,17 @@ PI_SDK_ROOT="$(npm root -g)/@earendil-works/pi-coding-agent" npm run test:pi
 
 Confirmar antes que o caminho existe. Numa instalação pi-web-ui, o SDK pode estar nas dependências dessa aplicação, não diretamente em npm root.
 
-Os testes verificam descoberta de **112 skills / 8 prompts / 1 extensão** a partir de apenas uma entrada raiz e a compatibilidade temporária com os quatro registos legados. Também verificam quatro ferramentas de orquestração, duas commands, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
+Os testes verificam descoberta de **114 skills / 8 prompts / 2 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os inventários internos. Também verificam quatro ferramentas de orquestração, duas commands OPS e uma command de routing, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
 
 ## 5. Planeamento persistente: teste do addon de runtime
 
-O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 111 skills.
+O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 113 skills.
 
 ```bash
 PI_SDK_ROOT=/caminho/real/@earendil-works/pi-coding-agent npm run test:planning
 ```
 
-A descoberta combinada deve ser **113 skills / 8 prompts / 2 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
+A descoberta combinada deve ser **115 skills / 8 prompts / 3 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
 
 ## 6. Smoke tests manuais sem ações externas
 
@@ -109,3 +109,15 @@ A validação do pacote 0.4.0 no SDK instalado **Pi 1.3.0** passou com:
 A descoberta foi 112/8/1 para a raiz e 113/8/2 com planeamento, sem diagnostics de skills/prompts. A coexistência com registos legados não duplicou recursos. O runtime de orquestração tinha validação anterior em Pi 1.2.0; não confundir isso com teste da nova descoberta nessa versão. As verificações anteriores de tipos mantêm o seu âmbito/versão documentado.
 
 Isto não certifica todos os sistemas operativos, ferramentas externas, qualidade dos modelos, contas cloud, segurança independente, métricas web, SEO, WCAG ou equipamentos reais. Registar versões, condições e resultados das verificações operacionais efetivamente realizadas. SSH, redes, Kubernetes, cloud e alterações de produção exigem âmbito, versões, permissões e aprovação específicos.
+
+## Validação 0.5.0 — routing e Archify
+
+No SDK instalado **Pi 1.3.0**, a cópia isolada passou **180 testes offline + 28 SDK + 11 planning = 219 testes**, sem pedidos reais a fornecedores/gateways.
+
+- Descoberta raiz: **114 skills / 8 prompts / 2 extensões**; com addon: **115 / 8 / 3**. Os snapshots/licenças e a ausência de colisões continuam cobertos.
+- Model resilience: quota/429/5xx antes do commit, ausência de fallback em auth/context/timeout/cancelamento, metered opt-in, marcador nativo de subscrição, origin catálogo + efetivo, providers sem payload hook recusados, input/output/deadlines e ausência de leaks de overrides.
+- SDK real com transports sintéticos: seleção virtual persistente, metadata/usage físico, hooks uma vez por tentativa, worker approval hash/recipients, auth.baseUrl override sem início de envio, length com compactação ativa sem replay, partial toolcall sem execução da ferramenta.
+- Archify: **23 mocks**, hashes/proveniência, subprocesso sem shell, paths/symlinks, destinos novos, timeout/buffer, update checks desativados e receipts/artifactos vinculados. Nenhum runtime real Archify ou browser executado; mocks não validam renderização visual nem isolamento OS/rede.
+- A revisão independente identificou três findings (length replay, effective origin, OAuth != subscrição); foram corrigidos e as regressões passaram. A revisão final não identificou blocker concreto no escopo.
+
+Comandos continuam npm test, npm run test:pi e npm run test:planning, com PI_SDK_ROOT explícito para os dois últimos. As referências anteriores a type checking/Pi 1.2.0 são históricas; esta alteração não reinstalou TypeScript nem alega nova prova estática completa.
