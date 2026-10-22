@@ -1,5 +1,11 @@
 # Dependencies and host integration
 
+**Installation entrypoint:** [manual installation and lifecycle runbooks](INSTALLATION.md), with [structured inventory](external-installations.json). This page describes requirements; the runbooks describe commands, directories, configuration, verification, supervision, upgrades and removal. Workflow-only stacks without approved versions remain explicitly blocked rather than silently installed.
+
+## Documentation validation prerequisites
+
+The default `npm test` now also checks external-installation documentation. Those seven tests use **Bash** for `bash -n` and **Python 3** for AST parsing plus wrapper/plist generation in a synthetic temporary HOME, in addition to Node. No installer, generated credential script, wrapper execution, launchctl or external runtime is executed. These are contributor/test prerequisites, not requirements to read skills or extra npm runtime dependencies. Windows contributors need an approved Bash/Python environment or a separate platform-specific validation plan; no automatic tool installation or silent test skip is provided.
+
 ## What loading this pack requires
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.

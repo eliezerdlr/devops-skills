@@ -6,6 +6,10 @@ Parte do pacote único; não instalar este módulo separadamente:
 pi install /caminho/absoluto/devops-skills
 ```
 
+## Instalar o servidor — procedimento separado
+
+**[Passo a passo macOS: instalação, segredos, launchd, verificação e rollback](../../docs/install/omniroute.md).** O comando `pi install` acima instala apenas este pacote de skills, **não o servidor OmniRoute**. A receita distingue source 3.8.53 de candidato npm 3.8.52 e exige aprovação antes de instalar; não usa `latest`. Ver [índice de todas as instalações externas](../../docs/INSTALLATION.md).
+
 ## Decisão e estado
 
 **Perfil escolhido: `gateway-managed`.** O operador instala e gere o **OmniRoute diretamente na máquina**, fora do pacote de skills. É uma dependência operacional necessária para este perfil, **não uma dependência npm**, nem requisito para ler/carregar as skills. A instalação deste pacote não instala, inicia ou configura o servidor.

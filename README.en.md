@@ -6,9 +6,13 @@ A collection of skills for engineering, DevOps, cybersecurity, and IT operations
 
 One package includes **113 skills/sub-skills**, **8 prompts** for network/security/testing/performance, and two extensions, including **real subagents and declarative analysis workflows**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
 
+## External installations — start here
+
+**[Central installation and operations guide](docs/INSTALLATION.md)**: Node/Pi, OmniRoute, Graphify, Archify, optional planning and workflow-specific tools. Covers commands, paths, verification, secrets, lifecycle, upgrades and removal. Unvalidated dependencies are explicitly identified; the pack does not install them.
+
 ## 1. Prerequisites
 
-- Pi **1.2.0** and Node.js **22.14+** for orchestration, with an authenticated model/provider.
+- Pi **1.3.0** is the full-package reference (orchestration also has historical 1.2.0 tests), with an authenticated model/provider. Pi 1.4.0 was observed on the host but is not yet validated. Node must satisfy the host and selected runtimes; see the [host guide](docs/install/host.md).
 - Git to obtain and update the repository.
 - Task-specific tools only for the workflows you intend to run; see [dependencies and compatibility](docs/DEPENDENCIES.md).
 

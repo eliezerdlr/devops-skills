@@ -18,6 +18,10 @@ pi install /caminho/absoluto/devops-skills
 
 Registar apenas a raiz; não instalar este módulo separadamente.
 
+## Provisionar o runtime externo
+
+**[Instalação passo a passo, verificação dos 203 hashes e lifecycle](../../docs/install/archify.md).** Inclui obtenção do commit exato fora do source, configuração, validação sem executar runtime, atualização e remoção. Não executar `npm install` no checkout upstream para este fluxo. Ver [índice externo](../../docs/INSTALLATION.md).
+
 ## Entrada / entry points
 
 - [Skill](skills/archify/SKILL.md)
