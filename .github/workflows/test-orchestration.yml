@@ -20,15 +20,15 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22'
-      - name: Dependency-free engine tests
+      - name: Offline engine and documentation tests (Node, Bash, Python)
         run: npm test
-      - name: Install isolated official test SDK and compiler (no lifecycle scripts)
+      - name: Install isolated reference SDK 1.3.0 and compiler (no lifecycle scripts)
         shell: bash
         run: |
           npm install --prefix "$RUNNER_TEMP/pi-test" --ignore-scripts --no-audit --no-fund \
-            @earendil-works/pi-coding-agent@1.2.0 \
-            @earendil-works/pi-agent-core@1.2.0 \
-            @earendil-works/pi-ai@1.2.0 typescript@5.9.3 @types/node@22
+            @earendil-works/pi-coding-agent@1.3.0 \
+            @earendil-works/pi-agent-core@1.3.0 \
+            @earendil-works/pi-ai@1.3.0 typescript@5.9.3 @types/node@22
           echo "PI_SDK_ROOT=$RUNNER_TEMP/pi-test/node_modules/@earendil-works/pi-coding-agent" >> "$GITHUB_ENV"
           ln -s "$RUNNER_TEMP/pi-test/node_modules" node_modules
       - name: Actual Pi package, loader and core tests (simulated provider)

@@ -70,6 +70,10 @@ set +a
 exec /CAMINHO/ABSOLUTO/node /PREFIXO/NPM/lib/node_modules/omniroute/bin/omniroute.mjs serve --port 20128 --no-open --no-tray --no-recovery
 ```
 
+`KeepAlive=true` (e `Restart=always` no Linux) cobre também saída 0 do CLI após morte sinalizada do servidor filho: no source 3.8.52, `runWithoutRecovery` usa `process.exit(code ?? 0)`. Reiniciar apenas perante exit code de falha não cobre esse caso. Manter throttling/limites; parar administrativamente por `bootout` ou `systemctl stop`, não matando processos filhos. Isto não substitui um teste real de recuperação.
+
+**Se já criou o serviço pelo guia anterior:** atualizar o plist/unit real, não apenas fazer pull deste repositório. No macOS, editar `KeepAlive` para booleano `true`, validar com `plutil -lint`, descarregar com `bootout` e voltar a carregar com `bootstrap`. No Linux, editar para `Restart=always`, executar `systemctl daemon-reload` e reiniciar a unit mediante aprovação. Preservar caminhos, dados e segredos; nenhum desses passos é executado automaticamente por estas alterações.
+
 O path do CLI é apenas ilustrativo: usar exatamente o resultado de `npm root -g` seguido de `/omniroute/bin/omniroute.mjs`. O ficheiro sourced é configuração privada criada pelo operador, não conteúdo recebido da rede. `--no-recovery` deixa o restart a cargo de launchd, sem dois supervisores.
 
 ```bash
@@ -93,7 +97,7 @@ Criar `~/Library/LaunchAgents/local.omniroute.plist`; substituir **todos** os pa
   <key>EnvironmentVariables</key>
   <dict><key>HOME</key><string>/Users/UTILIZADOR</string></dict>
   <key>RunAtLoad</key><true/>
-  <key>KeepAlive</key><dict><key>SuccessfulExit</key><false/></dict>
+  <key>KeepAlive</key><true/>
   <key>ThrottleInterval</key><integer>10</integer>
   <key>ExitTimeOut</key><integer>30</integer>
   <key>Umask</key><integer>63</integer>
@@ -148,7 +152,7 @@ Environment=PATH=/DIRETORIO/DO/NODE:/usr/local/bin:/usr/bin:/bin
 EnvironmentFile=/home/UTILIZADOR/.config/omniroute-service/service.env
 WorkingDirectory=/home/UTILIZADOR/.config/omniroute-service
 ExecStart=/CAMINHO/ABSOLUTO/node /PREFIXO/NPM/lib/node_modules/omniroute/bin/omniroute.mjs serve --port 20128 --no-open --no-tray --no-recovery
-Restart=on-failure
+Restart=always
 RestartSec=10
 TimeoutStopSec=30
 KillMode=control-group

@@ -9,7 +9,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const sdkRoot = process.env.PI_SDK_ROOT;
-if (!sdkRoot) throw new Error('Set PI_SDK_ROOT to the installed Pi 1.2.0 SDK package directory');
+if (!sdkRoot) throw new Error('Set PI_SDK_ROOT to the installed reference Pi 1.3.0 SDK package directory');
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const integration = resolve(root, 'integrations/planning-with-files');
 const upstream = resolve(integration, 'upstream');

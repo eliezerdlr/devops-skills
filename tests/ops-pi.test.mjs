@@ -10,7 +10,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 // The host supplies Pi packages. Do not install a second copy into the runtime pack.
 const sdkRoot = process.env.PI_SDK_ROOT;
-if (!sdkRoot) throw new Error('Set PI_SDK_ROOT to the installed Pi 1.2.0 package directory for host integration tests');
+if (!sdkRoot) throw new Error('Set PI_SDK_ROOT to the installed reference Pi 1.3.0 package directory for host integration tests');
 const requireSdk = createRequire(resolve(sdkRoot, 'package.json'));
 const { createJiti } = requireSdk('jiti');
 const hostModule = name => resolve(dirname(findPackageJSON(name, pathToFileURL(resolve(sdkRoot, 'package.json')))), 'dist/index.js');

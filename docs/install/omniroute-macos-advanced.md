@@ -186,7 +186,7 @@ d = {
     'ProgramArguments': [str(root / 'run-pilot.sh')],
     'WorkingDirectory': str(root),
     'RunAtLoad': True,
-    'KeepAlive': {'SuccessfulExit': False},
+    'KeepAlive': True,
     'ThrottleInterval': 30,
     'ExitTimeOut': 30,
     'StandardOutPath': str(logs / 'stdout.log'),
@@ -202,6 +202,8 @@ plutil -lint "$PLIST"
 launchctl bootstrap "gui/$(id -u)" "$PLIST"
 launchctl print "gui/$(id -u)/local.devops-skills.omniroute"
 ```
+
+`KeepAlive=true` reinicia mesmo que o CLI devolva 0 após morte sinalizada do servidor filho (`process.exit(code ?? 0)` no source 3.8.52). `SuccessfulExit=false` não cobre esse cenário. O `ThrottleInterval` continua a limitar a frequência; só a paragem administrativa descarrega o serviço. Testar recuperação no host antes de promover.
 
 Para parar e retirar da sessão: `launchctl bootout "gui/$(id -u)" "$PLIST"`. Voltar a iniciar com `bootstrap` apenas depois de corrigir a falha e confirmar ausência de instância órfã. Configurar retenção/rotação privada de logs e alertas externos; o exemplo não instala rotação nem monitorização. Logs podem conter dados sensíveis. Não usar `KeepAlive` como prova de serviço funcional.
 

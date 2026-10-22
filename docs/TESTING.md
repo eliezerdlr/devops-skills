@@ -121,3 +121,13 @@ No SDK instalado **Pi 1.3.0**, a cópia isolada passou **180 testes offline + 28
 - A revisão independente identificou três findings (length replay, effective origin, OAuth != subscrição); foram corrigidos e as regressões passaram. A revisão final não identificou blocker concreto no escopo.
 
 Comandos continuam npm test, npm run test:pi e npm run test:planning, com PI_SDK_ROOT explícito para os dois últimos. As referências anteriores a type checking/Pi 1.2.0 são históricas; esta alteração não reinstalou TypeScript nem alega nova prova estática completa.
+
+## Correções de revisão — serviços e SDK de referência
+
+Após a revisão do HEAD `3e62a2a`, os dois exemplos launchd usam `KeepAlive=true` e a unit systemd usa `Restart=always`, conservando throttling/limites de restart e paragem administrativa. Isto cobre a saída 0 que o CLI OmniRoute 3.8.52 pode reportar quando o processo filho morre por sinal (`code=null`). Os testes anteriores que fixavam a política frágil foram atualizados.
+
+Validação local desta correção: **197 testes offline + 28 SDK Pi 1.3.0 com transporte sintético + 11 planning = 236**, sem falhas/skips. Foram usados SDKs já existentes; não foram instaladas dependências. Os novos testes verificam a regressão de políticas com modelo sintético e os três pins SDK do workflow; não enviam sinais a processos reais nem executam gateway/serviços.
+
+O workflow `.github/workflows/test-orchestration.yml` instala agora `pi-coding-agent`, `pi-agent-core` e `pi-ai` em **1.3.0**, coerentes com a referência. As mensagens de pré-requisito das suites seguem essa versão. A execução remota de GitHub Actions e os passos de TypeScript não foram repetidos localmente nesta alteração (sem compilador local); não se declara CI remoto verde nem nova homologação de tipos. **Pi 1.4.0 continua por validar**.
+
+Continuam pendentes os testes reais de crash/restart/boot/login/stop e restauro nos sistemas alvo. Corrigir guias Git não atualiza automaticamente plists/units que um operador já tenha criado na máquina. Não houve mudança do código de runtime das extensões, instalação/ativação de serviço, inferência real ou benchmark.

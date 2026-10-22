@@ -110,7 +110,7 @@ p = Path.home() / 'Library/LaunchAgents/local.devops-skills.omniroute.plist'
 d = plistlib.loads(p.read_bytes())
 assert d['Label'] == 'local.devops-skills.omniroute'
 assert d['ProgramArguments'] == [str(root / 'run-pilot.sh')]
-assert d['KeepAlive'] == {'SuccessfulExit': False}
+assert d['KeepAlive'] is True
 assert 'EnvironmentVariables' not in d
 assert stat.S_IMODE(p.stat().st_mode) == 0o600
 assert stat.S_IMODE((root / 'run-pilot.sh').stat().st_mode) == 0o700
@@ -164,7 +164,7 @@ import plistlib, sys
 p = plistlib.loads(sys.stdin.buffer.read())
 assert p['Label'] == 'local.omniroute'
 assert p['RunAtLoad'] is True
-assert p['KeepAlive'] == {'SuccessfulExit': False}
+assert p['KeepAlive'] is True
 assert p['EnvironmentVariables'] == {'HOME': '/Users/UTILIZADOR'}
 assert p['Umask'] == 63
 assert p['ExitTimeOut'] == 30
@@ -181,7 +181,7 @@ test('systemd unit uses foreground global CLI, non-root user and private environ
   const text = await read('docs/install/omniroute-services.md');
   const unit = text.match(/^```ini\n([\s\S]*?)^```/m)?.[1];
   assert.ok(unit);
-  for (const setting of ['Type=simple', 'User=UTILIZADOR', 'Restart=on-failure', 'RestartSec=10', 'KillMode=control-group', 'NoNewPrivileges=true', 'UMask=0077', 'WantedBy=multi-user.target']) {
+  for (const setting of ['Type=simple', 'User=UTILIZADOR', 'Restart=always', 'RestartSec=10', 'KillMode=control-group', 'NoNewPrivileges=true', 'UMask=0077', 'WantedBy=multi-user.target']) {
     assert.ok(unit.includes(setting), setting);
   }
   assert.match(unit, /^EnvironmentFile=.*\/omniroute-service\/service\.env$/m);
@@ -194,4 +194,46 @@ test('systemd unit uses foreground global CLI, non-root user and private environ
   assert.match(text, /OMNIROUTE_SERVER_HOST=127\.0\.0\.1/);
   assert.match(text, /REQUIRE_API_KEY=true/);
   assert.match(await read('docs/install/omniroute.md'), /omniroute-services\.md/);
+});
+
+test('external supervisors cover a signal death mapped by the CLI to exit zero', async () => {
+  const text = await read('docs/install/omniroute-services.md');
+  const xml = text.match(/^```xml\n([\s\S]*?)^```/m)?.[1];
+  const parsed = spawnSync('python3', ['-c', 'import plistlib,sys,json; print(json.dumps(plistlib.loads(sys.stdin.buffer.read())["KeepAlive"]))'], { input: xml, encoding: 'utf8', timeout: 5000 });
+  assert.equal(parsed.status, 0, parsed.stderr);
+  const keepAlive = JSON.parse(parsed.stdout);
+  const restart = text.match(/^Restart=(\S+)$/m)?.[1];
+  // Synthetic model of documented policies, NOT a launchd/systemd integration test.
+  // Source v3.8.52 maps the child's null exit code (signal death) to CLI exit 0.
+  const reportedExit = childCode => childCode ?? 0;
+  const launchdRestarts = (policy, code, administrativeStop) => !administrativeStop &&
+    (policy === true || policy.SuccessfulExit === (code === 0));
+  const systemdRestarts = (policy, code, administrativeStop) => !administrativeStop &&
+    (policy === 'always' || (policy === 'on-failure' && code !== 0));
+  const signalDeathExit = reportedExit(null);
+  assert.equal(signalDeathExit, 0);
+  // Demonstrate that the former policies miss this exact scenario.
+  assert.equal(launchdRestarts({ SuccessfulExit: false }, signalDeathExit, false), false);
+  assert.equal(systemdRestarts('on-failure', signalDeathExit, false), false);
+  for (const code of [signalDeathExit, 1]) {
+    assert.equal(launchdRestarts(keepAlive, code, false), true);
+    assert.equal(systemdRestarts(restart, code, false), true);
+    assert.equal(launchdRestarts(keepAlive, code, true), false);
+    assert.equal(systemdRestarts(restart, code, true), false);
+  }
+  assert.match(text, /ThrottleInterval/);
+  assert.match(text, /StartLimitBurst=5/);
+  assert.match(text, /bootout/);
+  assert.match(text, /systemctl stop/);
+});
+
+test('CI keeps all Pi SDK packages aligned with the 1.3.0 reference', async () => {
+  const workflow = await read('.github/workflows/test-orchestration.yml');
+  const versions = [...workflow.matchAll(/@earendil-works\/(pi-coding-agent|pi-agent-core|pi-ai)@(\d+\.\d+\.\d+)/g)];
+  assert.equal(versions.length, 3);
+  assert.deepEqual(versions.map(match => match[1]).sort(), ['pi-agent-core', 'pi-ai', 'pi-coding-agent']);
+  for (const match of versions) assert.equal(match[2], '1.3.0', match[1]);
+  assert.match(workflow, /--ignore-scripts/);
+  assert.match(workflow, /npm run test:pi/);
+  assert.match(workflow, /npm run test:planning/);
 });
