@@ -4,7 +4,7 @@
 
 ## Documentation validation prerequisites
 
-The default `npm test` now also checks external-installation documentation. Those seven tests use **Bash** for `bash -n` and **Python 3** for AST parsing plus wrapper/plist generation in a synthetic temporary HOME, in addition to Node. No installer, generated credential script, wrapper execution, launchctl or external runtime is executed. These are contributor/test prerequisites, not requirements to read skills or extra npm runtime dependencies. Windows contributors need an approved Bash/Python environment or a separate platform-specific validation plan; no automatic tool installation or silent test skip is provided.
+The default `npm test` now also checks external-installation documentation. Those nine tests use **Bash** for `bash -n` and **Python 3** for AST parsing plus optional macOS wrapper/plist generation in a synthetic temporary HOME and parsing of native service templates, in addition to Node. These test tools are not prerequisites for the normal `npm install -g omniroute` installation on macOS, Linux or Windows. PowerShell examples are documented but not executed by this suite. No installer, generated credential script, wrapper execution, launchctl or external runtime is executed. These are contributor/test prerequisites, not requirements to read skills or extra npm runtime dependencies. Windows contributors need an approved Bash/Python environment or a separate platform-specific validation plan; no automatic tool installation or silent test skip is provided.
 
 ## What loading this pack requires
 

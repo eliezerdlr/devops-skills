@@ -3,6 +3,8 @@
   "index": "docs/INSTALLATION.md",
   "scope": "Root host, integrated external runtimes, optional addon and workflow prerequisite families; not every executable mentioned in generated examples.",
   "automaticInstallation": false,
+  "documentedPlatforms": ["macOS", "Linux", "Windows"],
+  "omnirouteInstallCommand": "npm install -g omniroute",
   "entries": [
     { "id": "host", "scope": "host", "required": "extensions", "guide": "docs/install/host.md", "validation": "documented-not-clean-install-tested" },
     { "id": "omniroute", "scope": "external-runtime", "required": "gateway-managed", "guide": "docs/install/omniroute.md", "sourceVersion": "3.8.53", "publishedCandidate": "3.8.52", "validation": "documented-not-runtime-tested" },

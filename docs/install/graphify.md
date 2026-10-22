@@ -2,7 +2,7 @@
 
 ## Pré-requisitos
 
-Opcional, só para executar mapas/consultas. Ler [limites e workflow](../../integrations/graphify/README.md). macOS com Python local aprovado; referência de piloto: Python 3.12, Git se trabalhar com source, espaço para gramáticas/dependências/cache. Upstream/PyPI `graphifyy==0.9.93` declara Python >=3.10; isso não homologa qualquer Python/CPU nem todos os extras. Não instalar Python ou uv silenciosamente.
+Opcional, só para executar mapas/consultas. Ler [limites e workflow](../../integrations/graphify/README.md). **macOS, Linux e Windows**, com Python local aprovado; referência de piloto: Python 3.12, Git se trabalhar com source, espaço para gramáticas/dependências/cache. Upstream/PyPI `graphifyy==0.9.93` declara Python >=3.10; isso não homologa qualquer Python/CPU nem todos os extras. Não instalar Python ou uv silenciosamente.
 
 ```bash
 set -euo pipefail
@@ -16,6 +16,10 @@ command -v graphify || true
 Nome da distribuição: **graphifyy** (dois y); executável: **graphify**. Não confundir com pacotes homónimos. Se já instalado por pipx/uv, inventariar `pipx list`/`uv tool list` no gestor existente e escolher **um só** método. O venv abaixo evita depender de instalar um gestor adicional.
 
 ## Instalação
+
+Se já utiliza pipx ou uv, o comando é igual nos três sistemas: `pipx install 'graphifyy==0.9.93'` ou `uv tool install 'graphifyy==0.9.93'`. Escolher um método, não instalar cópias concorrentes. Sem esses gestores, usar o venv standard abaixo.
+
+### macOS e Linux — Bash
 
 Num diretório fora do source, na mesma sessão Bash:
 
@@ -37,7 +41,23 @@ python3.12 -m venv "$VENV"
 "$VENV/bin/graphify" --version
 ```
 
-Esperado: `graphify 0.9.93`, `pip check` sem conflitos. Instalação pode descarregar wheels e construir dependências nativas se não houver wheel compatível; parar e rever toolchain/CPU em vez de instalar compiladores como root por tentativa. O pin direto não fixa transitivas: antes de promover, produzir lock com hashes/wheelhouse a partir da resolução revista e testar nova instalação offline com esse conjunto. `freeze.txt` é inventário, não verificação criptográfica nem lock universal. Extras Terraform/SQL/media/model providers não são instalados por este procedimento.
+### Windows — PowerShell
+
+Usar Python 3.12 já instalado (o launcher `py` é fornecido pela instalação Python correspondente):
+
+```powershell
+$Venv = Join-Path $env:LOCALAPPDATA "devops-skills\graphify\0.9.93"
+if (Test-Path $Venv) { throw "Ambiente já existe; verificar antes de substituir." }
+py -3.12 -m venv "$Venv"
+& "$Venv\Scripts\python.exe" -m pip install "graphifyy==0.9.93"
+& "$Venv\Scripts\python.exe" -m pip check
+& "$Venv\Scripts\python.exe" -m pip freeze --all | Set-Content -Encoding utf8 "$Venv\freeze.txt"
+& "$Venv\Scripts\graphify.exe" --version
+```
+
+Confirmar sucesso de cada comando antes do seguinte; PowerShell não transforma todo exit code nativo em exceção automaticamente. Se `py` não existir, usar o caminho do Python instalado e compatível, não outro pacote chamado graphify.
+
+Esperado em qualquer sistema: `graphify 0.9.93`, `pip check` sem conflitos. Instalação pode descarregar wheels e construir dependências nativas se não houver wheel compatível; parar e rever toolchain/CPU em vez de instalar compiladores como root por tentativa. O pin direto não fixa transitivas: antes de promover, produzir lock com hashes/wheelhouse a partir da resolução revista e testar nova instalação offline com esse conjunto. `freeze.txt` é inventário, não verificação criptográfica nem lock universal. Extras Terraform/SQL/media/model providers não são instalados por este procedimento.
 
 Alternativas, **apenas com gestor já aprovado**: `pipx install 'graphifyy==0.9.93'` ou `uv tool install 'graphifyy==0.9.93'`. Guardar versão do gestor/Python e inventário transitivo. Não executar `pipx ensurepath`/instalador uv sem aprovar alteração de PATH/downloads; não é necessário se for usado caminho absoluto do venv.
 
@@ -50,6 +70,15 @@ export PATH="$VENV/bin:$PATH"
 export GRAPHIFY_BACKEND=none
 export GRAPHIFY_NO_AUTO_REFRESH=1
 export GRAPHIFY_QUERY_LOG_DISABLE=1
+```
+
+No Windows PowerShell, para o venv acima:
+
+```powershell
+$env:Path = "$Venv\Scripts;" + $env:Path
+$env:GRAPHIFY_BACKEND = "none"
+$env:GRAPHIFY_NO_AUTO_REFRESH = "1"
+$env:GRAPHIFY_QUERY_LOG_DISABLE = "1"
 ```
 
 Não gravar em profiles sem revisão. Estes settings são os exigidos pelos workflows adaptados, não firewall/sandbox. Não chamar `graphify install`, watcher, guard, MCP/server ou hooks. Nenhuma chave LLM é necessária para consultar grafo já existente; processamento semântico/envio de conteúdo requer autorização separada. Outputs/grafos/cache têm paths definidos pelo workflow; escolher explicitamente projeto e raiz de output sem segredos, fora de HOME global. Não usar filesystem não confiável/symlinks para simular confinamento.
@@ -76,4 +105,4 @@ Desativar a skill pelo filtro do pacote se desejado; isso não remove o CLI nem 
 - [Proveniência e source pin](../../integrations/graphify/UPSTREAM.json).
 - [venv oficial](https://docs.python.org/3/library/venv.html), [instalações repetíveis pip](https://pip.pypa.io/en/stable/topics/repeatable-installs/), [pipx](https://pipx.pypa.io/stable/), [uv tools](https://docs.astral.sh/uv/guides/tools/).
 
-**Estado:** receita documentada, não executada nesta alteração. A instalação limpa, lock transitivo fechado, upgrade e recuperação ainda precisam de teste no host-alvo. Fontes oficiais orientam os comandos; versões externas podem retirar wheels ou alterar disponibilidade.
+**Estado:** receitas macOS/Linux e Windows documentadas, não executadas nesta alteração. A instalação limpa, lock transitivo fechado, upgrade e recuperação ainda precisam de teste no host-alvo. Fontes oficiais orientam os comandos; versões externas podem retirar wheels ou alterar disponibilidade.

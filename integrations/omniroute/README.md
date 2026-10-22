@@ -8,7 +8,7 @@ pi install /caminho/absoluto/devops-skills
 
 ## Instalar o servidor — procedimento separado
 
-**[Passo a passo macOS: instalação, segredos, launchd, verificação e rollback](../../docs/install/omniroute.md).** O comando `pi install` acima instala apenas este pacote de skills, **não o servidor OmniRoute**. A receita distingue source 3.8.53 de candidato npm 3.8.52 e exige aprovação antes de instalar; não usa `latest`. Ver [índice de todas as instalações externas](../../docs/INSTALLATION.md).
+**[Instalação simples — macOS, Linux e Windows](../../docs/install/omniroute.md):** instalar Node.js com npm e executar `npm install -g omniroute`. Depois configurar/iniciar o gateway e verificar o painel. O comando `pi install` acima instala apenas as skills, **não o servidor OmniRoute**. Versão fixa e serviço persistente são opções separadas, não requisitos da instalação. Ver [índice de instalações externas](../../docs/INSTALLATION.md).
 
 ## Decisão e estado
 
@@ -19,7 +19,7 @@ O contrato declarativo [operational-dependency.json](operational-dependency.json
 | Evidência | Estado |
 |---|---|
 | Código analisado | OmniRoute **3.8.53**, commit em [UPSTREAM.json](UPSTREAM.json) |
-| Artefacto a instalar | Por confirmar e fixar com versão e checksum/digest; não usar `latest` |
+| Artefacto a instalar | Publicação npm pelo comando oficial; fixar versão/digest quando exigido no deployment |
 | Versão instalada / runtime homologado | Não verificados; campos `null` no contrato |
 | Pi de referência | **1.3.0** |
 
@@ -46,7 +46,7 @@ Dispositivo autorizado → VPN/mesh + TLS + autenticação/ACL
 
 ## Preparação pelo operador — não executada pelo pacote
 
-1. **Fixar instalação:** escolher artefacto oficial e versão exata, verificar integridade/proveniência e requisitos Node/OS dessa versão. No código analisado: Node `>=22.22.2 <23` ou `>=24 <27`; não é o requisito mínimo deste pacote de skills. Registar método, versão e digest; não executar instaladores apenas por estarem mencionados aqui.
+1. **Instalação normal:** seguir `npm install -g omniroute` no [guia multiplataforma](../../docs/install/omniroute.md). Para deployment controlado, registar/fixar a versão efetiva e verificar integridade/proveniência e requisitos Node/OS dessa versão. No código analisado: Node `>=22.22.2 <23` ou `>=24 <27`; não é o requisito mínimo deste pacote de skills. Registar método, versão e digest; não executar instaladores apenas por estarem mencionados aqui.
 2. **Serviço e painel:** usar conta de serviço com privilégios mínimos, diretório privado de dados e supervisão adequada ao host (por exemplo launchd no macOS). Usar [service.env.example](examples/service.env.example) apenas como referência não secreta. Manter painel disponível; não usar `--headless`. Não desativar indiscriminadamente schedulers/refresh necessários a OAuth, quotas ou backups. Rever e desativar individualmente funcionalidades opcionais não aprovadas: cloud sync, túneis, proxies externos, memory/injeção, MCP/A2A e transformações de contexto. Estas linhas de ambiente não fazem essa revisão por ti.
 3. **Segredos antes de contas:** fornecer `STORAGE_ENCRYPTION_KEY` forte por gestor de segredos/ficheiro privado fora do repo; preservar a chave para recuperação. No código analisado, a ausência de chave permite plaintext e certos erros de cifragem também podem devolver plaintext: verificar o comportamento efetivo, não apenas a variável. Proteger disco e backups. Criar chave de inferência, autenticação de gestão e permissões distintas; `REQUIRE_API_KEY=true` não substitui autenticação do painel.
 4. **Rede:** servidor em loopback por defeito. Acesso remoto por proxy TLS autenticado vinculado à interface/IP mesh, com ACL dos dispositivos autorizados. **VPN não torna `127.0.0.1` acessível remotamente por si só.** Não publicar painel/API na Internet. NetBird pode fornecer conectividade independentemente da skill HomelabHero, que não é dependência aprovada deste pacote.

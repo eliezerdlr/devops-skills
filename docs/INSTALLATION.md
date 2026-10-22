@@ -1,60 +1,56 @@
-# Instalações externas — índice operacional
+# Instalações externas — macOS, Linux e Windows
 
-Este é o ponto de entrada para instalar e operar dependências **fora do checkout `devops-skills`**. `pi install /caminho/devops-skills` regista skills/extensões; não instala os runtimes abaixo. Não executar todos os guias: selecionar apenas as capacidades necessárias.
+## Caminho principal: OmniRoute
 
-## Inventário e ordem
+1. Instalar **Node.js LTS com npm** para o sistema/arquitetura em [nodejs.org](https://nodejs.org/en/download), ou reutilizar a instalação existente compatível.
+2. No Terminal (macOS/Linux) ou PowerShell (Windows):
 
-| Componente | Obrigatoriedade | Procedimento | Estado da evidência |
-|---|---|---|---|
-| Node + Pi | Host para executar as extensões | [Host](install/host.md) | Suítes anteriores com Pi 1.3.0; Pi 1.4.0 observado instalado, compatibilidade ainda não homologada |
-| OmniRoute | Obrigatório apenas para o perfil escolhido `gateway-managed` | [Instalação macOS e serviço](install/omniroute.md) | Fonte analisada 3.8.53; artefacto npm 3.8.52 disponível; aprovação/piloto pendentes |
-| Graphify | Opcional: executar mapeamento/consulta | [Instalação Python isolada](install/graphify.md) | graphifyy 0.9.93; testes históricos sintéticos não equivalem a instalação limpa |
-| Archify | Opcional: renderizar diagramas | [Provisionar checkout pinado](install/archify.md) | 3.2.0 / 203 hashes; renderização real não homologada |
-| Planning with Files | Addon opt-in, não requisito de execução do pacote raiz | [Ativação, helpers e remoção](../integrations/planning-with-files/README.md) | Snapshot 3.24.0; 11 testes históricos Pi 1.3.0, não certificação de helpers |
-| Ferramentas das skills | Só no workflow escolhido | [Ferramentas, ambientes e bloqueios](install/workflow-tools.md) | Sem matriz universal de versões aprovadas; não instalar indiscriminadamente |
+```sh
+node --version
+npm --version
+npm install -g omniroute
+omniroute --version
+```
 
-O [inventário estruturado](external-installations.json) torna esta classificação verificável nos testes. É documentação, não um instalador ou inventário automático da máquina. [DEPENDENCIES.md](DEPENDENCIES.md) mantém os requisitos técnicos e limites por família.
+3. [Iniciar com configuração local e verificar o painel](install/omniroute.md#configuração).
 
-Addy Engineering, Web Quality, Security Audit e ECC selecionado são conteúdo/implementação local: **não exigem instalar os repositórios upstream**. Os peers Pi vêm do host. Não executar `npm install` recursivamente nos manifestos, fixtures ou snapshots.
+**Não é preciso instalar Python, Git, Docker, criar um instalador próprio ou configurar um serviço para usar o OmniRoute.** O npm global usa o prefixo do Node/npm escolhido, não a pasta `devops-skills`. Instalação, configuração de contas e serviço persistente são passos separados.
 
-OpenRouter é um **serviço remoto**, não software local a instalar. Contas, destinatários, termos, retenção e orçamento exigem autorização própria. NetBird/proxy TLS são infraestrutura de acesso remoto escolhida separadamente; não há topologia/IdP/ACL aprovados que permitam fornecer uma configuração universal segura. A skill HomelabHero não está aprovada. Snyk Agent Scan, Sage, UniFi opcional e outros projetos apenas analisados não são dependências operacionais aprovadas.
+## Guias por componente
+
+| Componente | Quando necessário | Guia |
+|---|---|---|
+| Node/npm + Pi | Host das extensões | [Host — três sistemas](install/host.md) |
+| OmniRoute | Perfil `gateway-managed` escolhido | [Instalação npm, configuração e lifecycle — três sistemas](install/omniroute.md) |
+| Graphify | Mapeamento/consulta de projetos | [CLI Python — macOS/Linux e Windows](install/graphify.md) |
+| Archify | Renderização de diagramas | [Runtime pinado — macOS/Linux e Windows](install/archify.md) |
+| Planning with Files | Addon opt-in | [Ativação, helpers e remoção](../integrations/planning-with-files/README.md) |
+| Ferramentas das skills | Só no workflow escolhido | [Ferramentas e fontes por sistema](install/workflow-tools.md) |
+
+[Inventário estruturado](external-installations.json) e [requisitos técnicos](DEPENDENCIES.md). O [apêndice macOS de piloto isolado/launchd](install/omniroute-macos-advanced.md) é **opcional e separado**, não o caminho normal. Não misturar instalações globais com paths/wrappers desse perfil alternativo.
+
+## Instalação simples, operação controlada
+
+- Usar o mecanismo oficial normal. `npm install -g omniroute` resolve a versão publicada; versão fixa é opção para controlo de mudanças, não requisito para experimentar o produto. Registar versão efetiva antes de promover a produção.
+- Reutilizar gestores existentes; não instalar cópias concorrentes, alterar políticas globais ou recorrer automaticamente a `sudo`/`--force` perante erro.
+- Manter configurações/segredos/dados fora do Git. Antes de atualizar dados, ter backup e plano de rollback compatível.
+- Painel/API local protegidos; acesso remoto requer TLS/autenticação/ACL próprios. A instalação não autoriza envio de dados, subscrições ou inferência paga.
+- Serviços são opcionais: [receitas launchd no macOS e systemd no Linux para npm global](install/omniroute-services.md); no Windows, mecanismo aprovado na organização. Não habilitar serviço nem segundo supervisor por consequência de instalar skills.
+- Addy Engineering, Web Quality, Security Audit e ECC selecionado não exigem instalar os seus repositórios upstream. Não executar npm recursivamente em snapshots/fixtures.
+- OpenRouter é serviço remoto, não programa local. NetBird/proxy e ferramentas específicas de cloud/GPU/browser são escolhas de infraestrutura/workflow, não requisitos do pacote inteiro.
 
 ## Contrato obrigatório de documentação
 
-Qualquer nova dependência operacional deve ter, antes de ser anunciada como utilizável:
+Cada dependência operacional deve identificar: finalidade, plataformas, pré-requisitos, fonte e seleção de versão; comando oficial de instalação; paths/segredos; arranque e verificação; atualização/backup/rollback; remoção e limitações reais de teste. O caminho simples aparece primeiro. Isolamento avançado, serviço e políticas empresariais ficam separados, sem converter boas práticas opcionais em obstáculos universais.
 
-1. Finalidade, obrigatoriedade e responsável; sistemas/arquiteturas suportados.
-2. Fonte oficial, versão exata, integridade/proveniência e licenças.
-3. Pré-requisitos e verificações que falham antes de instalar no destino errado.
-4. Comandos, diretórios de binários/dados/logs e efeitos de scripts de instalação.
-5. Configuração, armazenamento/recuperação de segredos e política de rede.
-6. Verificações de disponibilidade separadas de teste funcional/autenticado.
-7. Arranque/paragem/supervisão, ou declaração de que é ferramenta pontual.
-8. Atualização controlada, backup/restauro, rollback e remoção preservando dados.
-9. Estado real de validação: escrito/revisto, teste sintético ou execução real.
+Isto é documentação, não instalação automática nem certificação. Não inventar suporte funcional, performance ou pins para preencher campos. Ferramentas de exemplos sem versão/alvo selecionados são avaliadas quando se ativa o respetivo workflow.
 
-Versão não escolhida, mecanismo incompatível ou pré-requisito ausente são **bloqueios**, não autorização para instalar `latest`, ignorar scripts necessários ou inventar um pin. Um exemplo não é uma receita homologada.
+## Verificação documental
 
-## Regras de execução e evidência
+Da raiz: `npm test`. Valida inventário, links, sintaxe Bash/Python e geração de um wrapper/plist opcional em HOME temporário. Os testes usam Node, Bash e Python disponíveis; **esses requisitos são dos testes de contribuição, não da instalação OmniRoute**. PowerShell é documentado, mas não foi executado neste host. Não se executam instaladores, servidor, launchctl, criação de credenciais ou inferência.
 
-- Os comandos publicados são para execução **manual aprovada**, não foram executados para escrever estes guias. Downloads de metadata pública não são instalação.
-- Perfil detalhado: **macOS Apple Silicon**; as diferenças de Linux/Windows estão assinaladas. Não anunciar estes procedimentos como suporte multi-OS validado.
-- Usar uma sessão Bash dedicada, blocos pela ordem indicada e os mesmos exports; `set -euo pipefail` faz erros abortarem. Não colar Markdown inteiro num terminal. Ler cada bloco e parar nos gates manuais.
-- Não usar `sudo npm`, `curl | sh`, instaladores globais concorrentes ou diretórios de source como diretórios de runtime. Nunca substituir uma instalação existente sem backup e plano.
-- Registar fora do Git: data, OS/arquitetura, Node/Python/Pi, versão/digest do artefacto, lock/freeze transitivo, paths, aprovação, resultados e versão anterior. Não registar valores de segredos. Alterar declarações de estado do projeto apenas com evidência revista.
-- Parar se algum comando divergir da fonte/versão: preservar logs redigidos, não executar reparações automáticas nem `--force` indiscriminado.
-- Revalidar antes de produção, após mudança de runtime, artefacto ou configuração. Os testes de documentação verificam estrutura, links e pins; não executam instaladores ou simulam uma máquina limpa.
+## Estado
 
-## Verificação documental pelo contribuidor
+Suítes SDK anteriores: Pi 1.3.0. Pi 1.4.0 foi observado instalado, sem nova homologação SDK. Instalações reais macOS/Linux/Windows, serviços persistentes e benchmarks não foram executados nesta alteração. **Nenhum código de runtime, dependência ou processo adicional foi introduzido por estes guias.**
 
-Da raiz: `npm test`. Além de Node, os testes documentais requerem Bash e Python 3 já disponíveis: `bash -n`, parsing AST e geração sintética de wrapper/plist num HOME temporário, sem executar instaladores, wrapper, criação de chaves ou serviço. Não instalam ferramentas se faltarem. O resultado não homologa instaladores, runtime, credenciais, launchd ou rede.
-
-## Ordem recomendada neste projeto
-
-1. Confirmar o host existente — não reinstalar Pi só por carregar skills.
-2. Aprovar a versão/artefacto OmniRoute e preparar piloto local sem fornecedores.
-3. Validar serviço, autenticação, armazenamento, backup/restauro e destinatários.
-4. Ligar o Pi e testar inferência só com autorização e orçamento.
-5. Instalar Graphify/Archify apenas quando o respetivo trabalho for necessário; ativar Planning apenas se desejado.
-
-**EN:** this installation index separates host prerequisites, external operational runtimes, an optional addon, and workflow-only tools. Each runtime has a manual lifecycle runbook. Documented commands are not evidence of execution or production approval. Unknown versions and infrastructure-specific configuration remain explicit blockers, not hidden installs.
+**EN:** install Node.js with npm, then `npm install -g omniroute` on macOS, Linux or Windows. Platform-specific environment setup and lifecycle are documented separately; managed services and isolated deployments are optional. Written commands are not proof of runtime or performance validation.

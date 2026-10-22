@@ -26,6 +26,22 @@ ADDON="$PACK/integrations/planning-with-files/upstream"
 pi install "$ADDON"
 ```
 
+### Windows PowerShell
+
+O mesmo addon local pode ser registado com path Windows (depois de verificar snapshot/settings existentes):
+
+```powershell
+pi install "C:\caminho\devops-skills\integrations\planning-with-files\upstream"
+$env:PWF_MODE = "notify"
+$env:UV_OFFLINE = "1"
+$env:UV_PYTHON_DOWNLOADS = "never"
+pi
+```
+
+Usar Python local compatível: o helper tem fallback para `py -3` no Windows. Não copiar atribuições Bash para PowerShell. Helpers shell/PowerShell e o próprio addon precisam de validação no OS alvo; documentação de comandos não é homologação Windows. Remoção: `pi remove "C:\caminho\devops-skills\integrations\planning-with-files\upstream"`.
+
+### Configuração comum
+
 Não é necessário executar `npm install` nesse diretório ou nos subdiretórios. Preserva as restantes configurações. Vê [examples/pi-planning-settings.json](../../examples/pi-planning-settings.json) para a alternativa por `packages` e modo `notify`. Se usares settings, ajusta ambos os caminhos e não dupliques os registos existentes.
 
 Começa com modo de notificações, sem continuação automática do fim de turno:

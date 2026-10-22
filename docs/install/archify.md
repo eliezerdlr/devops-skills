@@ -2,9 +2,11 @@
 
 ## Pré-requisitos
 
-Opcional, só para gerar diagramas HTML. Não instalar o projeto de desenvolvimento inteiro nem outra skill Pi. Requer Git, Node >=18 para o runtime (usar o Node aprovado do host), Python 3 apenas para a verificação de hashes publicada abaixo, acesso ao GitHub para obter source e diretório privado fora do checkout de skills. `deliver`/`check` deste caminho usam Node built-ins; não precisam de `npm install`, Chrome, Playwright ou instalação de fontes no sistema.
+**macOS, Linux e Windows.** Opcional, só para gerar diagramas HTML. Não instalar o projeto de desenvolvimento inteiro nem outra skill Pi. Requer Git, Node >=18 para o runtime (usar o Node aprovado do host), Python 3 apenas para a verificação de hashes em macOS/Linux (Windows usa Get-FileHash nativo), acesso ao GitHub para obter source e diretório privado fora do checkout de skills. `deliver`/`check` deste caminho usam Node built-ins; não precisam de `npm install`, Chrome, Playwright ou instalação de fontes no sistema.
 
 Pin: **Archify 3.2.0**, commit `25cf37080fc8b1dbe758a4efc3935b55f3327083`; [proveniência](../../integrations/archify/UPSTREAM.json) e [203 hashes](../../integrations/archify/runtime-lock.json). O bundle contém assets/fontes e licenças de terceiros que devem ser preservados, não redistribuídos como autoria própria.
+
+Em macOS/Linux, usar Bash; em Windows usar PowerShell e confirmar `git --version`, `node --version` e Python disponível.
 
 ```bash
 set -euo pipefail
@@ -17,6 +19,8 @@ node --version
 ## Instalação — checkout novo, sem npm/hooks
 
 Executar apenas após aprovação do download. Paths não podem conter symlinks em ancestrais para o adaptador; usar caminhos físicos, não aliases como `/tmp` que no macOS podem resolver para outro path.
+
+### macOS e Linux
 
 ```bash
 set -euo pipefail
@@ -31,6 +35,23 @@ git clone --no-checkout https://github.com/tt-a1i/archify.git "$DEST"
 git -C "$DEST" -c core.hooksPath=/dev/null checkout --detach "$PIN"
 test "$(git -C "$DEST" rev-parse HEAD)" = "$PIN"
 export PACK DEST
+```
+
+### Windows — PowerShell
+
+```powershell
+$Pack = "C:\caminho\devops-skills"
+$Pin = "25cf37080fc8b1dbe758a4efc3935b55f3327083"
+$Dest = Join-Path $env:LOCALAPPDATA "devops-skills\archify\$Pin"
+if (Test-Path $Dest) { throw "Destino já existe." }
+New-Item -ItemType Directory -Force (Split-Path $Dest) | Out-Null
+git clone --no-checkout https://github.com/tt-a1i/archify.git "$Dest"
+if ($LASTEXITCODE -ne 0) { throw "Clone falhou." }
+$Hooks = Join-Path $Dest ".git\disabled-hooks"
+New-Item -ItemType Directory -Force $Hooks | Out-Null
+git -C "$Dest" -c "core.hooksPath=$Hooks" checkout --detach "$Pin"
+if ($LASTEXITCODE -ne 0) { throw "Checkout falhou." }
+if ((git -C "$Dest" rev-parse HEAD) -ne $Pin) { throw "Commit divergente." }
 ```
 
 Não executar instaladores upstream, `npm install`, build de gallery, `finalize`, browser, update ou comandos proativos mencionados no README externo. O root `package.json` upstream não é o contrato desta integração. Clone por hash e hashes locais confirmam identidade/conteúdo conhecido, não confiança em Git/Node/OS nem isolamento.
@@ -63,6 +84,27 @@ print('PASS:', len(lock), 'hashes; Archify', pkg['version'])
 PY
 ```
 
+No Windows PowerShell, usar a mesma origem e lock, sem depender de Bash:
+
+```powershell
+$env:DEVOPS_ARCHIFY_DIR = (Resolve-Path (Join-Path $Dest "archify")).Path
+$env:ARCHIFY_UPDATE_CHECK_DISABLED = "1"
+$LockPath = Join-Path $Pack "integrations\archify\runtime-lock.json"
+$Lock = Get-Content -Raw $LockPath | ConvertFrom-Json
+foreach ($Entry in $Lock.PSObject.Properties) {
+    $File = Join-Path $env:DEVOPS_ARCHIFY_DIR $Entry.Name
+    if (-not (Test-Path -LiteralPath $File -PathType Leaf)) { throw "Ficheiro ausente: $File" }
+    if ((Get-FileHash -LiteralPath $File -Algorithm SHA256).Hash.ToLowerInvariant() -ne $Entry.Value) {
+        throw "Hash divergente: $File"
+    }
+}
+$Package = Get-Content -Raw (Join-Path $env:DEVOPS_ARCHIFY_DIR "package.json") | ConvertFrom-Json
+if ($Package.version -ne "3.2.0") { throw "Versão divergente." }
+"PASS: $(@($Lock.PSObject.Properties).Count) hashes; Archify $($Package.version)"
+```
+
+A verificação manual de hashes não substitui o adaptador, que recusa symlinks/ancestrais e valida paths antes de executar em qualquer sistema.
+
 Esperado: 203 hashes e versão 3.2.0. Parar se divergir; não regenerar lock para ocultar diferenças. O adaptador também verifica o pin a cada plano/execução. Ficheiros extra e processos do mesmo utilizador não são autenticados por este hash inventory; manter diretórios controlados e rever qualquer conteúdo extra.
 
 Nenhuma API key necessária para renderizar JSON local. Preparar `outputRoot` privado e aprovado; inputs/receipts/HTML não devem conter segredos. Definir ambiente apenas no processo Pi/terminal desejado, sem editar profiles globais. O adaptador força update checks off nos subprocessos; isso não implementa bloqueio de rede do SO.
@@ -74,6 +116,12 @@ A verificação acima não executa código upstream. Para testar ligação ao ad
 ```bash
 # Só depois de preparar e aprovar a configuração; substituir o caminho.
 node "$PACK/integrations/archify/adapter.mjs" plan /caminho/fisico/config.json
+```
+
+Windows PowerShell, com config preparada:
+
+```powershell
+node (Join-Path $Pack "integrations\archify\adapter.mjs") plan "C:\caminho\config.json"
 ```
 
 Esperado: plano válido, sem escrita nem subprocessos. `execute` é um gate **separado**, autorizado explicitamente: executa o runtime, cria output e receipts. Depois conferir `ok=true`, proveniência e inspeção visual autorizada; um hash/receipt não prova qualidade visual. Não executar renderização como efeito colateral de instalação.
@@ -95,4 +143,4 @@ Remover a variável do processo/profile que efetivamente a definiu e desativar a
 - [Source pinado](https://github.com/tt-a1i/archify/tree/25cf37080fc8b1dbe758a4efc3935b55f3327083), em particular `archify/package.json`, CLI, schemas e contrato de delivery.
 - [Operação do adaptador](../../integrations/archify/skills/archify/references/operations.md), [limites de segurança](../../integrations/archify/skills/archify/references/safety-and-evidence.md).
 
-**Estado:** source e contrato inspecionados; testes anteriores usaram runtime mock. Estes comandos de clone/instalação, renderização real e rollback não foram executados nesta alteração. O pin não é certificação de segurança ou qualidade visual.
+**Estado:** instruções macOS/Linux/Windows documentadas; source e contrato inspecionados; testes anteriores usaram runtime mock. Estes comandos de clone/instalação, renderização real e rollback não foram executados nesta alteração. O pin não é certificação de segurança ou qualidade visual.

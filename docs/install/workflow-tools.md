@@ -2,7 +2,7 @@
 
 ## Pré-requisitos e âmbito
 
-As 113 skills não constituem uma aplicação única a instalar. [DEPENDENCIES.md](../DEPENDENCIES.md) inventaria imports e famílias de ferramentas; ler uma skill não exige instalar os seus exemplos. Os runtimes integrados têm receitas próprias em [INSTALLATION.md](../INSTALLATION.md).
+**macOS, Linux e Windows:** escolher instalador/gestor e sintaxe do sistema em uso. As 113 skills não constituem uma aplicação única a instalar. [DEPENDENCIES.md](../DEPENDENCIES.md) inventaria imports e famílias de ferramentas; ler uma skill não exige instalar os seus exemplos. Os runtimes integrados têm receitas próprias em [INSTALLATION.md](../INSTALLATION.md).
 
 **Estado deste âmbito: versões/matriz por tarefa ainda não aprovadas.** Os procedimentos abaixo preparam isolamento e definem os gates; não afirmam que todos os exemplos estão prontos para produção. Não há pin universal seguro para stacks cloud/GPU/browser/MCP. Antes de habilitar uma destas ferramentas, completar a receita específica com OS, versão exata, artefacto/hash, conta/destinatários e teste. Enquanto faltar, o workflow que a exige fica bloqueado — não se usa `latest` ou um fallback de demo como resultado real.
 
@@ -10,7 +10,7 @@ As 113 skills não constituem uma aplicação única a instalar. [DEPENDENCIES.m
 
 | Ferramenta / stack | Quando necessária | Procedimento específico que precisa de seleção/revisão |
 |---|---|---|
-| Python 3 | Scripts da skill escolhida, helpers Planning | Distribuição oficial/gestor da organização; [instalação macOS](https://docs.python.org/3/using/mac.html). Verificar arquitetura, assinatura do installer e coexistência com Python do sistema. Não substituir `/usr/bin/python3`. |
+| Python 3 | Scripts da skill escolhida, helpers Planning | Distribuição oficial/gestor da organização; [downloads por sistema](https://www.python.org/downloads/). Verificar arquitetura, assinatura do installer e coexistência com Python do sistema. Não substituir `/usr/bin/python3`. |
 | PyYAML, Pillow | YAML e imagens, não todos os scripts | Venv por tarefa abaixo, versões/hashes escolhidos após verificar imports e interpreter. [pip](https://pip.pypa.io/en/stable/topics/repeatable-installs/) |
 | NumPy/ONNX/ONNX Runtime/PyTorch | Branches específicas de visão/benchmarks | Matriz OS/CPU/GPU/driver e wheels aprovados; [PyTorch](https://pytorch.org/get-started/locally/), [ONNX Runtime](https://onnxruntime.ai/docs/install/). Não misturar builds GPU/CPU por tentativa. |
 | Netmiko/TextFSM/ntc-templates | Coleção SSH de dispositivos | Venv por tarefa, pins compatíveis e host keys validadas; [Netmiko](https://ktbyers.github.io/netmiko/). Instalar biblioteca não autoriza sessão SSH ou push. |
@@ -21,10 +21,10 @@ As 113 skills não constituem uma aplicação única a instalar. [DEPENDENCIES.m
 | deepagents/LangChain/LangGraph/Zod | Desenvolvimento de uma aplicação Deep Agents | Projeto isolado e matriz de versões de APIs; [Deep Agents](https://docs.langchain.com/oss/python/deepagents/overview). Não instalar framework só para ler a skill; exemplos têm placeholders. |
 | Git/gh | Worktrees/review/PR escolhidos | [Git](https://git-scm.com/downloads), [GitHub CLI](https://cli.github.com/manual/). Verificar binário e origem; worktrees usam ferramenta dedicada do host. Autenticação remota e push exigem autorização. |
 | Terraform | Validar/provisionar IaC selecionado | [Installer oficial](https://developer.hashicorp.com/terraform/install), pin por projeto + provider lock. `init` descarrega módulos/providers e não é mera análise offline. |
-| AWS CLI / Azure CLI / gcloud | Operação cloud do fornecedor escolhido | [AWS](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), [Azure macOS](https://learn.microsoft.com/cli/azure/install-azure-cli-macos), [gcloud](https://cloud.google.com/sdk/docs/install). Escolher um, validar identidade/conta/região e política de SSO; não instalar os três por defeito. |
-| kubectl / Docker ou runtime escolhido | Kubernetes/containers aprovados | [kubectl](https://kubernetes.io/docs/tasks/tools/), [Docker macOS](https://docs.docker.com/desktop/setup/install/mac-install/). Contexto de cluster/daemon é decisão separada; não usar contexto default sem confirmação. Rever licenças e privilégio do daemon. |
+| AWS CLI / Azure CLI / gcloud | Operação cloud do fornecedor escolhido | [AWS](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), [Azure por sistema](https://learn.microsoft.com/cli/azure/install-azure-cli), [gcloud](https://cloud.google.com/sdk/docs/install). Escolher um, validar identidade/conta/região e política de SSO; não instalar os três por defeito. |
+| kubectl / Docker ou runtime escolhido | Kubernetes/containers aprovados | [kubectl](https://kubernetes.io/docs/tasks/tools/), [Docker por sistema](https://docs.docker.com/get-started/get-docker/). Contexto de cluster/daemon é decisão separada; não usar contexto default sem confirmação. Rever licenças e privilégio do daemon. |
 | gws | Operações Google Workspace selecionadas | [CLI oficial](https://github.com/googleworkspace/cli), skill específica e escopos OAuth mínimos; sem execução de demo como auditoria real. |
-| PowerShell + Graph/Exchange | M365/tenant selecionado | [PowerShell macOS](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-macos), [Graph SDK](https://learn.microsoft.com/powershell/microsoftgraph/installation), [Exchange Online](https://learn.microsoft.com/powershell/exchange/exchange-online-powershell). Selecionar módulos/versões e tenant, sem consentimento admin implícito. |
+| PowerShell + Graph/Exchange | M365/tenant selecionado | [PowerShell por sistema](https://learn.microsoft.com/powershell/scripting/install/installing-powershell), [Graph SDK](https://learn.microsoft.com/powershell/microsoftgraph/installation), [Exchange Online](https://learn.microsoft.com/powershell/exchange/exchange-online-powershell). Selecionar módulos/versões e tenant, sem consentimento admin implícito. |
 | Bash/jq/curl/sips | Smoke test e branches de scripts | Confirmar comandos e versões do OS/gestor aprovado; `sips` é específico macOS. Bash macOS pode não suportar recursos de Bash moderno de exemplos externos. Não prometer portabilidade sem testar. |
 | uv ou pipx | Alternativa de gestão Python, não requisito universal | [uv instalação](https://docs.astral.sh/uv/getting-started/installation/), [pipx instalação](https://pipx.pypa.io/stable/installation/). Preferir venv existente/revisado quando adequado; sem `curl | sh`, sem garantir pin de helper não selecionado. |
 
@@ -46,7 +46,20 @@ test -f "$REVIEWED_REQUIREMENTS"
 "$TASK_ENV/bin/python" -m pip check
 ```
 
-O lock deve incluir transitivas e hashes compatíveis com interpreter/CPU/OS; pode ser necessário wheelhouse fechado. Não fabricar ficheiro de requirements a partir de nomes numa tabela. Builds de source podem executar código e descarregar toolchains; rever essa necessidade separadamente. O pacote `security_scorer` é módulo local do skill-tester, não uma dependência PyPI a instalar.
+Equivalente Windows PowerShell, com os mesmos caminhos/lock aprovados:
+
+```powershell
+if (-not $env:APPROVED_PYTHON -or -not $env:TASK_ENV -or -not $env:REVIEWED_REQUIREMENTS) {
+    throw "Definir interpreter, ambiente novo e lock aprovados."
+}
+if (Test-Path $env:TASK_ENV) { throw "Ambiente já existe." }
+& $env:APPROVED_PYTHON -m venv "$env:TASK_ENV"
+$Python = Join-Path $env:TASK_ENV "Scripts\python.exe"
+& $Python -m pip install --require-hashes -r "$env:REVIEWED_REQUIREMENTS"
+& $Python -m pip check
+```
+
+Confirmar o exit code de cada comando nativo antes de avançar. O lock deve incluir transitivas e hashes compatíveis com interpreter/CPU/OS; pode ser necessário wheelhouse fechado. Não fabricar ficheiro de requirements a partir de nomes numa tabela. Builds de source podem executar código e descarregar toolchains; rever essa necessidade separadamente. O pacote `security_scorer` é módulo local do skill-tester, não uma dependência PyPI a instalar.
 
 ## Instalação — ferramentas Node/MCP por tarefa
 
@@ -58,6 +71,13 @@ set -euo pipefail
 test -f "$TASK_PROJECT/package-lock.json"
 # Gate: rever manifesto, lock, scripts e build antes de permitir lifecycle.
 npm ci --prefix "$TASK_PROJECT" --ignore-scripts
+```
+
+Windows PowerShell usa o mesmo npm, com sintaxe de variável própria:
+
+```powershell
+if (-not $env:TASK_PROJECT) { throw "Definir projeto isolado aprovado." }
+npm ci --prefix "$env:TASK_PROJECT" --ignore-scripts
 ```
 
 Scripts bloqueados podem ser necessários ao runtime. Revisá-los e autorizar uma instalação/build com scripts é um gate separado, não remover o flag silenciosamente. Um servidor MCP só é registado depois de build/output/path/transport/credenciais e restrições de ferramentas verificados. Usar gestão MCP do host, verificando instalações existentes antes de adicionar; não copiar configuração antiga Claude como se fosse Pi atual.

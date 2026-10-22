@@ -1,123 +1,84 @@
-# Host — Node, Pi e registo do pacote
+# Host — Node.js, npm e Pi nos três sistemas
 
 ## Pré-requisitos
 
-macOS arm64, utilizador sem root, Git, curl, tar e `shasum`. Comandos em Bash, fora do checkout. Se Node/Pi já existem, **não instalar outra cópia**: primeiro verificar proprietário/gestor e versão. Node **24.22.1 LTS** foi confirmado no índice oficial em 2026-10-22; é candidato documental compatível com os engines analisados, não runtime testado aqui. Pi **1.3.0** é a referência dos testes históricos; **1.4.0** foi observado instalado neste host, não homologado com o pacote.
+**macOS, Linux ou Windows.** Reutilizar Node/Pi existentes quando compatíveis; não criar instalações concorrentes. Node inclui npm. Para OmniRoute, Node 24 LTS satisfaz os engines publicados na referência consultada; confirmar com `npm view omniroute engines` antes de instalar. O requisito do host pode ser mais restrito que o manifesto das skills.
 
-```bash
-set -euo pipefail
-uname -s
-uname -m
-command -v node
+## Instalação
+
+### 1. Node.js com npm
+
+| Sistema | Caminho simples |
+|---|---|
+| macOS Intel / Apple Silicon | Descarregar o instalador LTS para a arquitetura correta em [nodejs.org](https://nodejs.org/en/download), executar o `.pkg` e reabrir o terminal. Se já usa gestor Node, continuar com esse gestor. |
+| Windows x64 / ARM64 | Descarregar o instalador LTS adequado em [nodejs.org](https://nodejs.org/en/download), instalar Node + npm com entrada no PATH e reabrir PowerShell. |
+| Linux | Na mesma página oficial, escolher a distribuição/arquitetura e seguir o método suportado, ou usar o gestor Node já aprovado. Confirmar a versão: o pacote `nodejs` da distribuição pode ser mais antigo que o exigido pelo OmniRoute. |
+
+Não é preciso descarregar npm separadamente, compilar Node ou criar um prefixo privado para começar. Downloads/instaladores têm efeitos no sistema e devem ser executados pelo operador. Em ambiente com política de versões, escolher LTS exata e verificar assinatura/checksum oficiais; isso não muda o procedimento normal das skills.
+
+Confirmar em qualquer sistema:
+
+```sh
 node --version
-command -v npm
 npm --version
-command -v pi
+```
+
+Se falhar, reabrir terminal e corrigir a instalação/PATH antes de avançar.
+
+### 2. Pi — apenas se ainda não existir
+
+Se `pi --version` já funciona, não reinstalar. Se não existe e se escolheu a distribuição npm oficial, nos três sistemas:
+
+```sh
+npm install -g @earendil-works/pi-coding-agent
 pi --version
 ```
 
-Se um comando faltar, executar apenas a instalação correspondente abaixo. Guardar a origem dos executáveis; um `pi` gerido não deve ser sobreposto por npm. Não precisa de alterar Node apenas porque executou `pi update`.
-
-## Instalação — Node apenas se necessário
-
-A distribuição oficial é instalada num prefixo privado e versionado. Não instala Homebrew nem mexe em profiles. Parar se OS/arquitetura diferirem.
-
-```bash
-set -euo pipefail
-test "$(uname -s)" = Darwin
-test "$(uname -m)" = arm64
-NODE_VERSION=24.22.1
-NODE_PREFIX="$HOME/.local/opt/node/$NODE_VERSION"
-NODE_STAGE="$HOME/.cache/devops-skills/node-$NODE_VERSION"
-test ! -e "$NODE_PREFIX"
-test ! -e "$NODE_STAGE"
-umask 077
-mkdir -p "$NODE_STAGE"
-cd "$NODE_STAGE"
-ARCHIVE="node-v$NODE_VERSION-darwin-arm64.tar.gz"
-curl --proto '=https' --tlsv1.2 --fail --show-error --location \
-  --proto-redir '=https' --output "$ARCHIVE" \
-  "https://nodejs.org/dist/v$NODE_VERSION/$ARCHIVE"
-curl --proto '=https' --tlsv1.2 --fail --show-error --location \
-  --proto-redir '=https' --output SHASUMS256.txt \
-  "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt"
-awk -v f="$ARCHIVE" '$2 == f { print }' SHASUMS256.txt > selected.sha256
-test "$(wc -l < selected.sha256 | tr -d ' ')" = 1
-# Hash revisto no manifesto oficial em 2026-10-22; divergência exige revisão.
-test "$(awk '{print $1}' selected.sha256)" = '89c682593d76cd44233fa53b1563264e7de9cbb189cad169135c5b4fadfbc0a7'
-shasum -a 256 --check selected.sha256
-mkdir -p "$NODE_PREFIX"
-tar -xzf "$ARCHIVE" -C "$NODE_PREFIX" --strip-components=1
-export PATH="$NODE_PREFIX/bin:$PATH"
-node --version
-npm --version
-```
-
-Resultado esperado: `v24.22.1`. SHA256 verifica integridade contra o manifesto recebido por TLS; para autenticidade independente, verificar também as assinaturas oficiais segundo a política da organização. Não alegar que TLS + checksum constitui uma auditoria de supply chain. Guardar manifesto e artefacto aprovados para rollback.
-
-### Pi — escolher instalação existente ou npm isolado
-
-Neste host, o launcher gerido já aponta para Pi 1.4.0. **Não executar a alternativa npm abaixo nesse caso.** Para uma máquina sem Pi e sem gestor existente, o pacote oficial npm permite um prefixo separado. Este exemplo conserva a referência **1.3.0**; uma adoção de 1.4.0 requer uma mudança aprovada e novos testes.
-
-```bash
-PI_VERSION=1.3.0
-PI_RELEASE="$HOME/.local/opt/pi/$PI_VERSION"
-test ! -e "$PI_RELEASE"
-mkdir -p "$PI_RELEASE"
-npm view "@earendil-works/pi-coding-agent@$PI_VERSION" version engines dist.integrity
-# Gate manual: confirmar pacote/versão, rever hooks/dependências e aprovar download.
-npm install --prefix "$PI_RELEASE" --save-exact \
-  "@earendil-works/pi-coding-agent@$PI_VERSION"
-"$PI_RELEASE/node_modules/.bin/pi" --version
-```
-
-A instalação npm pode executar lifecycle scripts de dependências; não a executar sem rever/autorizar esses efeitos. Guardar `package-lock.json` e `npm ls --prefix "$PI_RELEASE" --all` em inventário privado. Não substituir o launcher de uma instalação gerida, não copiar `auth.json`, não executar instalador remoto via pipe. Os ficheiros npm ficam em `$PI_RELEASE`, não em `devops-skills`.
+Não sobrepor um Pi gerido por outro instalador. A referência dos testes históricos deste projeto é Pi 1.3.0; Pi 1.4.0 foi observado neste host, ainda sem homologação SDK específica. Instalar a versão publicada não significa que todas as versões tenham sido testadas. Para fixar uma versão aprovada, acrescentar `@VERSAO` ao nome do pacote.
 
 ## Configuração
 
-Se foi escolhido npm isolado, usar o caminho absoluto acima ou acrescentar o seu `node_modules/.bin` ao PATH **apenas no processo desejado**, depois de revisão. Não gravar profiles automaticamente. O diretório de agente Pi pode ser personalizado e `~/.pi/agent` pode ser symlink; confirmar o destino real antes de backups ou edição.
+Registar **uma vez** o pacote local. Ajustar o caminho, preservando settings e logins existentes.
 
-Registar a raiz do pacote uma única vez:
+macOS/Linux:
 
 ```bash
-PACK="/caminho/absoluto/devops-skills"
-test -f "$PACK/package.json"
+pi install "/caminho/absoluto/devops-skills"
 pi list
-pi install "$PACK"
 ```
 
-Este comando altera settings Pi; obter aprovação e backup privado primeiro. Autenticação `/login` é ação separada do operador. Skills não instalam servidores. Não partilhar `auth.json` nem usar um dump de configurações como diagnóstico público.
+Windows PowerShell:
+
+```powershell
+pi install "C:\caminho\devops-skills"
+pi list
+```
+
+Isto regista as skills/extensões, não instala OmniRoute, Graphify ou Archify. Para o gateway: [instalação simples OmniRoute](omniroute.md).
 
 ## Verificação
 
-Dentro do Pi: `/reload`, consultar skills e executar `/devops-routing-status` se a extensão estiver carregada. Para `gateway-managed`, esperar `Routing disabled`. Isso não comprova OmniRoute. Verificar `pi list` para evitar módulos redundantes.
+Executar `node --version`, `npm --version`, `pi --version` e `pi list`. Dentro do Pi, `/reload`; no perfil gateway-managed, `/devops-routing-status` deve mostrar `Routing disabled`. Não prova saúde do servidor.
 
-Da raiz do checkout:
-
-```bash
-npm test
-```
-
-Testes SDK são separados e só após aprovação; `PI_SDK_ROOT` deve apontar para o SDK **da versão que se quer testar**, não para uma cópia antiga. Não anunciar Pi 1.4.0 homologado por executar testes com SDK 1.3.0.
+Para localizar executáveis: macOS/Linux `command -v node` e `command -v pi`; Windows `Get-Command node` e `Get-Command pi`. `npm prefix -g` e `npm root -g` mostram o destino global, não a pasta corrente. Se PowerShell bloquear o shim `.ps1`, usar o `.cmd` correspondente (`npm.cmd`, `pi.cmd`) sem alterar a política global.
 
 ## Operação
 
-Pi é iniciado pelo operador/host existente. Este guia não cria serviço Pi Web nem abre portas. As extensões não precisam de daemon próprio. Uma instalação managed pode manter várias releases; isso não é instalação no diretório corrente.
+Iniciar `pi` normalmente, com credenciais do operador. Não criar daemon nem instalar Pi Web por consequência deste guia. O diretório de agente pode ser personalizado; não copiar `auth.json` nem presumir que o path aparente não é symlink.
 
 ## Atualização e rollback
 
-Na CLI Pi 1.4.0, `pi update` atualiza **o Pi**; `pi update --extensions` reconcilia pacotes; `pi update --models` atualiza catálogos. Um pacote local continua a ser o checkout, não uma cópia npm. Verificar `pi update --help` na versão existente antes de executar: atualização não é um health check.
+Na CLI Pi 1.4.0: `pi update` atualiza o Pi, `pi update --extensions` reconcilia pacotes, `pi update --models` atualiza catálogos. Confirmar `pi update --help` na versão instalada. Para Node/Pi, usar **o mesmo gestor que fez a instalação**; uma instalação npm global pode ser atualizada com `npm install -g NOME_DO_PACOTE`.
 
-Antes de atualizar: backup privado de settings/auth, versão/gestor e release anterior. Não executar `pi update` como parte de carregar skills. Para npm isolado, instalar outra versão em **novo prefixo**, validar e trocar o PATH; rollback é voltar ao prefixo anterior e à configuração compatível. Para instalação gerida, usar o procedimento do gestor/instalador original, não editar arbitrariamente `current-version`. Nunca remover versões anteriores antes do teste de recuperação.
+Antes da mudança, registar versões e guardar backup privado da configuração/dados. Rollback: repor versão anterior pelo mesmo gestor e configuração compatível, sem apagar credenciais. Não modificar ficheiros internos de uma instalação gerida por tentativa. O checkout local de skills é atualizado via Git e `/reload`, não transformado em instalação npm dentro do source.
 
 ## Remoção
 
-Para desregistar só o pacote: `pi remove /caminho/absoluto/devops-skills`, preservando restantes entradas. Não apaga o checkout nem runtimes externos. Para remover um Pi/Node npm/manual isolado, primeiro retirar apenas o PATH/serviço criado e confirmar que nada usa o prefixo; arquivar ou remover **apenas esse prefixo aprovado**. Não apagar `~/.pi`, logins ou versões geridas para limpar uma instalação isolada.
+Para desregistar só as skills: `pi remove "CAMINHO_DO_CHECKOUT"`. Não apaga source, runtimes ou dados. Se Pi foi instalado por npm global, `npm uninstall -g @earendil-works/pi-coding-agent`; não usar este comando para gerir instalações de outro gestor. Node é removido pelo mecanismo original do OS/gestor, apenas se nenhum consumidor precisar dele. Preservar configurações/backups até decidir retenção.
 
 ## Fontes e estado
 
-- [Distribuições Node](https://nodejs.org/dist/index.json), [release e checksums](https://nodejs.org/dist/v24.22.1/).
-- [Pi oficial](https://github.com/earendil-works/pi), [metadata npm 1.4.0](https://registry.npmjs.org/@earendil-works%2fpi-coding-agent/1.4.0).
-- `docs/cli.md` e `docs/packages.md` dos SDKs locais 1.3.0/1.4.0 confirmam os comandos e a distinção entre pacote local e instalação do host; consultar a versão instalada.
+- [Download Node por sistema](https://nodejs.org/en/download), [instalar Node e npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+- [Pi oficial](https://github.com/earendil-works/pi), documentação `cli.md`/`packages.md` da versão instalada.
 
-**Estado:** guia revisto contra fontes; nenhum download de runtime, instalação ou arranque foi realizado para o escrever. A instalação limpa e o rollback deste procedimento ainda não foram executados. Não é uma garantia de suporte de todas as versões/plataformas.
+**Estado:** instruções multiplataforma documentadas; novas instalações e rollback não foram executados nesta alteração. Testes offline não homologam instaladores de cada OS nem a compatibilidade de qualquer versão futura.
