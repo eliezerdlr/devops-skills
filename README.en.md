@@ -179,7 +179,7 @@ New independent local contributions are also distributed under MIT, as authorise
 
 ## Model availability and visual communication
 
-- **[Model resilience / OmniRoute](integrations/omniroute/README.md):** explicit fallback across existing Pi API and `/login` providers. Requires **Pi 1.3.0**, a private approved policy and selecting its virtual model. Inert without policy; no OAuth export. The external gateway requires loopback binding, an inference key, approved recipients and billing controls.
+- **[OmniRoute / Model resilience](integrations/omniroute/README.md):** selected operational profile: an **external, operator-installed OmniRoute gateway** on the machine, with its dashboard and gateway-owned fallback. Required for that profile, not an npm dependency or a requirement to load skills. The [operational contract](integrations/omniroute/operational-dependency.json) separates analyzed source from installed/validated runtime (still unverified). Keep the Pi virtual router **off** in this profile; native API/OAuth fallback remains a separate opt-in alternative on **Pi 1.3.0**. No automatic installation/startup or token export.
 - **[Archify](integrations/archify/README.md):** on-demand interactive HTML diagrams with plan/execute adapter and pinned external **3.2.0** runtime. Generic symbols by default; third-party marketing logos require confirmed rights. No personal-browser opening or candidate JavaScript execution.
 
 Both skills belong to the single root installation. Synthetic tests do not validate real gateways/accounts or Archify execution. Initial routing is text-only, thinking off; no unlimited capacity or absolute financial guarantee.

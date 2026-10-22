@@ -179,7 +179,7 @@ As novas contribuições locais independentes são também disponibilizadas sob 
 
 ## Disponibilidade de modelos e comunicação visual
 
-- **[Model resilience / OmniRoute](integrations/omniroute/README.md):** fallback explícito entre providers API e subscrições `/login` existentes. Pi **1.3.0**, política privada e seleção do modelo virtual são necessários; sem política, a extensão permanece inativa. Nenhum token OAuth é exportado. Gateway externo, loopback + chave e destinatários/custos aprovados.
+- **[OmniRoute / Model resilience](integrations/omniroute/README.md):** perfil operacional escolhido: **gateway OmniRoute externo**, instalado e gerido pelo operador diretamente na máquina, com painel e fallback no gateway. É dependência deste perfil, não dependência npm nem requisito para carregar as skills. O [contrato operacional](integrations/omniroute/operational-dependency.json) distingue versão analisada de instalada/homologada (ainda não verificadas). Router virtual Pi **desligado** neste perfil; fallback nativo API/OAuth continua alternativa opt-in em Pi **1.3.0**. Sem instalação/ativação automática nem exportação de tokens.
 - **[Archify](integrations/archify/README.md):** diagramas HTML interativos sob pedido, com adaptador plan/execute e runtime externo **3.2.0** pinado. Símbolos genéricos por defeito; sem logos empresariais/marketing sem direitos confirmados. Sem abrir browser ou executar JavaScript fornecido como candidato.
 
 Ambas as skills já estão incluídas na única instalação raiz. Os testes de integração usam mocks; ativação de contas/gateway, pedidos pagos e execução real Archify são passos separados, mediante aprovação. O fallback inicial é text-only, thinking off, e não garante tokens infinitos nem um teto financeiro real.

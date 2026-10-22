@@ -127,7 +127,13 @@ The extension also passed strict TypeScript checking with TypeScript 5.9.3 again
 
 These results validate the scoped implementation, **not universal production readiness or independent security certification**. Live provider authentication/error modes, RPC approval UI, Windows/macOS runtime behaviour and real network operations have not been certified here. Before granting operational use, confirm your provider/data policy and perform an approved real-model run with synthetic evidence. No production credentials are required for that first run.
 
-## Approved fallback recipients (0.5.0)
+## Selected gateway-managed deployment
+
+OmniRoute is the operator-managed external gateway for the selected operational profile; [dependency and runbook](../integrations/omniroute/README.md). Select an approved physical `omniroute` model/combo, leave `DEVOPS_MODEL_POLICY` unset and keep the Pi virtual router off. No service or model selection is changed automatically.
+
+The approval of a physical gateway model does not discover or enumerate its internal fallback recipients. The operator must approve and restrict those destinations, tools, retention and billing server-side before supplying evidence. SDK/client retries and gateway/upstream retries need a combined bound. Do not infer the guarantees of the Pi virtual router below apply to a physical gateway; OmniRoute streaming, auth, tool/cancel and failure behavior need separate validation.
+
+## Approved fallback recipients — alternative native Pi router (0.5.0)
 
 When the selected model is the configured DevOps router, the real approval dialog lists **all** recipient provider/model/origin/billing routes, policy hash and logical-attempt limit. The approval fingerprint binds the plan, pinned selection and disclosed immutable policy. Changing the policy file/ID prevents a new worker approval until reload. Unknown virtual routers are refused for workers.
 

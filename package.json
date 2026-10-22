@@ -12,10 +12,15 @@
     "typebox": "*"
   },
   "scripts": {
-    "test": "node --test tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs tests/model-resilience.test.mjs tests/archify-integration.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
+    "test": "node --test tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs tests/model-resilience.test.mjs tests/omniroute-contract.test.mjs tests/archify-integration.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
     "test:pi": "node --test tests/ops-pi.test.mjs tests/model-resilience-pi.test.mjs",
     "test:planning": "node --test tests/planning-pi.test.mjs",
     "test:package": "node --test tests/unified-package.test.mjs"
+  },
+  "devopsSkills": {
+    "operationalDependencies": [
+      "./integrations/omniroute/operational-dependency.json"
+    ]
   },
   "description": "Unified DEV/OPS/SEC/web skills, visual diagrams and explicit quota fallback with bounded approved analysis workflows.",
   "pi": {
