@@ -4,8 +4,8 @@ Na versão **0.5.0**, o manifesto raiz inclui todos os recursos aprovados:
 
 | Recurso | Quantidade | Disponibilidade |
 |---|---:|---|
-| Skills especialistas | **113** | 99 anteriores + 14 aprovadas, todas no pacote principal |
-| Catálogo | 1 | engineering-skills; 114 recursos de skills ao todo |
+| Skills especialistas | **117** | 99 anteriores + 18 aprovadas (incluindo quatro adaptações AWS/VPN), todas no pacote principal |
+| Catálogo | 1 | engineering-skills; 118 recursos de skills ao todo |
 | Prompts de papéis | **8** | 3 rede, 3 segurança, 2 testes/performance |
 | Extensões | 2 | ops-orchestrator + model-resilience; routing sem política explícita permanece inativo |
 
@@ -63,10 +63,12 @@ Os manifestos dos módulos ficam como inventários internos/compatibilidade com 
 | Testes/performance | `/test-engineer`, `/web-performance-auditor` | Papéis na sessão atual, não isolamento de permissões |
 | Contexto do projeto | `/skill:graphify` | Skill disponível; mapas exigem CLI externo preparado |
 | Rede | `/network-architect`, `/network-troubleshooter`, `/network-config-reviewer` | Prompts atuais; workers independentes só via ops_agent/ops_workflow e aprovação |
+| VPN | `/skill:homelab-wireguard-vpn`, `/skill:aws-site-to-site-vpn` | WireGuard remoto e IPsec AWS são funções diferentes; nenhuma rede alterada por carregar instruções |
+| AWS FinOps/revisão | `/skill:aws-billing-and-cost-management`, `/skill:aws-well-architected-review` | Dados e custos explícitos, leitura por defeito; sem MCP/CLI automático nem certificação |
 
 ## Disponível não significa executar tudo no arranque
 
-Pi anuncia nome/descrição e carrega instruções completas sob demanda. As 113 skills não iniciam 113 processos ou agentes. O manifesto não instala ferramentas ou credenciais; a extensão de routing carrega inativa sem política; não há novos hooks nem chamadas a modelos no arranque.
+Pi anuncia nome/descrição e carrega instruções completas sob demanda. As 117 skills não iniciam 117 processos ou agentes. O manifesto não instala ferramentas ou credenciais; a extensão de routing carrega inativa sem política; não há novos hooks nem chamadas a modelos no arranque.
 
 Dependências de workflows continuam explícitas, como em qualquer ferramenta DevOps:
 
@@ -75,7 +77,7 @@ Dependências de workflows continuam explícitas, como em qualquer ferramenta De
 - **Segurança:** os validadores Node estão incluídos; executar o código do alvo exige o sandbox e as autorizações documentadas. Prompts não implementam isolamento.
 - **Cloud/IT/rede:** CLI, versões, contas e acesso são requisitos por tarefa, não bootstrap automático.
 
-Duas exclusões mantêm uma razão operacional concreta: **Planning with Files** inclui hooks/processos próprios e permanece um addon de runtime opt-in; **UniFi** continua não aprovado e fora do carregamento. Não são dependências ocultas das 113 skills principais.
+Duas exclusões mantêm uma razão operacional concreta: **Planning with Files** inclui hooks/processos próprios e permanece um addon de runtime opt-in; **UniFi** continua não aprovado e fora do carregamento. Não são dependências ocultas das 117 skills principais.
 
 ## Testar o contrato único
 
@@ -84,7 +86,7 @@ npm test
 PI_SDK_ROOT=/caminho/do/pi-coding-agent npm run test:pi
 ```
 
-`npm test` executa o contrato do pacote e as suítes das capacidades aprovadas, não apenas o motor de rede. O teste Pi deve descobrir **114 recursos de skills, 8 prompts e 2 extensões** com apenas a raiz. Não são chamadas APIs reais nem infraestrutura.
+`npm test` executa o contrato do pacote e as suítes das capacidades aprovadas, não apenas o motor de rede. O teste Pi deve descobrir **118 recursos de skills, 8 prompts e 2 extensões** com apenas a raiz. Não são chamadas APIs reais nem infraestrutura.
 
 A suíte de planeamento é separada porque ativa um runtime adicional em ambiente de teste:
 
@@ -92,11 +94,11 @@ A suíte de planeamento é separada porque ativa um runtime adicional em ambient
 PI_SDK_ROOT=/caminho/do/pi-coding-agent npm run test:planning
 ```
 
-Ela deve descobrir 115 recursos de skills, 8 prompts e 3 extensões quando o addon é selecionado. Descoberta correta não comprova qualidade de respostas de modelos, credenciais ou testes em produção.
+Ela deve descobrir 119 recursos de skills, 8 prompts e 3 extensões quando o addon é selecionado. Descoberta correta não comprova qualidade de respostas de modelos, credenciais ou testes em produção.
 
 ## English summary
 
-Version 0.5.0 has one public installation entrypoint: the repository root. It includes 113 specialist skills, their catalogue, eight prompts and orchestration plus explicit opt-in routing extensions. Internal modules retain attribution and supporting files but require no separate registration. Remove only legacy module registrations after confirming the root, preserve other settings, and reload. External tools remain explicit workflow prerequisites; no hidden installs, new hooks or automatic audits are introduced.
+Version 0.5.0 has one public installation entrypoint: the repository root. It includes 117 specialist skills, their catalogue, eight prompts and orchestration plus explicit opt-in routing extensions. Internal modules retain attribution and supporting files but require no separate registration. Remove only legacy module registrations after confirming the root, preserve other settings, and reload. External tools remain explicit workflow prerequisites; no hidden installs, new hooks or automatic audits are introduced.
 
 ## Adições em 0.5.0
 

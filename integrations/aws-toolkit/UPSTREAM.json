@@ -1,0 +1,33 @@
+{
+  "repository": "https://github.com/aws/agent-toolkit-for-aws",
+  "commit": "9ab50636d12510dc351ff02fd7966efa4dba4341",
+  "license": "Apache-2.0",
+  "copyright": "Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.",
+  "source_sha256": {
+    "LICENSE": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
+    "NOTICE": "d4290ed64c2edd0fce1d84e3f9dfb2881240fe534def76b8cd29ed6af683e287",
+    "skills/core-skills/aws-billing-and-cost-management/SKILL.md": "d631ab1017bb779fd0b00ddd8b032e18652f2fa2fc1c232b64335d383151bdd1",
+    "skills/core-skills/aws-billing-and-cost-management/references/deterministic-calculations.md": "bb8d3df2c7beed78bd850f0d36bbe8ac34b66acd7e2d0e99d994932fd8e01c29",
+    "skills/core-skills/aws-billing-and-cost-management/references/cost-audit.md": "43f4114a18fb8770d66827369452d335e8eea88bbcf8b1898655d0e4dc926077",
+    "skills/core-skills/aws-billing-and-cost-management/references/savings-plans.md": "2b2f6569bf48a7896f41cbd09db94b2cdf5d38882bb2099e490ed061129ec9e6",
+    "skills/core-skills/aws-well-architected-review/SKILL.md": "aa8fef39ef6d64365e48827d9acc90b2b8755023f5c177341cf1c954c1057811",
+    "skills/core-skills/aws-well-architected-review/references/review-modes.md": "775af21410b1261888a74da9555bd9593c47022937dcd02b966035305d1a19d9",
+    "skills/core-skills/aws-well-architected-review/references/security-considerations.md": "8170b65abe7187fcb4fbdcff2c1cf9d286335b07702ba2f3fa6d60197c1732c6",
+    "skills/specialized-skills/networking-and-content-delivery-skills/sitetositevpn/SKILL.md": "484a335909c2d8841c70d15c4bfde290c4214b5667ca04850d91e430d0e99e82",
+    "skills/specialized-skills/networking-and-content-delivery-skills/sitetositevpn/references/creating-a-site-to-site-vpn-connection.md": "df916c71ac9a46dc001884745056c70be89c714515e4279e211a3facc6671fa0",
+    "skills/specialized-skills/networking-and-content-delivery-skills/sitetositevpn/references/applying-the-customer-gateway-device-configuration.md": "fc0a98ad92439d9e9281e654f5f73e46a9258e94ced33b8efea09bd3b626f209",
+    "skills/specialized-skills/networking-and-content-delivery-skills/sitetositevpn/references/making-a-connection-highly-available.md": "202f9ca8d474c86db0450fc734d4e07b8d596b1e6d983a5d9b0230456df5c205"
+  },
+  "source_distribution": "Selected source paths/hashes record provenance; upstream skill bodies and scripts are not bundled. LICENSE and NOTICE are preserved verbatim.",
+  "registered_skills": [
+    "aws-billing-and-cost-management",
+    "aws-site-to-site-vpn",
+    "aws-well-architected-review"
+  ],
+  "modifications": [
+    "Rewritten concise guidance-first Pi entrypoints and scoped local references; VPN renamed with AWS prefix.",
+    "Removed implicit installation, mandatory MCP, automatic AWS setup, forced full-corpus crawl, hooks and secret wrapper.",
+    "Added approval/cost/data boundaries, rollback, secret-safe output and explicit offline/partial evidence modes."
+  ],
+  "registration": "Included by the root package; component manifest is an inventory, not a separate installation."
+}

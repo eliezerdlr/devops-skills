@@ -131,7 +131,7 @@ test('role prompts disclose same-session execution and prohibit target-code exec
 
 test('catalogue and notices include the MIT security component in the unified package', async () => {
   const catalogue = await readFile(resolve(root, 'skills/engineering-skills/SKILL.md'), 'utf8');
-  assert.match(catalogue, /Catalogue of 113 engineering skills/);
+  assert.match(catalogue, /Catalogue of 117 engineering skills/);
   assert.match(catalogue, /\]\(\.\.\/\.\.\/integrations\/security-audit\/skills\/security-audit\/SKILL\.md\)/);
   const notices = await readFile(resolve(root, 'THIRD_PARTY_NOTICES.md'), 'utf8');
   assert.match(notices, /Cloudflare — Security Audit/);

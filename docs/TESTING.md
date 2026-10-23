@@ -18,7 +18,7 @@ pi list
 
 Se já estiver registada, atualizar e recarregar é suficiente. Não registar módulos internos adicionalmente. Ver [pacote único e migração de configurações antigas](UNIFIED-PACKAGE.md); preservar configurações não relacionadas e filtros intencionais.
 
-A raiz expõe **113 especialistas + 1 catálogo = 114 recursos de skills**, **8 prompts** e **2 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
+A raiz expõe **117 especialistas + 1 catálogo = 118 recursos de skills**, **8 prompts** e **2 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
 
 ## 2. Recarregar e conferir
 
@@ -71,17 +71,17 @@ PI_SDK_ROOT="$(npm root -g)/@earendil-works/pi-coding-agent" npm run test:pi
 
 Confirmar antes que o caminho existe. Numa instalação pi-web-ui, o SDK pode estar nas dependências dessa aplicação, não diretamente em npm root.
 
-Os testes verificam descoberta de **114 skills / 8 prompts / 2 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os inventários internos. Também verificam quatro ferramentas de orquestração, duas commands OPS e uma command de routing, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
+Os testes verificam descoberta de **118 skills / 8 prompts / 2 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os inventários internos. Também verificam quatro ferramentas de orquestração, duas commands OPS e uma command de routing, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
 
 ## 5. Planeamento persistente: teste do addon de runtime
 
-O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 113 skills.
+O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 117 skills.
 
 ```bash
 PI_SDK_ROOT=/caminho/real/@earendil-works/pi-coding-agent npm run test:planning
 ```
 
-A descoberta combinada deve ser **115 skills / 8 prompts / 3 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
+A descoberta combinada deve ser **119 skills / 8 prompts / 3 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
 
 ## 6. Smoke tests manuais sem ações externas
 
@@ -121,6 +121,14 @@ No SDK instalado **Pi 1.3.0**, a cópia isolada passou **180 testes offline + 28
 - A revisão independente identificou três findings (length replay, effective origin, OAuth != subscrição); foram corrigidos e as regressões passaram. A revisão final não identificou blocker concreto no escopo.
 
 Comandos continuam npm test, npm run test:pi e npm run test:planning, com PI_SDK_ROOT explícito para os dois últimos. As referências anteriores a type checking/Pi 1.2.0 são históricas; esta alteração não reinstalou TypeScript nem alega nova prova estática completa.
+
+## Integração AWS Toolkit e ECC WireGuard — validação atual
+
+Quatro adaptações documentais acrescentam FinOps AWS, IPsec Site-to-Site VPN, revisão Well-Architected e WireGuard de homelab. A raiz descobre **117 especialistas + catálogo = 118 recursos / 8 prompts / 2 extensões**; com addon Planning, **119 / 8 / 3**. As contagens nas secções históricas referem-se aos respetivos snapshots, não ao inventário atual.
+
+Validação local: **205 testes offline + 28 SDK Pi 1.3.0 + 11 planning = 244 testes**, sem falhas/skips. `tests/aws-vpn-integration.test.mjs` acrescenta oito testes de registo, proveniência/licenças, integridade completa dos ficheiros distribuídos, links locais, ausência de executáveis/dependências novas e presença das salvaguardas documentais. As regressões de inventário existentes foram atualizadas sem remover cobertura. `git diff --check` passou.
+
+Os testes SDK verificaram descoberta sem colisões e sem diagnostics. Testes de texto/regex não impõem política ao modelo nem provam isolamento de segredos, permissões AWS, firewall ou funcionamento VPN. Não houve instalação, autenticação/consulta AWS, WireGuard real, alteração de rede, MCP, teste de failover/revogação real ou benchmark. Extensões de runtime não foram modificadas. Sem novo typecheck, execução de CI remoto ou homologação Pi 1.4.0; os testes continuaram a usar o SDK de referência já instalado 1.3.0.
 
 ## Correções de revisão — serviços e SDK de referência
 

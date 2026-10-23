@@ -2,7 +2,7 @@
 
 ## Pré-requisitos e âmbito
 
-**macOS, Linux e Windows:** escolher instalador/gestor e sintaxe do sistema em uso. As 113 skills não constituem uma aplicação única a instalar. [DEPENDENCIES.md](../DEPENDENCIES.md) inventaria imports e famílias de ferramentas; ler uma skill não exige instalar os seus exemplos. Os runtimes integrados têm receitas próprias em [INSTALLATION.md](../INSTALLATION.md).
+**macOS, Linux e Windows:** escolher instalador/gestor e sintaxe do sistema em uso. As 117 skills não constituem uma aplicação única a instalar. [DEPENDENCIES.md](../DEPENDENCIES.md) inventaria imports e famílias de ferramentas; ler uma skill não exige instalar os seus exemplos. Os runtimes integrados têm receitas próprias em [INSTALLATION.md](../INSTALLATION.md).
 
 **Estado deste âmbito: versões/matriz por tarefa ainda não aprovadas.** Os procedimentos abaixo preparam isolamento e definem os gates; não afirmam que todos os exemplos estão prontos para produção. Não há pin universal seguro para stacks cloud/GPU/browser/MCP. Antes de habilitar uma destas ferramentas, completar a receita específica com OS, versão exata, artefacto/hash, conta/destinatários e teste. Enquanto faltar, o workflow que a exige fica bloqueado — não se usa `latest` ou um fallback de demo como resultado real.
 

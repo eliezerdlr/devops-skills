@@ -12,7 +12,7 @@
     "typebox": "*"
   },
   "scripts": {
-    "test": "node --test tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs tests/model-resilience.test.mjs tests/omniroute-contract.test.mjs tests/external-installation.test.mjs tests/archify-integration.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
+    "test": "node --test tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs tests/model-resilience.test.mjs tests/omniroute-contract.test.mjs tests/external-installation.test.mjs tests/archify-integration.test.mjs tests/aws-vpn-integration.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
     "test:pi": "node --test tests/ops-pi.test.mjs tests/model-resilience-pi.test.mjs",
     "test:planning": "node --test tests/planning-pi.test.mjs",
     "test:package": "node --test tests/unified-package.test.mjs"
@@ -40,7 +40,10 @@
       "./integrations/web-quality/skills/web-seo/SKILL.md",
       "./integrations/web-quality/skills/web-best-practices/SKILL.md",
       "./integrations/omniroute/skills/model-resilience/SKILL.md",
-      "./integrations/archify/skills/archify/SKILL.md"
+      "./integrations/archify/skills/archify/SKILL.md",
+      "./integrations/aws-toolkit/skills/aws-billing-and-cost-management/SKILL.md",
+      "./integrations/aws-toolkit/skills/aws-site-to-site-vpn/SKILL.md",
+      "./integrations/aws-toolkit/skills/aws-well-architected-review/SKILL.md"
     ],
     "extensions": [
       "./extensions/ops-orchestrator/index.ts",

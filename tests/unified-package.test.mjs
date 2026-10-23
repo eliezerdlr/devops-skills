@@ -17,9 +17,10 @@ const approvedNames = [
   'graphify', 'security-audit', 'constraint-driven-development', 'context-engineering',
   'source-driven-development', 'code-simplification', 'web-quality-audit', 'web-performance',
   'core-web-vitals', 'web-accessibility', 'web-seo', 'web-best-practices', 'model-resilience', 'archify',
+  'aws-billing-and-cost-management', 'aws-site-to-site-vpn', 'aws-well-architected-review',
 ];
 
-test('root manifest includes all 14 approved specialists and five added prompts', async () => {
+test('root manifest includes all 17 approved modular specialists and five added prompts', async () => {
   const pkg = await assertUnifiedManifest();
   assert.equal(pkg.version, '0.5.0');
   const names = [];
@@ -29,7 +30,7 @@ test('root manifest includes all 14 approved specialists and five added prompts'
   for (const path of pkg.pi.prompts) await access(resolve(root, path));
 });
 
-test('single package has 113 specialists plus catalogue, no duplicate skill/prompt names', async () => {
+test('single package has 117 specialists plus catalogue, no duplicate skill/prompt names', async () => {
   const paths = await registeredSkillFiles();
   assert.equal(paths.length, skillResourceCount);
   const names = await Promise.all(paths.map(async path => nameOf(await readFile(path, 'utf8'))));
@@ -44,7 +45,7 @@ test('single package has 113 specialists plus catalogue, no duplicate skill/prom
 
 test('catalogue counts and links include all approved resources as main package features', async () => {
   const text = await read('skills/engineering-skills/SKILL.md');
-  assert.match(text, /Catalogue of 113 engineering skills/);
+  assert.match(text, /Catalogue of 117 engineering skills/);
   assert.match(text, /All specialists below are included by the main package manifest/);
   assert.doesNotMatch(text, /not in the 99 core|Optional source-first security|Optional project context/);
   const pkg = await assertUnifiedManifest();
@@ -62,12 +63,12 @@ test('one public install entrypoint replaces per-module installation instruction
   assert.match(migration, /não edita as tuas configurações globais automaticamente/);
   assert.match(migration, /pi remove .*integrations\/graphify/);
   assert.match(migration, /Não remover a entrada raiz/);
-  assert.match(migration, /114 recursos de skills, 8 prompts e 2 extensões/);
+  assert.match(migration, /118 recursos de skills, 8 prompts e 2 extensões/);
 });
 
 test('standard npm test covers all included capability suites and source validators', async () => {
   const pkg = await assertUnifiedManifest();
-  for (const file of ['ops-engine.test.mjs', 'graphify-integration.test.mjs', 'security-audit-integration.test.mjs', 'addy-integrations.test.mjs', 'unified-package.test.mjs', 'model-resilience.test.mjs', 'archify-integration.test.mjs', 'validate-findings.test.cjs', 'validate-coverage-ledger.test.cjs']) {
+  for (const file of ['ops-engine.test.mjs', 'graphify-integration.test.mjs', 'security-audit-integration.test.mjs', 'addy-integrations.test.mjs', 'unified-package.test.mjs', 'model-resilience.test.mjs', 'archify-integration.test.mjs', 'aws-vpn-integration.test.mjs', 'validate-findings.test.cjs', 'validate-coverage-ledger.test.cjs']) {
     assert.ok(pkg.scripts.test.includes(file), `default test must run ${file}`);
   }
   assert.doesNotMatch(pkg.scripts.test, /npm install|npx|pip|curl/);

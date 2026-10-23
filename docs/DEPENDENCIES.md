@@ -10,7 +10,7 @@ The default `npm test` now also checks external-installation documentation. Thos
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares all 113 specialist skills plus their catalogue, eight same-session role prompts and locally authored ops-orchestrator/model-resilience extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core, pi-ai and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares all 117 specialist skills plus their catalogue, eight same-session role prompts and locally authored ops-orchestrator/model-resilience extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core, pi-ai and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
 See [ORCHESTRATION.md](ORCHESTRATION.md) for the executable integration, approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 
@@ -30,7 +30,7 @@ Clone to a chosen directory, then merge a `packages` entry into the existing `~/
 }
 ```
 
-Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 14 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
+Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 17 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
 
 ### Register the checkout as a local Pi package
 
@@ -49,6 +49,14 @@ Do not copy another project's SYSTEM.md, AGENTS.md or lifecycle hooks into the g
 The pinned upstream Pi package lives in `integrations/planning-with-files/upstream/` and is **not selected by the main manifest**. Register it separately to add persistent planning and native Pi hooks; see the [integration guide](../integrations/planning-with-files/README.md) and [settings example](../examples/pi-planning-settings.json). It uses the host Pi SDK as a peer dependency. Do not install its nested Vitest development environment to use the extension.
 
 Its session-start recovery helper can spawn uv/Python; attestation helpers use sh or PowerShell. Start with `PWF_MODE=notify UV_OFFLINE=1 UV_PYTHON_DOWNLOADS=never` to avoid automatic end-of-turn continuation and implicit uv downloads. Explicit `/plan-loop` remains capable of periodic model calls even in notify mode. Plan activation is not infrastructure approval. Eleven targeted tests passed against Pi 1.2.0, plus strict type checking of its extension; this does not validate every bundled helper or operating system.
+
+## AWS Toolkit and ECC WireGuard — instructions, not installed services
+
+The root includes three [AWS Toolkit adaptations](../integrations/aws-toolkit/README.md) (FinOps, AWS Site-to-Site VPN and Well-Architected review) and the [ECC WireGuard adaptation](../skills/engineering-skills/homelab-wireguard-vpn/SKILL.md). Reading these Markdown skills requires no new external dependency. No AWS CLI, uv/Python, proxy, MCP, cloud agent, WireGuard service, install hook or root npm dependency is bundled or installed by this addition.
+
+Actual AWS queries require existing approved AWS CLI/SDK or an explicitly configured optional MCP, temporary credentials, account/region scope and a query/cost budget. Cost Explorer/Athena may charge even for read-only analysis; creating VPN resources, monitoring or commitments needs separate approval. Calculations use available calculator/local tools only when needed. No live AWS validation has been performed by the integration tests.
+
+Actual WireGuard deployment needs supported endpoint/client software, OS-specific networking tools and privileges, plus an approved routing/firewall/IPv6/rollback plan. Loading the skill does not set these up. Documentation is portable across macOS/Linux/Windows; no claim of operational three-OS homologation or measured VPN performance is made. DDNS automation and Python configuration generation were intentionally excluded. Tests validate instruction contracts and integrity, not that an agent will obey them or that a real VPN works.
 
 ## Included engineering and web quality modules
 

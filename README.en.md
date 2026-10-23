@@ -4,7 +4,7 @@
 
 A collection of skills for engineering, DevOps, cybersecurity, and IT operations.
 
-One package includes **113 skills/sub-skills**, **8 prompts** for network/security/testing/performance, and two extensions, including **real subagents and declarative analysis workflows**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
+One package includes **117 skills/sub-skills**, **8 prompts** for network/security/testing/performance, and two extensions, including **real subagents and declarative analysis workflows**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
 
 ## External installations — start here
 
@@ -34,7 +34,7 @@ Edit `~/.pi/agent/settings.json` and add the checkout to the existing `packages`
 
 Replace the path with your actual checkout location. **Do not replace the entire settings file** if it already contains configuration: preserve other fields and paths.
 
-The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 113 specialists, the catalogue, eight prompts and two extensions, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
+The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 117 specialists, the catalogue, eight prompts and two extensions, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
 
 ### Option B — Install the checkout as a Pi package
 
@@ -76,7 +76,7 @@ Already registered individual modules? Follow the [single-package migration guid
 
 ## 3. Enable operational capabilities
 
-**Registering the single root package makes all 113 skills available.** Running their workflows may require additional setup:
+**Registering the single root package makes all 117 skills available.** Running their workflows may require additional setup:
 
 | Capability | Separate setup |
 |---|---|
@@ -102,7 +102,7 @@ The [dsh-error-handling](skills/engineering-skills/dsh-error-handling/SKILL.md) 
 
 ### ECC network agents
 
-Eight ECC skills and three agents adapted as Pi prompts are included: `/network-architect`, `/network-troubleshooter`, and `/network-config-reviewer`. Both `pi install` and a `packages` entry in `settings.json` register them through the manifest.
+Nine ECC skills (including adapted WireGuard guidance) and three agents adapted as Pi prompts are included: `/network-architect`, `/network-troubleshooter`, and `/network-config-reviewer`. Both `pi install` and a `packages` entry in `settings.json` register them through the manifest.
 
 These are roles in the current session, **not autonomous subagents or permission isolation**. See the [agent index](agents/README.md) and [post-pull testing guide](docs/TESTING.md).
 
@@ -127,7 +127,13 @@ Two MIT modules already registered by the root manifest; no separate Pi installa
 - [Addy Engineering](integrations/addy-engineering/README.md): four adapted constraint/context/official-source/simplification skills and two same-session personas, not autonomous subagents. ADR/adversarial-review material is supplementary.
 - [Web Quality & SEO](integrations/web-quality/README.md): six skills for web audits, performance, Core Web Vitals, accessibility, technical/on-page SEO and browser best practices, with product/structured-data/internationalisation references.
 
-Their ten skills and two prompts are part of the package's 113 specialists and eight prompts. Loading them installs no tools, hooks, browsers/MCP or analytics. Complete selected references do not establish enforcement, measured metrics, WCAG conformance or ranking gains. Web quality is not a complete marketing/advertising platform; the guides qualify tool dependencies and non-universal examples.
+Their ten skills and two prompts are part of the package's 117 specialists and eight prompts. Loading them installs no tools, hooks, browsers/MCP or analytics. Complete selected references do not establish enforcement, measured metrics, WCAG conformance or ranking gains. Web quality is not a complete marketing/advertising platform; the guides qualify tool dependencies and non-universal examples.
+
+### AWS FinOps, framework review and VPN — included
+
+Three [AWS Agent Toolkit adaptations](integrations/aws-toolkit/README.md) add `aws-billing-and-cost-management`, `aws-site-to-site-vpn` and `aws-well-architected-review`. The ECC [homelab-wireguard-vpn](skills/engineering-skills/homelab-wireguard-vpn/SKILL.md) skill covers remote device access to a homelab; AWS VPN is IPsec between networks, not the same use case.
+
+These instructions add no mandatory package dependencies, MCPs or automatic services. Real operations still need approved AWS/WireGuard tools, permissions, budget and authorization. Loading instructions installs or authenticates nothing. Secret handling, firewall/IPv6 scope, revocation and rollback are explicit; no real cloud/VPN validation or performance guarantee is claimed.
 
 ### Security auditing — included in the package
 
@@ -149,7 +155,7 @@ Prepare the external dependency manually; no automatic installation or implicit 
 
 ### UniFi — optional integration under review
 
-The original project is available in [integrations/unifi-skills](integrations/unifi-skills/README.md), including five skills and a Python helper. **It is not loaded by this pack's Pi manifest** and is not part of the 113 main skills.
+The original project is available in [integrations/unifi-skills](integrations/unifi-skills/README.md), including five skills and a Python helper. **It is not loaded by this pack's Pi manifest** and is not part of the 117 main skills.
 
 **Do not use unchanged in production:** the original helper disables TLS verification, permits writes by default, and may expose sensitive data in responses/dry-run output. Corrections and real-device tests have not been completed. Publication is not operational approval. Do not run examples against a company network with administrative credentials.
 
