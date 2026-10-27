@@ -115,12 +115,3 @@ test('run registry bounded and immutable to callers', async () => {
   for (let i = 0; i < 35; i++) await e.run(plan(), { approve, worker: async () => good() });
   assert.equal(e.list().length, LIMITS.records); const list = e.list(); list[0].status = 'fake'; assert.notEqual(e.list()[0].status, 'fake');
 });
-
-test('approval fingerprint binds selected provider and immutable routing hash', async () => {
-  const fingerprints = [];
-  for (const approvalContext of [{ model: 'one/m', routing: { policyHash: 'a' } }, { model: 'one/m', routing: { policyHash: 'b' } }, { model: 'two/m', routing: { policyHash: 'b' } }]) {
-    const r = await new Orchestrator().run(plan(), { approvalContext, approve: async a => { fingerprints.push(a.fingerprint); approvalContext.model = 'mutated after snapshot'; return true; }, worker: async () => good() });
-    assert.equal(r.approvalFingerprint, fingerprints.at(-1));
-  }
-  assert.equal(new Set(fingerprints).size, 3);
-});

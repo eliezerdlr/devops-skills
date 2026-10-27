@@ -18,7 +18,7 @@ pi list
 
 Se já estiver registada, atualizar e recarregar é suficiente. Não registar módulos internos adicionalmente. Ver [pacote único e migração de configurações antigas](UNIFIED-PACKAGE.md); preservar configurações não relacionadas e filtros intencionais.
 
-A raiz expõe **117 especialistas + 1 catálogo = 118 recursos de skills**, **8 prompts** e **2 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
+A raiz expõe **112 especialistas + 1 catálogo = 113 recursos de skills**, **8 prompts** e **1 extensão**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
 
 ## 2. Recarregar e conferir
 
@@ -55,6 +55,16 @@ npm run test:package
 
 O contrato falha se um módulo aprovado deixar de ser exportado pelo manifesto raiz, se um snapshot passar a ser descoberto, se houver nomes duplicados, se os guias voltarem a exigir instalações Pi separadas ou se npm test deixar de incluir as suítes aprovadas.
 
+## Verificação da skill NetBird
+
+```bash
+npm run test:netbird
+python3 -B skills/engineering-skills/netbird-remote-access/scripts/validate_skill.py
+python3 -B -m unittest discover -s skills/engineering-skills/netbird-remote-access/tests -v
+```
+
+A suíte padrão inclui o contrato NetBird. Se Python 3.9+ não estiver disponível, os dois testes Python são explicitamente ignorados, sem instalação automática; os testes sintéticos POSIX são igualmente ignorados em Windows. Os 41 testes Python e a validação são locais: não contactam Docker, NetBird, AWS ou dispositivos. Um PASS é heurístico e não uma certificação DLP ou teste de infraestrutura.
+
 ## 4. Carregador/núcleo Pi real com transporte simulado
 
 Usar o SDK que já está instalado; não instalar outra cópia no pack:
@@ -71,17 +81,17 @@ PI_SDK_ROOT="$(npm root -g)/@earendil-works/pi-coding-agent" npm run test:pi
 
 Confirmar antes que o caminho existe. Numa instalação pi-web-ui, o SDK pode estar nas dependências dessa aplicação, não diretamente em npm root.
 
-Os testes verificam descoberta de **118 skills / 8 prompts / 2 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os inventários internos. Também verificam quatro ferramentas de orquestração, duas commands OPS e uma command de routing, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
+Os testes verificam descoberta de **113 skills / 8 prompts / 1 extensão** a partir de apenas uma entrada raiz e a compatibilidade temporária com os quatro registos legados. Também verificam quatro ferramentas de orquestração, duas commands, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
 
 ## 5. Planeamento persistente: teste do addon de runtime
 
-O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 117 skills.
+O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 112 skills.
 
 ```bash
 PI_SDK_ROOT=/caminho/real/@earendil-works/pi-coding-agent npm run test:planning
 ```
 
-A descoberta combinada deve ser **119 skills / 8 prompts / 3 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
+A descoberta combinada deve ser **114 skills / 8 prompts / 2 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
 
 ## 6. Smoke tests manuais sem ações externas
 
@@ -99,43 +109,25 @@ Para um teste autorizado com modelo real de ops_workflow, usar apenas evidência
 
 ## 7. Estado de validação e limites
 
-A validação do pacote 0.4.0 no SDK instalado **Pi 1.3.0** passou com:
+A validação anterior à integração NetBird do pacote 0.4.0 no SDK instalado **Pi 1.3.0** passou com:
 
 - **126 testes** em npm test;
 - **21 testes** do carregador/núcleo Pi real com transporte simulado;
 - **11 testes** do addon de planeamento;
 - total **158**, sem skips nesse ambiente.
 
-A descoberta foi 112/8/1 para a raiz e 113/8/2 com planeamento, sem diagnostics de skills/prompts. A coexistência com registos legados não duplicou recursos. O runtime de orquestração tinha validação anterior em Pi 1.2.0; não confundir isso com teste da nova descoberta nessa versão. As verificações anteriores de tipos mantêm o seu âmbito/versão documentado.
+Nesse registo anterior, a descoberta foi 112/8/1 para a raiz e 113/8/2 com planeamento, sem diagnostics de skills/prompts. A coexistência com registos legados não duplicou recursos. O runtime de orquestração tinha validação anterior em Pi 1.2.0; não confundir isso com teste da nova descoberta nessa versão. As verificações anteriores de tipos mantêm o seu âmbito/versão documentado.
+
+## 8. Integração NetBird — validação actual
+
+Após incluir `netbird-remote-access`, a validação com **Pi 1.4.0**, **Node 26.12.1** e **Python 3.15.2** passou com:
+
+- **133 testes Node** na suíte `npm test`, incluindo os sete testes de integração NetBird;
+- **41 testes Python sintéticos** executados pelo contrato NetBird, além do validador offline PASS sobre os 12 ficheiros da skill;
+- **21 testes** do carregador/núcleo Pi real, com transporte de modelo simulado;
+- **11 testes** do addon opcional de planeamento;
+- nenhum skip ou falha nesse ambiente.
+
+A descoberta actual é **113 recursos de skills / 8 prompts / 1 extensão** na raiz e **114 / 8 / 2** com o addon. As 41 verificações Python são executadas dentro da suíte padrão; não são mais 41 testes Node. O pacote fornece 112 especialistas mais o catálogo. As configurações globais não foram alteradas e nenhum alvo NetBird, Docker ou AWS foi contactado.
 
 Isto não certifica todos os sistemas operativos, ferramentas externas, qualidade dos modelos, contas cloud, segurança independente, métricas web, SEO, WCAG ou equipamentos reais. Registar versões, condições e resultados das verificações operacionais efetivamente realizadas. SSH, redes, Kubernetes, cloud e alterações de produção exigem âmbito, versões, permissões e aprovação específicos.
-
-## Validação 0.5.0 — routing e Archify
-
-No SDK instalado **Pi 1.3.0**, a cópia isolada passou **180 testes offline + 28 SDK + 11 planning = 219 testes**, sem pedidos reais a fornecedores/gateways.
-
-- Descoberta raiz: **114 skills / 8 prompts / 2 extensões**; com addon: **115 / 8 / 3**. Os snapshots/licenças e a ausência de colisões continuam cobertos.
-- Model resilience: quota/429/5xx antes do commit, ausência de fallback em auth/context/timeout/cancelamento, metered opt-in, marcador nativo de subscrição, origin catálogo + efetivo, providers sem payload hook recusados, input/output/deadlines e ausência de leaks de overrides.
-- SDK real com transports sintéticos: seleção virtual persistente, metadata/usage físico, hooks uma vez por tentativa, worker approval hash/recipients, auth.baseUrl override sem início de envio, length com compactação ativa sem replay, partial toolcall sem execução da ferramenta.
-- Archify: **23 mocks**, hashes/proveniência, subprocesso sem shell, paths/symlinks, destinos novos, timeout/buffer, update checks desativados e receipts/artifactos vinculados. Nenhum runtime real Archify ou browser executado; mocks não validam renderização visual nem isolamento OS/rede.
-- A revisão independente identificou três findings (length replay, effective origin, OAuth != subscrição); foram corrigidos e as regressões passaram. A revisão final não identificou blocker concreto no escopo.
-
-Comandos continuam npm test, npm run test:pi e npm run test:planning, com PI_SDK_ROOT explícito para os dois últimos. As referências anteriores a type checking/Pi 1.2.0 são históricas; esta alteração não reinstalou TypeScript nem alega nova prova estática completa.
-
-## Integração AWS Toolkit e ECC WireGuard — validação atual
-
-Quatro adaptações documentais acrescentam FinOps AWS, IPsec Site-to-Site VPN, revisão Well-Architected e WireGuard de homelab. A raiz descobre **117 especialistas + catálogo = 118 recursos / 8 prompts / 2 extensões**; com addon Planning, **119 / 8 / 3**. As contagens nas secções históricas referem-se aos respetivos snapshots, não ao inventário atual.
-
-Validação local: **205 testes offline + 28 SDK Pi 1.3.0 + 11 planning = 244 testes**, sem falhas/skips. `tests/aws-vpn-integration.test.mjs` acrescenta oito testes de registo, proveniência/licenças, integridade completa dos ficheiros distribuídos, links locais, ausência de executáveis/dependências novas e presença das salvaguardas documentais. As regressões de inventário existentes foram atualizadas sem remover cobertura. `git diff --check` passou.
-
-Os testes SDK verificaram descoberta sem colisões e sem diagnostics. Testes de texto/regex não impõem política ao modelo nem provam isolamento de segredos, permissões AWS, firewall ou funcionamento VPN. Não houve instalação, autenticação/consulta AWS, WireGuard real, alteração de rede, MCP, teste de failover/revogação real ou benchmark. Extensões de runtime não foram modificadas. Sem novo typecheck, execução de CI remoto ou homologação Pi 1.4.0; os testes continuaram a usar o SDK de referência já instalado 1.3.0.
-
-## Correções de revisão — serviços e SDK de referência
-
-Após a revisão do HEAD `3e62a2a`, os dois exemplos launchd usam `KeepAlive=true` e a unit systemd usa `Restart=always`, conservando throttling/limites de restart e paragem administrativa. Isto cobre a saída 0 que o CLI OmniRoute 3.8.52 pode reportar quando o processo filho morre por sinal (`code=null`). Os testes anteriores que fixavam a política frágil foram atualizados.
-
-Validação local desta correção: **197 testes offline + 28 SDK Pi 1.3.0 com transporte sintético + 11 planning = 236**, sem falhas/skips. Foram usados SDKs já existentes; não foram instaladas dependências. Os novos testes verificam a regressão de políticas com modelo sintético e os três pins SDK do workflow; não enviam sinais a processos reais nem executam gateway/serviços.
-
-O workflow `.github/workflows/test-orchestration.yml` instala agora `pi-coding-agent`, `pi-agent-core` e `pi-ai` em **1.3.0**, coerentes com a referência. As mensagens de pré-requisito das suites seguem essa versão. A execução remota de GitHub Actions e os passos de TypeScript não foram repetidos localmente nesta alteração (sem compilador local); não se declara CI remoto verde nem nova homologação de tipos. **Pi 1.4.0 continua por validar**.
-
-Continuam pendentes os testes reais de crash/restart/boot/login/stop e restauro nos sistemas alvo. Corrigir guias Git não atualiza automaticamente plists/units que um operador já tenha criado na máquina. Não houve mudança do código de runtime das extensões, instalação/ativação de serviço, inferência real ou benchmark.

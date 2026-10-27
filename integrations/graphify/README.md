@@ -12,7 +12,7 @@ Uma **skill adaptada**, três referências e dois workflows para mapear projetos
 
 ## Uma instalação do pacote principal
 
-A skill Graphify faz parte das 117 skills do pacote e é registada pelo manifesto principal. A pasta deste módulo mantém origem, referências e licença; não é uma instalação adicional.
+A skill Graphify faz parte das 112 skills do pacote e é registada pelo manifesto principal. A pasta deste módulo mantém origem, referências e licença; não é uma instalação adicional.
 
 ```bash
 pi install /caminho/absoluto/devops-skills
@@ -26,10 +26,6 @@ Este registo não instala o Graphify Python. Se tinhas registado módulos indivi
 ```
 
 Para desativar apenas esta skill, usa o filtro de recursos do pacote principal em `pi config`; não é necessário remover o pacote inteiro. A desativação não apaga planos, notas, grafos ou o CLI instalado separadamente.
-
-## Receita operacional completa
-
-**[Instalação isolada, paths, configuração, testes e remoção](../../docs/install/graphify.md).** O procedimento venv dispensa instalar um gestor adicional; pipx/uv abaixo são alternativas, não instalações cumulativas. Ver [índice externo](../../docs/INSTALLATION.md).
 
 ## Dependência externa — preparação manual
 
@@ -66,7 +62,13 @@ uv tool install 'graphifyy==0.9.93'
 graphify --version
 ```
 
-Não instalar a mesma ferramenta por pipx e uv simultaneamente. Para obter uv, selecionar uma versão e mecanismo da [documentação Astral](https://docs.astral.sh/uv/getting-started/installation/), segundo a política da organização. Não publicar/executar `curl | sh` como bootstrap deste projeto. A versão de um gestor novo exige aprovação e verificação; o [procedimento venv](../../docs/install/graphify.md) evita essa dependência. Não instalar uv se pipx/venv já satisfazem o workflow.
+Não instalar a mesma ferramenta por pipx e uv simultaneamente. Para obter uv, o [instalador da Astral](https://docs.astral.sh/uv/getting-started/installation/) disponibiliza:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Atenção:** este comando descarrega e executa um script remoto, cujo conteúdo pode mudar. Só o executar após aprovação e revisão do script; não é executado por esta integração. Não é necessário se a instalação por pipx já funciona. Num ambiente empresarial, preferir o mecanismo de instalação de ferramentas aprovado pela organização.
 
 ### Compatibilidade e alcance da validação
 

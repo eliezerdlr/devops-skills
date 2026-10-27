@@ -5,7 +5,6 @@ import { Type } from 'typebox';
 import type { ExtensionAPI, ExtensionContext } from '@earendil-works/pi-coding-agent';
 import { Agent } from '@earendil-works/pi-agent-core';
 import { Orchestrator, LIMITS, ROLES, validatePlan } from './engine.mjs';
-import { routingApproval, describeApproval } from '../model-resilience/policy.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const OUTCOME = 'Return ONLY one JSON object: {"status":"ok" or "blocked","summary":"nonempty text","findings":[{"severity":"info|low|medium|high|critical","detail":"text"}]}. At most 30 findings. status=ok means the analysis task completed, NOT approval to change infrastructure. Never invent observations, successful tests, or permission. If evidence is insufficient, say so. Do not output credentials.';
@@ -88,15 +87,11 @@ export default function (pi: ExtensionAPI) {
     const workerContext = { cwd: ctx.cwd, model: selectedModel, modelRegistry: ctx.modelRegistry } as ExtensionContext;
     const thinkingLevel = pi.getThinkingLevel();
     const identity = `${selectedModel.provider}/${selectedModel.id}`;
-    const routing = routingApproval(selectedModel);
-    if (selectedModel.api === 'pi-virtual' && !routing) throw new Error('This router has no approved worker route disclosure. Select a physical model or a configured DevOps routing policy.');
-    const routingDisclosure = describeApproval(routing);
     const tasks = plan.steps.map((s: any) => `${s.id}: ${s.role}\n${clipped(s.task, 500)}`).join('\n\n');
     return engine.run(plan, {
       signal,
-      approvalContext: { model: identity, ...(routing ? { routing } : {}) },
       onStart: (id: string) => onUpdate?.(respond({ runId: id, status: 'awaiting-approval' })),
-      approve: async (audit: any, approvalSignal: AbortSignal) => ctx.ui.confirm('Run analysis workflow?', `Run ${audit.id}\nModel: ${identity}\nSteps: ${audit.stepCount}\nPlan hash: ${audit.fingerprint}${routingDisclosure}\n\n${tasks}\n\nThe supplied evidence (${Buffer.byteLength(plan.evidence)} bytes) and worker outputs will be sent to this model provider. Up to ${audit.stepCount} worker model requests for this plan, capped at 4096 output tokens each; provider-internal retries/limits apply. Up to 4 active workers across this extension. No child tools, shell, files, inherited extensions or infrastructure actions. A 3-minute deadline applies. Model usage may be billed. Confirm only if the input is approved for this provider and every disclosed fallback recipient.`, { signal: approvalSignal, timeout: LIMITS.timeoutMs }),
+      approve: async (audit: any, approvalSignal: AbortSignal) => ctx.ui.confirm('Run analysis workflow?', `Run ${audit.id}\nModel: ${identity}\nSteps: ${audit.stepCount}\nPlan hash: ${audit.fingerprint}\n\n${tasks}\n\nThe supplied evidence (${Buffer.byteLength(plan.evidence)} bytes) and worker outputs will be sent to this model provider. Up to ${audit.stepCount} worker model requests for this plan, capped at 4096 output tokens each; provider-internal retries/limits apply. Up to 4 active workers across this extension. No child tools, shell, files, inherited extensions or infrastructure actions. A 3-minute deadline applies. Model usage may be billed. Confirm only if the input is approved for this provider.`, { signal: approvalSignal, timeout: LIMITS.timeoutMs }),
       worker: async ({ role, task, evidence, dependencies, signal: childSignal }: any) => {
         const session = await createAnalysisSession(workerContext, role, thinkingLevel);
         sessions.add(session);

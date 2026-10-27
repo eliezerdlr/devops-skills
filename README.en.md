@@ -4,19 +4,15 @@
 
 A collection of skills for engineering, DevOps, cybersecurity, and IT operations.
 
-One package includes **117 skills/sub-skills**, **8 prompts** for network/security/testing/performance, and two extensions, including **real subagents and declarative analysis workflows**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
-
-## External installations — start here
-
-**[Central installation and operations guide](docs/INSTALLATION.md)**: Node/Pi, OmniRoute, Graphify, Archify, optional planning and workflow-specific tools. Covers commands, paths, verification, secrets, lifecycle, upgrades and removal. Unvalidated dependencies are explicitly identified; the pack does not install them.
+One package includes **112 skills/sub-skills**, **8 prompts** for network/security/testing/performance, and an extension with **real subagents and declarative analysis workflows**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
 
 ## 1. Prerequisites
 
-- Pi **1.3.0** is the full-package reference (orchestration also has historical 1.2.0 tests), with an authenticated model/provider. Pi 1.4.0 was observed on the host but is not yet validated. Node must satisfy the host and selected runtimes; see the [host guide](docs/install/host.md).
+- Pi **1.2.0** and Node.js **22.14+** for orchestration, with an authenticated model/provider.
 - Git to obtain and update the repository.
 - Task-specific tools only for the workflows you intend to run; see [dependencies and compatibility](docs/DEPENDENCIES.md).
 
-Skills are instructions, not services. The package loads orchestration and opt-in routing extensions; review its [scope, approvals and limits](docs/ORCHESTRATION.md). It does not install Terraform, kubectl, Python, browsers or credentials.
+Skills are instructions, not services. The package also loads an executable orchestration extension; review its [scope, approvals and limits](docs/ORCHESTRATION.md). It does not install Terraform, kubectl, Python, browsers or credentials.
 
 ## 2. Enable skills in Pi
 
@@ -34,7 +30,7 @@ Edit `~/.pi/agent/settings.json` and add the checkout to the existing `packages`
 
 Replace the path with your actual checkout location. **Do not replace the entire settings file** if it already contains configuration: preserve other fields and paths.
 
-The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 117 specialists, the catalogue, eight prompts and two extensions, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
+The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 112 specialists, the catalogue, eight prompts and the orchestration extension, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
 
 ### Option B — Install the checkout as a Pi package
 
@@ -43,7 +39,7 @@ pi install /absolute/path/devops-skills
 pi list
 ```
 
-The root `package.json` registers all approved skills, eight prompts and the `ops-orchestrator` and `model-resilience` extensions in one installation. It includes no hooks, themes or installation scripts. Pi supplies the extension's peer dependencies; no root `npm install` is needed.
+The root `package.json` registers all approved skills, eight prompts and the `ops-orchestrator` extension in one installation. It includes no hooks, themes or installation scripts. Pi supplies the extension's peer dependencies; no root `npm install` is needed.
 
 You can also install directly from GitHub:
 
@@ -76,7 +72,7 @@ Already registered individual modules? Follow the [single-package migration guid
 
 ## 3. Enable operational capabilities
 
-**Registering the single root package makes all 117 skills available.** Running their workflows may require additional setup:
+**Registering the single root package makes all 112 skills available.** Running their workflows may require additional setup:
 
 | Capability | Separate setup |
 |---|---|
@@ -96,13 +92,19 @@ The [dependency guide](docs/DEPENDENCIES.md) distinguishes optional libraries, e
 
 The [deep-agents-core](skills/engineering-skills/deep-agents-core/SKILL.md) skill from the LangChain project guides development of Deep Agents applications. It does not install the framework or add subagents or memory to Pi. Read the [dependencies and example limitations](docs/DEPENDENCIES.md#deep-agents-core-langchain) before running code.
 
+### NetBird remote access — included in the package
+
+The locally authored [netbird-remote-access](skills/engineering-skills/netbird-remote-access/README.md) skill covers restricted LAN resource access through a Linux routing peer, with parameterised templates, approval gates and evidence-led documentation. Examples are fictitious; no production inventory or credentials are included. Loading it does not install NetBird, create AWS resources, run SSH or change networking.
+
+Its offline validator and 41 synthetic tests use Python 3.9+ and the standard library. These are heuristic package checks, not DLP certification or infrastructure validation. Load it with `/skill:netbird-remote-access`.
+
 ### Reliability and error handling
 
 The [dsh-error-handling](skills/engineering-skills/dsh-error-handling/SKILL.md) skill from DeepSeek Harness adds guidance on structured failures, recovery, safe retries and verifiable outcomes. Only the Markdown instructions are included; the DeepSeek runtime is not installed and Pi tools are not changed.
 
 ### ECC network agents
 
-Nine ECC skills (including adapted WireGuard guidance) and three agents adapted as Pi prompts are included: `/network-architect`, `/network-troubleshooter`, and `/network-config-reviewer`. Both `pi install` and a `packages` entry in `settings.json` register them through the manifest.
+Eight ECC skills and three agents adapted as Pi prompts are included: `/network-architect`, `/network-troubleshooter`, and `/network-config-reviewer`. Both `pi install` and a `packages` entry in `settings.json` register them through the manifest.
 
 These are roles in the current session, **not autonomous subagents or permission isolation**. See the [agent index](agents/README.md) and [post-pull testing guide](docs/TESTING.md).
 
@@ -127,13 +129,7 @@ Two MIT modules already registered by the root manifest; no separate Pi installa
 - [Addy Engineering](integrations/addy-engineering/README.md): four adapted constraint/context/official-source/simplification skills and two same-session personas, not autonomous subagents. ADR/adversarial-review material is supplementary.
 - [Web Quality & SEO](integrations/web-quality/README.md): six skills for web audits, performance, Core Web Vitals, accessibility, technical/on-page SEO and browser best practices, with product/structured-data/internationalisation references.
 
-Their ten skills and two prompts are part of the package's 117 specialists and eight prompts. Loading them installs no tools, hooks, browsers/MCP or analytics. Complete selected references do not establish enforcement, measured metrics, WCAG conformance or ranking gains. Web quality is not a complete marketing/advertising platform; the guides qualify tool dependencies and non-universal examples.
-
-### AWS FinOps, framework review and VPN — included
-
-Three [AWS Agent Toolkit adaptations](integrations/aws-toolkit/README.md) add `aws-billing-and-cost-management`, `aws-site-to-site-vpn` and `aws-well-architected-review`. The ECC [homelab-wireguard-vpn](skills/engineering-skills/homelab-wireguard-vpn/SKILL.md) skill covers remote device access to a homelab; AWS VPN is IPsec between networks, not the same use case.
-
-These instructions add no mandatory package dependencies, MCPs or automatic services. Real operations still need approved AWS/WireGuard tools, permissions, budget and authorization. Loading instructions installs or authenticates nothing. Secret handling, firewall/IPv6 scope, revocation and rollback are explicit; no real cloud/VPN validation or performance guarantee is claimed.
+Their ten skills and two prompts are part of the package's 112 specialists and eight prompts. Loading them installs no tools, hooks, browsers/MCP or analytics. Complete selected references do not establish enforcement, measured metrics, WCAG conformance or ranking gains. Web quality is not a complete marketing/advertising platform; the guides qualify tool dependencies and non-universal examples.
 
 ### Security auditing — included in the package
 
@@ -155,7 +151,7 @@ Prepare the external dependency manually; no automatic installation or implicit 
 
 ### UniFi — optional integration under review
 
-The original project is available in [integrations/unifi-skills](integrations/unifi-skills/README.md), including five skills and a Python helper. **It is not loaded by this pack's Pi manifest** and is not part of the 117 main skills.
+The original project is available in [integrations/unifi-skills](integrations/unifi-skills/README.md), including five skills and a Python helper. **It is not loaded by this pack's Pi manifest** and is not part of the 112 main skills.
 
 **Do not use unchanged in production:** the original helper disables TLS verification, permits writes by default, and may expose sensitive data in responses/dry-run output. Corrections and real-device tests have not been completed. Publication is not operational approval. Do not run examples against a company network with administrative credentials.
 
@@ -186,10 +182,3 @@ Before executing scripts or actions, review the content, confirm tools and scope
 Upstream content is redistributed mainly under MIT; the adapted Graphify integration retains Apache-2.0 and its own notices. Notices are preserved in [LICENSE](LICENSE), nested licence files, and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). This is a curated/adapted collection, not a claim of exclusive authorship or official affiliation with upstream authors, Snyk, or Gen Digital.
 
 New independent local contributions are also distributed under MIT, as authorised by the maintainer; Graphify adaptations retain the licence stated in that integration. Original component copyright notices remain preserved.
-
-## Model availability and visual communication
-
-- **[OmniRoute / Model resilience](integrations/omniroute/README.md):** selected operational profile: an **external, operator-installed OmniRoute gateway** on the machine, with its dashboard and gateway-owned fallback. Required for that profile, not an npm dependency or a requirement to load skills. The [operational contract](integrations/omniroute/operational-dependency.json) separates analyzed source from installed/validated runtime (still unverified). Keep the Pi virtual router **off** in this profile; native API/OAuth fallback remains a separate opt-in alternative on **Pi 1.3.0**. No automatic installation/startup or token export.
-- **[Archify](integrations/archify/README.md):** on-demand interactive HTML diagrams with plan/execute adapter and pinned external **3.2.0** runtime. Generic symbols by default; third-party marketing logos require confirmed rights. No personal-browser opening or candidate JavaScript execution.
-
-Both skills belong to the single root installation. Synthetic tests do not validate real gateways/accounts or Archify execution. Initial routing is text-only, thinking off; no unlimited capacity or absolute financial guarantee.

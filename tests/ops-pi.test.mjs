@@ -2,15 +2,14 @@ import test from 'node:test';
 import { components, skillResourceCount, promptCount } from './package-contract.mjs';
 import assert from 'node:assert/strict';
 import { createRequire, findPackageJSON } from 'node:module';
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
-import { validatePolicy, PROVIDER } from '../extensions/model-resilience/policy.mjs';
+import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 // The host supplies Pi packages. Do not install a second copy into the runtime pack.
 const sdkRoot = process.env.PI_SDK_ROOT;
-if (!sdkRoot) throw new Error('Set PI_SDK_ROOT to the installed reference Pi 1.3.0 package directory for host integration tests');
+if (!sdkRoot) throw new Error('Set PI_SDK_ROOT to the installed Pi 1.2.0 package directory for host integration tests');
 const requireSdk = createRequire(resolve(sdkRoot, 'package.json'));
 const { createJiti } = requireSdk('jiti');
 const hostModule = name => resolve(dirname(findPackageJSON(name, pathToFileURL(resolve(sdkRoot, 'package.json')))), 'dist/index.js');
@@ -48,7 +47,7 @@ function context({ answer = good, approve = true, hasUI = true, error = false, h
   return { ctx, calls, approvals, streams };
 }
 async function extension() {
-  const result = await loadExtensions([resolve(root, 'extensions/ops-orchestrator/index.ts'), resolve(root, 'extensions/model-resilience/index.ts')], root);
+  const result = await loadExtensions([resolve(root, 'extensions/ops-orchestrator/index.ts')], root);
   assert.deepEqual(result.errors, []); result.runtime.getThinkingLevel = () => 'off';
   return result.extensions[0];
 }
@@ -58,14 +57,14 @@ async function invoke(ext, name, params, ctx, signal = new AbortController().sig
   return JSON.parse(result.content[0].text);
 }
 
-test('one root package discovers 118 skills, eight prompts and two extensions in actual Pi', async () => {
+test('one root package discovers 113 skills, eight prompts and one extension in actual Pi', async () => {
   const temp = await mkdtemp(resolve(tmpdir(), 'devops-resource-test-'));
   try {
     const sdkImport = name => import(pathToFileURL(resolve(sdkRoot, `dist/core/${name}.js`)));
     const [{ SettingsManager }, { DefaultPackageManager }, { loadSkills }, { loadPromptTemplates }] = await Promise.all(['settings-manager', 'package-manager', 'skills', 'prompt-templates'].map(sdkImport));
     const paths = await new DefaultPackageManager({ cwd: temp, agentDir: temp, settingsManager: SettingsManager.inMemory({ packages: [root] }) }).resolve();
     const selected = group => paths[group].filter(p => p.enabled && p.path.startsWith(`${root}/`)).map(p => p.path);
-    assert.equal(selected('skills').length, skillResourceCount); assert.equal(selected('prompts').length, promptCount); assert.deepEqual(selected('extensions'), [resolve(root, 'extensions/ops-orchestrator/index.ts'), resolve(root, 'extensions/model-resilience/index.ts')]);
+    assert.equal(selected('skills').length, skillResourceCount); assert.equal(selected('prompts').length, promptCount); assert.deepEqual(selected('extensions'), [resolve(root, 'extensions/ops-orchestrator/index.ts')]);
     const skills = loadSkills({ cwd: temp, agentDir: temp, skillPaths: selected('skills'), includeDefaults: false });
     const prompts = loadPromptTemplates({ cwd: temp, agentDir: temp, promptPaths: selected('prompts'), includeDefaults: false });
     assert.equal(skills.skills.length, skillResourceCount); assert.equal(prompts.templates.length, promptCount); assert.deepEqual(skills.diagnostics, []); assert.deepEqual(prompts.diagnostics, []);
@@ -85,7 +84,7 @@ test('legacy module registrations alongside root load no duplicate skills or pro
     assert.equal(prompts.templates.length, promptCount);
     assert.deepEqual(skills.diagnostics, []);
     assert.deepEqual(prompts.diagnostics, []);
-    assert.deepEqual(selected('extensions'), [resolve(root, 'extensions/ops-orchestrator/index.ts'), resolve(root, 'extensions/model-resilience/index.ts')]);
+    assert.deepEqual(selected('extensions'), [resolve(root, 'extensions/ops-orchestrator/index.ts')]);
   } finally { await rm(temp, { recursive: true, force: true }); }
 });
 test('actual Pi loader registers exactly four tools and two commands', async () => {
@@ -184,21 +183,4 @@ for (const lifecycleEvent of ['session_shutdown', 'session_before_switch', 'sess
   for (const handler of e.handlers.get(lifecycleEvent) ?? []) await handler({ type: lifecycleEvent }, c.ctx);
   assert.equal((await pending).status, 'cancelled');
   assert.ok(!JSON.stringify(await invoke(e, 'ops_runs', {}, c.ctx)).includes(input.evidence));
-});
-
-test('worker routing approval discloses recipients, limits and policy hash; drift is refused', async () => {
-  const temp = await mkdtemp(resolve(tmpdir(), 'ops-routing-approval-'));
-  const old = process.env.DEVOPS_MODEL_POLICY;
-  const p = { version: 1, allowMetered: false, maxInputUsdPerMillion: 3, maxOutputUsdPerMillion: 15, maxAttempts: 1, deadlineMs: 2000, attemptTimeoutMs: 1000, contextWindow: 32000, maxOutputTokens: 4096, maxInputBytes: 26000, routes: [{ provider: 'fixture-oauth', model: 'fixture-model', origin: 'https://recipient.invalid', billing: 'subscription', supportsTools: true }] };
-  try {
-    process.env.DEVOPS_MODEL_POLICY = resolve(temp, 'policy.json'); await writeFile(process.env.DEVOPS_MODEL_POLICY, JSON.stringify(p));
-    const policy = validatePolicy(p), e = await extension(), c = context();
-    c.ctx.model = { ...model, provider: PROVIDER, id: policy.id, api: 'pi-virtual' };
-    const result = await invoke(e, 'ops_agent', input, c.ctx); assert.equal(result.status, 'completed');
-    assert.match(c.approvals[0].body, /recipient.invalid/); assert.ok(c.approvals[0].body.includes(policy.hash)); assert.match(c.approvals[0].body, /1 logical upstream/);
-    p.allowMetered = true; await writeFile(process.env.DEVOPS_MODEL_POLICY, JSON.stringify(p));
-    await assert.rejects(invoke(e, 'ops_agent', input, c.ctx), /changed/); assert.equal(c.calls.length, 1);
-    const unknown = context(); unknown.ctx.model = { ...model, api: 'pi-virtual', provider: 'unknown-router' };
-    await assert.rejects(invoke(e, 'ops_agent', input, unknown.ctx), /no approved worker route/); assert.equal(unknown.calls.length, 0);
-  } finally { if (old === undefined) delete process.env.DEVOPS_MODEL_POLICY; else process.env.DEVOPS_MODEL_POLICY = old; await rm(temp, { recursive: true, force: true }); }
 });

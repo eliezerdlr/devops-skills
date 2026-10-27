@@ -85,11 +85,8 @@ export class Orchestrator {
     c.abort(new Error('Run cancelled')); return true;
   }
   cancelAll() { for (const id of this.#controllers.keys()) this.cancel(id); }
-  async run(input, { approve, worker, signal, onStart = (_id) => {}, approvalContext }) {
+  async run(input, { approve, worker, signal, onStart = (_id) => {} }) {
     const plan = validatePlan(input);
-    const binding = approvalContext === undefined ? plan : { plan, approvalContext: structuredClone(approvalContext) };
-    if (approvalContext !== undefined && JSON.stringify(binding.approvalContext).length > 8192) throw new Error('Approval binding exceeds limit');
-    const serializedBinding = JSON.stringify(binding);
     if (signal?.aborted) throw abortError(signal);
     if (this.#controllers.size >= LIMITS.activeRuns) throw new Error('Active workflow capacity reached');
     const id = randomUUID();
@@ -100,8 +97,7 @@ export class Orchestrator {
     signal?.addEventListener('abort', onAbort, { once: true });
     if (signal?.aborted) onAbort();
     const timer = setTimeout(() => controller.abort(new Error('Workflow deadline exceeded')), this.timeoutMs);
-    const audit = { id, fingerprint: createHash('sha256').update(serializedBinding).digest('hex'), stepCount: plan.steps.length, roles: [...new Set(plan.steps.map(s => s.role))] };
-    run.approvalFingerprint = audit.fingerprint;
+    const audit = { id, fingerprint: createHash('sha256').update(JSON.stringify(plan)).digest('hex'), stepCount: plan.steps.length, roles: [...new Set(plan.steps.map(s => s.role))] };
     const running = new Map();
     try {
       onStart(id);

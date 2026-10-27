@@ -1,6 +1,6 @@
 {
   "name": "devops-skills",
-  "version": "0.5.0",
+  "version": "0.4.0",
   "private": true,
   "engines": {
     "node": ">=22.14.0"
@@ -8,22 +8,16 @@
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
     "@earendil-works/pi-agent-core": "*",
-    "@earendil-works/pi-ai": "*",
     "typebox": "*"
   },
   "scripts": {
-    "test": "node --test tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs tests/model-resilience.test.mjs tests/omniroute-contract.test.mjs tests/external-installation.test.mjs tests/archify-integration.test.mjs tests/aws-vpn-integration.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
-    "test:pi": "node --test tests/ops-pi.test.mjs tests/model-resilience-pi.test.mjs",
+    "test": "node --test tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs tests/netbird-skill.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
+    "test:pi": "node --test tests/ops-pi.test.mjs",
     "test:planning": "node --test tests/planning-pi.test.mjs",
-    "test:package": "node --test tests/unified-package.test.mjs"
+    "test:package": "node --test tests/unified-package.test.mjs",
+    "test:netbird": "node --test tests/netbird-skill.test.mjs"
   },
-  "devopsSkills": {
-    "installationInventory": "./docs/external-installations.json",
-    "operationalDependencies": [
-      "./integrations/omniroute/operational-dependency.json"
-    ]
-  },
-  "description": "Unified DEV/OPS/SEC/web skills, visual diagrams and explicit quota fallback with bounded approved analysis workflows.",
+  "description": "Unified engineering, DevOps, security, project context and web/SEO skills with bounded network analysis workflows.",
   "pi": {
     "skills": [
       "./skills/engineering-skills/**/SKILL.md",
@@ -38,16 +32,10 @@
       "./integrations/web-quality/skills/core-web-vitals/SKILL.md",
       "./integrations/web-quality/skills/web-accessibility/SKILL.md",
       "./integrations/web-quality/skills/web-seo/SKILL.md",
-      "./integrations/web-quality/skills/web-best-practices/SKILL.md",
-      "./integrations/omniroute/skills/model-resilience/SKILL.md",
-      "./integrations/archify/skills/archify/SKILL.md",
-      "./integrations/aws-toolkit/skills/aws-billing-and-cost-management/SKILL.md",
-      "./integrations/aws-toolkit/skills/aws-site-to-site-vpn/SKILL.md",
-      "./integrations/aws-toolkit/skills/aws-well-architected-review/SKILL.md"
+      "./integrations/web-quality/skills/web-best-practices/SKILL.md"
     ],
     "extensions": [
-      "./extensions/ops-orchestrator/index.ts",
-      "./extensions/model-resilience/index.ts"
+      "./extensions/ops-orchestrator/index.ts"
     ],
     "prompts": [
       "./agents/network-architect.md",

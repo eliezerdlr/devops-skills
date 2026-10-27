@@ -2,45 +2,15 @@
 
 Snapshot do pacote Pi oficial de [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files), versão **3.24.0**, commit **96b79bf1d64f22ab5f68442e0a45704eef06ddfc**. Os 46 ficheiros em `upstream/` preservam o conteúdo original; apenas acrescentámos a licença MIT do repositório ao pacote. Proveniência em [UPSTREAM.json](UPSTREAM.json), integridade em [SHA256SUMS](SHA256SUMS), licença em [upstream/LICENSE](upstream/LICENSE).
 
-**Não é carregado pelo manifesto principal.** Ativação explícita evita instalar hooks, ler planos ou iniciar processos por surpresa ao atualizar o pack. O pacote principal inclui 117 skills/sub-skills (118 recursos incluindo catálogo); a instalação opcional acrescenta uma skill e uma extensão. Não registes simultaneamente outra cópia npm/global de planning-with-files.
+**Não é carregado pelo manifesto principal.** Ativação explícita evita instalar hooks, ler planos ou iniciar processos por surpresa ao atualizar o pack. O pacote principal inclui 112 skills; a instalação opcional acrescenta uma skill e uma extensão. Não registes simultaneamente outra cópia npm/global de planning-with-files.
 
-## Pré-requisitos e helpers externos
+## Ativar no Pi 1.2.0
 
-Ver [índice de instalações](../../docs/INSTALLATION.md), [host](../../docs/install/host.md) e [ferramentas opcionais](../../docs/install/workflow-tools.md). A referência combinada testada é Pi 1.3.0; resultados Pi 1.2.0 são históricos. Pi 1.4.0 não está homologado. O addon é conteúdo local, não exige baixar outro repositório nem executar npm nos manifestos upstream.
-
-Antes de ativar, confirmar `pi --version`, `node --version` e `python3 --version`. O helper de recuperação tenta `uv run`, depois `python3`, `python` e `py -3`, por esta ordem; não instala uv automaticamente nesta adaptação, mas um uv disponível pode tentar downloads. Começar com `UV_OFFLINE=1 UV_PYTHON_DOWNLOADS=never`, Python local aprovado e modo notify. Se faltar interpreter, parar e prepará-lo pelo gestor aprovado; não permitir downloads implícitos para resolver a falha.
-
-Não adicionar pacotes Python presumidos: rever o helper/branch utilizado. Os helpers shell precisam de Bash/PowerShell adequado ao OS e os de attestation usam utilitários de hashing. Gerar planos não exige instalar uma toolchain Vitest/TypeScript. Não foi testada instalação limpa destes helpers.
-
-## Instalação / ativação no Pi de referência
-
-Depois de atualizar o checkout, verificar integridade antes de registar o pacote opcional. Ajustar `PACK`; não executar npm nesse snapshot:
+Depois de atualizar o checkout, regista o pacote opcional:
 
 ```bash
-set -euo pipefail
-PACK="/caminho/absoluto/devops-skills"
-ADDON="$PACK/integrations/planning-with-files/upstream"
-( cd "$ADDON" && shasum -a 256 --check ../SHA256SUMS )
-# Esperado: todos os hashes OK. Parar se houver divergência.
-# Gate: backup privado de settings e aprovação antes de registar hooks.
-pi install "$ADDON"
+pi install /caminho/absoluto/devops-skills/integrations/planning-with-files/upstream
 ```
-
-### Windows PowerShell
-
-O mesmo addon local pode ser registado com path Windows (depois de verificar snapshot/settings existentes):
-
-```powershell
-pi install "C:\caminho\devops-skills\integrations\planning-with-files\upstream"
-$env:PWF_MODE = "notify"
-$env:UV_OFFLINE = "1"
-$env:UV_PYTHON_DOWNLOADS = "never"
-pi
-```
-
-Usar Python local compatível: o helper tem fallback para `py -3` no Windows. Não copiar atribuições Bash para PowerShell. Helpers shell/PowerShell e o próprio addon precisam de validação no OS alvo; documentação de comandos não é homologação Windows. Remoção: `pi remove "C:\caminho\devops-skills\integrations\planning-with-files\upstream"`.
-
-### Configuração comum
 
 Não é necessário executar `npm install` nesse diretório ou nos subdiretórios. Preserva as restantes configurações. Vê [examples/pi-planning-settings.json](../../examples/pi-planning-settings.json) para a alternativa por `packages` e modo `notify`. Se usares settings, ajusta ambos os caminhos e não dupliques os registos existentes.
 
@@ -91,21 +61,13 @@ Os workers do nosso orquestrador continuam sem ferramentas e **não escrevem nes
 - Os parsers upstream leem ficheiros sincronicamente sem limite global de tamanho; a contagem de estados é textual, não prova semântica de conclusão. Mantém planos pequenos, em workspaces de confiança, e verifica resultados reais. Não é proteção contra ficheiros maliciosos, symlinks arbitrários ou outros processos do mesmo utilizador.
 - Seleciona `PLAN_ID` explicitamente quando houver tarefas paralelas. Não dependas de seleção implícita de plano para isolamento forte.
 
-## Operação, atualização e remoção
-
-Sem daemon próprio. Manter PWF_MODE=notify e controlar loops explicitamente; `/plan-loop stop` e `/plan-execute reset` antes de retirar o addon. O session-start pode executar helper local: registar o addon não é operação puramente textual. Backup privado dos planos e settings antes de alterar hooks/configuração.
-
-Atualizar apenas o snapshot após revisão de source/licença/hash e compatibilidade SDK; não fazer pull/npm dentro de `upstream/`. Testar versão nova separadamente; rollback deve restaurar o snapshot compatível, settings e planos necessários. Não editar os ficheiros preservados para ocultar divergências de SHA256SUMS.
-
-Para remover, usar `pi remove /caminho/absoluto/devops-skills/integrations/planning-with-files/upstream` e recarregar; preservar raiz e outros pacotes. Não apagar `task_plan.md`, `findings.md`, `progress.md` ou históricos como consequência automática. Não há processo periódico retomado automaticamente após reiniciar o orquestrador. A desativação de hooks não equivale a parar um loop se ainda estiver ativo: verificar estado antes de encerrar.
-
 ## Validação
 
 ```bash
 PI_SDK_ROOT="$(npm root -g)/@earendil-works/pi-coding-agent" npm run test:planning
 ```
 
-A suíte de **11 testes locais** cobre integridade dos 46 ficheiros, descoberta combinada, ausência de colisões, leitura persistente de planos, modo passivo, `notify`, ativação/reset, ausência de continuação após erro/abort, revogação no shutdown, deteção de alteração e seletor inválido. Na validação anterior do pacote unificado com o SDK Pi 1.3.0, os 11 testes passaram. A composição atual é **119 recursos de skills / 8 prompts / 3 extensões** (118/8/2 na raiz mais o addon); não confundir a contagem de recursos com homologação dos helpers. Houve validação anterior do addon no Pi 1.2.0 com a composição antiga. As suítes do pacote principal e do planeamento mantêm-se separadas. A extensão opcional também passou verificação estrita de tipos com TypeScript 5.9.3 contra as declarações do Pi 1.2.0.
+A suíte de **11 testes locais** cobre integridade dos 46 ficheiros, descoberta combinada, ausência de colisões, leitura persistente de planos, modo passivo, `notify`, ativação/reset, ausência de continuação após erro/abort, revogação no shutdown, deteção de alteração e seletor inválido. Na validação do pacote unificado com o SDK Pi 1.3.0, os 11 passaram com **113 recursos de skills / 8 prompts / 2 extensões**. Houve validação anterior do addon no Pi 1.2.0 com a composição antiga. As suítes do pacote principal e do planeamento mantêm-se separadas. A extensão opcional também passou verificação estrita de tipos com TypeScript 5.9.3 contra as declarações do Pi 1.2.0.
 
 Não executámos a suíte Vitest upstream completa, os helpers de shell/PowerShell, recuperação de histórico, temporizadores periódicos ou chamadas a fornecedores reais. Os testes não certificam Windows/macOS, segurança independente ou uso irrestrito em produção. Nenhuma configuração global ou infraestrutura foi alterada.
 

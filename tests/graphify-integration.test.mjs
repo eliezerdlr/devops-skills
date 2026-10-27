@@ -86,7 +86,7 @@ test('provenance and upstream licence notices are retained', async () => {
 
 test('catalogue includes Graphify in the unified specialist count', async () => {
   const catalogue = await readFile(resolve(root, 'skills/engineering-skills/SKILL.md'), 'utf8');
-  assert.match(catalogue, /Catalogue of 117 engineering skills/);
+  assert.match(catalogue, /Catalogue of 112 engineering skills/);
   assert.match(catalogue, /\]\(\.\.\/\.\.\/integrations\/graphify\/skills\/graphify\/SKILL\.md\)/);
   assert.match(catalogue, /All specialists below are included by the main package manifest/);
 });

@@ -31,7 +31,7 @@ If not already registered:
 pi install /absolute/path/to/devops-skills
 ```
 
-Restart Pi or run `/reload`. The manifest now loads `extensions/ops-orchestrator/index.ts` in addition to 117 specialist skills, the catalogue and eight same-session role prompts (three network, three security, two testing/performance). It registers tools but starts no model calls, background processes or infrastructure connections at startup.
+Restart Pi or run `/reload`. The manifest now loads `extensions/ops-orchestrator/index.ts` in addition to 112 specialist skills, the catalogue and eight same-session role prompts (three network, three security, two testing/performance). It registers tools but starts no model calls, background processes or infrastructure connections at startup.
 
 If you previously registered only skill directories manually, use a single local `packages` entry instead (see examples/pi-settings.json) so extensions and prompts are discovered too. Resolve duplicate older copies under ~/.agents/skills deliberately.
 
@@ -121,22 +121,8 @@ For a non-npm Pi installation, use the actual SDK package directory instead. The
 
 Recorded local results: **29 engine tests and 20 Pi integration tests passed** on Node 22.23.1 / Pi 1.2.0. Tests cover dependency validation, concurrency, denial, approval failures, no-UI rejection, invalid output, independent contexts, zero child tools, parent transport routing, token cap, cancellation, shutdown, bounded metadata and actual multi-step execution using synthetic model responses. They do not call a paid provider or access real infrastructure.
 
-The same integration suite and type check also passed using a fresh official Pi 1.2.0 npm SDK installed into a temporary directory with lifecycle scripts disabled, matching the historical GitHub Actions workflow at that time. The current workflow pins all three Pi SDK packages to the 1.3.0 reference used for model resilience; 1.4.0 is not yet certified. This is not a full interactive clean-machine certification. CI is configured in [.github/workflows/test-orchestration.yml](../.github/workflows/test-orchestration.yml), with read-only repository permissions and SHA-pinned official checkout/setup-node actions. No provider secrets are needed by CI.
+The same integration suite and type check also passed using a fresh official Pi 1.2.0 npm SDK installed into a temporary directory with lifecycle scripts disabled, matching the supplied GitHub Actions workflow. This is not a full interactive clean-machine certification. CI is configured in [.github/workflows/test-orchestration.yml](../.github/workflows/test-orchestration.yml), with read-only repository permissions and SHA-pinned official checkout/setup-node actions. No provider secrets are needed by CI.
 
 The extension also passed strict TypeScript checking with TypeScript 5.9.3 against the installed Pi 1.2.0 declarations. Its shared JavaScript engine is covered by runtime tests; TypeScript checking does not claim full static proof of that module.
 
 These results validate the scoped implementation, **not universal production readiness or independent security certification**. Live provider authentication/error modes, RPC approval UI, Windows/macOS runtime behaviour and real network operations have not been certified here. Before granting operational use, confirm your provider/data policy and perform an approved real-model run with synthetic evidence. No production credentials are required for that first run.
-
-## Selected gateway-managed deployment
-
-OmniRoute is the operator-managed external gateway for the selected operational profile; [dependency and runbook](../integrations/omniroute/README.md). Select an approved physical `omniroute` model/combo, leave `DEVOPS_MODEL_POLICY` unset and keep the Pi virtual router off. No service or model selection is changed automatically.
-
-The approval of a physical gateway model does not discover or enumerate its internal fallback recipients. The operator must approve and restrict those destinations, tools, retention and billing server-side before supplying evidence. SDK/client retries and gateway/upstream retries need a combined bound. Do not infer the guarantees of the Pi virtual router below apply to a physical gateway; OmniRoute streaming, auth, tool/cancel and failure behavior need separate validation.
-
-## Approved fallback recipients — alternative native Pi router (0.5.0)
-
-When the selected model is the configured DevOps router, the real approval dialog lists **all** recipient provider/model/origin/billing routes, policy hash and logical-attempt limit. The approval fingerprint binds the plan, pinned selection and disclosed immutable policy. Changing the policy file/ID prevents a new worker approval until reload. Unknown virtual routers are refused for workers.
-
-One worker registry request may perform up to the disclosed routing maxAttempts physical dispatches (each with SDK maxRetries=0 where honored); provider/gateway-internal behavior and actual billable requests can differ. Hard provider billing caps remain external. Evidence must be approved for every recipient, not just the initial model. No failed tool execution is replayed. Router metadata is distinct from the worker's in-memory status registry. [Routing contract](../integrations/omniroute/references/policy.md).
-
-The initial routing model is text-only/thinking off. Direct workers exceeding its conservative input byte guard fail closed; they do not gain automatic compaction or permission to discard evidence.

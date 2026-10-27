@@ -1,16 +1,10 @@
 # Dependencies and host integration
 
-**Installation entrypoint:** [manual installation and lifecycle runbooks](INSTALLATION.md), with [structured inventory](external-installations.json). This page describes requirements; the runbooks describe commands, directories, configuration, verification, supervision, upgrades and removal. Workflow-only stacks without approved versions remain explicitly blocked rather than silently installed.
-
-## Documentation validation prerequisites
-
-The default `npm test` now also checks external-installation documentation. Those eleven tests use **Bash** for `bash -n` and **Python 3** for AST parsing plus optional macOS wrapper/plist generation in a synthetic temporary HOME and parsing of native service templates, in addition to Node. These test tools are not prerequisites for the normal `npm install -g omniroute` installation on macOS, Linux or Windows. PowerShell examples are documented but not executed by this suite. No installer, generated credential script, wrapper execution, launchctl or external runtime is executed. These are contributor/test prerequisites, not requirements to read skills or extra npm runtime dependencies. Windows contributors need an approved Bash/Python environment or a separate platform-specific validation plan; no automatic tool installation or silent test skip is provided.
-
 ## What loading this pack requires
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares all 117 specialist skills plus their catalogue, eight same-session role prompts and locally authored ops-orchestrator/model-resilience extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core, pi-ai and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares all 112 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator extension. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
 See [ORCHESTRATION.md](ORCHESTRATION.md) for the executable integration, approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 
@@ -30,7 +24,7 @@ Clone to a chosen directory, then merge a `packages` entry into the existing `~/
 }
 ```
 
-Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 17 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
+Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 12 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
 
 ### Register the checkout as a local Pi package
 
@@ -49,14 +43,6 @@ Do not copy another project's SYSTEM.md, AGENTS.md or lifecycle hooks into the g
 The pinned upstream Pi package lives in `integrations/planning-with-files/upstream/` and is **not selected by the main manifest**. Register it separately to add persistent planning and native Pi hooks; see the [integration guide](../integrations/planning-with-files/README.md) and [settings example](../examples/pi-planning-settings.json). It uses the host Pi SDK as a peer dependency. Do not install its nested Vitest development environment to use the extension.
 
 Its session-start recovery helper can spawn uv/Python; attestation helpers use sh or PowerShell. Start with `PWF_MODE=notify UV_OFFLINE=1 UV_PYTHON_DOWNLOADS=never` to avoid automatic end-of-turn continuation and implicit uv downloads. Explicit `/plan-loop` remains capable of periodic model calls even in notify mode. Plan activation is not infrastructure approval. Eleven targeted tests passed against Pi 1.2.0, plus strict type checking of its extension; this does not validate every bundled helper or operating system.
-
-## AWS Toolkit and ECC WireGuard — instructions, not installed services
-
-The root includes three [AWS Toolkit adaptations](../integrations/aws-toolkit/README.md) (FinOps, AWS Site-to-Site VPN and Well-Architected review) and the [ECC WireGuard adaptation](../skills/engineering-skills/homelab-wireguard-vpn/SKILL.md). Reading these Markdown skills requires no new external dependency. No AWS CLI, uv/Python, proxy, MCP, cloud agent, WireGuard service, install hook or root npm dependency is bundled or installed by this addition.
-
-Actual AWS queries require existing approved AWS CLI/SDK or an explicitly configured optional MCP, temporary credentials, account/region scope and a query/cost budget. Cost Explorer/Athena may charge even for read-only analysis; creating VPN resources, monitoring or commitments needs separate approval. Calculations use available calculator/local tools only when needed. No live AWS validation has been performed by the integration tests.
-
-Actual WireGuard deployment needs supported endpoint/client software, OS-specific networking tools and privileges, plus an approved routing/firewall/IPv6/rollback plan. Loading the skill does not set these up. Documentation is portable across macOS/Linux/Windows; no claim of operational three-OS homologation or measured VPN performance is made. DDNS automation and Python configuration generation were intentionally excluded. Tests validate instruction contracts and integrity, not that an agent will obey them or that a real VPN works.
 
 ## Included engineering and web quality modules
 
@@ -81,6 +67,12 @@ The [Graphify module](../integrations/graphify/README.md) contributes an adapted
 CLI examples target the externally prepared `graphifyy==0.9.93` distribution (`graphify` executable). Its core requires Python and NetworkX/NumPy/RapidFuzz/tree-sitter grammars; extras such as Terraform require separate review. This pack does not install those dependencies. Do not invoke upstream installers/guards or assume the host subagent API matches upstream examples. Structural checks here do not validate a clean installation or the complete runtime.
 
 The adapted instructions require child-process settings `GRAPHIFY_BACKEND=none`, `GRAPHIFY_NO_AUTO_REFRESH=1` and `GRAPHIFY_QUERY_LOG_DISABLE=1`, plus an approved project output root. These are workflow guidance, not network/filesystem isolation. Markdown structure is available in the update path, whereas `extract --code-only` skips documents; YAML infrastructure is not automatically modeled structurally. Remote semantic processing needs separate approval of corpus, provider and budget.
+
+## NetBird remote access — local instructions and offline validation
+
+The `netbird-remote-access` specialist is included by the existing specialist glob. Its validator uses Python 3.9+ and the standard library only; no Docker daemon, network connection or credentials are required. The 41 regression tests use temporary synthetic fixtures on Linux/macOS; the POSIX suite is not homologated on Windows. Root Node integration tests explicitly skip the Python branches when a compatible interpreter is unavailable rather than installing it.
+
+The Docker templates target a Linux routing peer with Engine/Compose/TUN and require explicit parameters, a verified official image version/architecture/digest and separate operational approval. They are not an installer or a live inventory. Host networking and capabilities must be reviewed for the selected release. The validator is heuristic and only supports a trusted stable package tree; it is not DLP, sandboxing, an image registry check or infrastructure validation.
 
 ## Optional Python dependencies
 
@@ -185,15 +177,3 @@ Completed without running bundled scripts:
 - Three npm manifests classified: two optional MCP integrations and one fixture, not root pack dependencies.
 
 Not completed: dependency installation/resolution, build/integration tests, live CVE/licence databases, exhaustive generated-code dependency resolution, clean-machine Pi loading and subagent execution. Do not publish claims that the whole pack works without setup or has passed security analysis.
-
-## Model resilience and Archify (0.5.0)
-
-The unified root adds two skills and the locally authored model-resilience extension. Routing requires **Pi 1.3.0** and the host's **pi-ai** peer; no root dependency install is needed. Without DEVOPS_MODEL_POLICY it registers only an informational command. A valid operator policy still requires explicit virtual-model selection. Native registry authentication retains OAuth in Pi; no token export to gateways. See [setup, limits and rollback](../integrations/omniroute/README.md).
-
-**Selected operational profile: `gateway-managed`.** OmniRoute is a required **external operational dependency for this profile**, installed and supervised by the operator directly on the machine, with its dashboard available. It is not an npm dependency, embedded code, or a prerequisite for loading skills. The root `package.json` points to [operational-dependency.json](../integrations/omniroute/operational-dependency.json); this is descriptive metadata, not automatic installation or runtime enforcement. No service/account is provisioned by this pack.
-
-OmniRoute **3.8.53** is the analyzed source candidate, not a validated installed release. The earlier analysis found npm **3.8.52** rather than the same artifact; select and verify an exact artifact before deployment. Installed version, artifact digest and validated runtime remain unknown (`null`) until evidenced. On the analyzed source, Node support is `>=22.22.2 <23` or `>=24 <27`; verify the actual release separately from this package's engines.
-
-The gateway owns fallback in this profile: keep `DEVOPS_MODEL_POLICY` unset and the Pi virtual router off. Native Pi fallback remains an alternative that does not need OmniRoute. Merge the documented physical provider fragment manually; the analyzed gateway Pi config writer is incompatible. Server-side recipient policy, inference and dashboard auth, encryption with recoverable STORAGE_ENCRYPTION_KEY, retry/billing/retention controls, TLS/mesh access and backup/restore require separate verification. Keep required OAuth/backup schedulers; headless mode is not the dashboard profile. See the [operational runbook](../integrations/omniroute/README.md).
-
-Archify **3.2.0** is an explicit external trusted runtime selected through DEVOPS_ARCHIFY_DIR. The adapter verifies 203 file hashes, uses Node built-ins, and supports ten native diagram types. It does not copy assets/fonts, install dependencies, run updates or open a browser. No explainer/JS candidate execution or full browser/perceptual validation is claimed. See [operations](../integrations/archify/README.md).
