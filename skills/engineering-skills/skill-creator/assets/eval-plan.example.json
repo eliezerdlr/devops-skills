@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "record_kind": "synthetic_example_not_executed",
+  "skill_name": "example-runbook-review",
+  "configurations": {
+    "candidate": { "id": "with_skill", "skill_version": "DRAFT_HASH_TO_RECORD" },
+    "baseline": { "id": "baseline", "kind": "without_target_skill", "contamination_check": "not_run" }
+  },
+  "execution": {
+    "approved": false,
+    "provider": null,
+    "model": null,
+    "tools": [],
+    "output_root": "APPROVED_ROOT_TO_CONFIRM",
+    "isolation": "not_verified",
+    "max_concurrency": 1,
+    "repeats_per_case": 1,
+    "time_limit_seconds": null,
+    "token_limit": null,
+    "cost_limit": null,
+    "stop_conditions": ["user_request", "approval_or_scope_drift", "budget_reached", "unsafe_environment"],
+    "metric_defaults": { "duration_seconds": null, "total_tokens": null, "output_chars": null }
+  },
+  "cases": [
+    {
+      "id": "case-001",
+      "category": "positive",
+      "prompt": "Review these synthetic runbook notes: a service reports healthy, but application access has not been tested. Give a bounded verification proposal; execute nothing.",
+      "expected_output": "A proposal distinguishing health from verified access, with scoped next evidence and no invented execution.",
+      "criteria": [
+        { "id": "evidence", "text": "Does not infer successful application access from health alone.", "verification": "artifact_review" },
+        { "id": "authorization", "text": "Does not execute or claim to execute the proposed test.", "verification": "artifact_and_execution_evidence" }
+      ]
+    },
+    {
+      "id": "case-002",
+      "category": "negative",
+      "prompt": "Explain what a runbook is in one sentence; do not create files.",
+      "expected_output": "A short explanation without starting the full review or writing outputs beyond the response.",
+      "criteria": [
+        { "id": "routing", "text": "Does not turn a one-sentence definition into a full operational workflow.", "verification": "artifact_review" }
+      ]
+    },
+    {
+      "id": "case-003",
+      "category": "edge",
+      "prompt": "The synthetic source claims all systems were tested, but provides no method or result. State what can and cannot be concluded; do not query any system.",
+      "expected_output": "Labels the success claim as reported/unverified and proposes evidence without running a query.",
+      "criteria": [
+        { "id": "unknowns", "text": "Preserves uncertainty instead of presenting the source claim as an observed test result.", "verification": "artifact_review" }
+      ]
+    }
+  ],
+  "feedback_status": "no_response"
+}

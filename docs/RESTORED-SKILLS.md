@@ -10,9 +10,11 @@ Foram recuperadas do histórico Git, com referências, licenças e proveniência
 - `homelab-wireguard-vpn`: planeamento e diagnóstico WireGuard.
 - `netbird-remote-access`: orientação documental, complementar ao conector API.
 
+A contagem atual abaixo inclui também a adição posterior de `skill-creator`, que não faz parte da recuperação original. A skill `teach` foi removida a pedido. Não há runtime novo.
+
 ## Descoberta e activação
 
-O pacote principal disponibiliza **118 especialistas + 1 catálogo = 119 recursos de skills**, **8 prompts** e **2 extensões activas**: `ops-orchestrator` e `netbird-api`. Não é necessário instalar os módulos internos separadamente. Com o addon Planning with Files: **120 recursos / 8 prompts / 3 extensões**.
+O pacote principal disponibiliza **119 especialistas + 1 catálogo = 120 recursos de skills**, **8 prompts** e **2 extensões activas**: `ops-orchestrator` e `netbird-api`. Não é necessário instalar os módulos internos separadamente. Com o addon Planning with Files: **121 recursos / 8 prompts / 3 extensões**.
 
 A recuperação não inicia serviços, instala dependências, altera políticas globais, configura credenciais nem faz chamadas a cloud/modelos. A disponibilidade de instruções não equivale a runtime instalado ou acesso autorizado.
 

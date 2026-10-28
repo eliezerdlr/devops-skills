@@ -4,7 +4,7 @@
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares all 118 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator and NetBird API extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares all 119 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator and NetBird API extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
 See [ORCHESTRATION.md](ORCHESTRATION.md) for orchestration and [NETBIRD-API.md](NETBIRD-API.md) for persistent API access (macOS/Linux, HTTPS, protected local token and explicit approvals), approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 
@@ -67,6 +67,12 @@ The [Graphify module](../integrations/graphify/README.md) contributes an adapted
 CLI examples target the externally prepared `graphifyy==0.9.93` distribution (`graphify` executable). Its core requires Python and NetworkX/NumPy/RapidFuzz/tree-sitter grammars; extras such as Terraform require separate review. This pack does not install those dependencies. Do not invoke upstream installers/guards or assume the host subagent API matches upstream examples. Structural checks here do not validate a clean installation or the complete runtime.
 
 The adapted instructions require child-process settings `GRAPHIFY_BACKEND=none`, `GRAPHIFY_NO_AUTO_REFRESH=1` and `GRAPHIFY_QUERY_LOG_DISABLE=1`, plus an approved project output root. These are workflow guidance, not network/filesystem isolation. Markdown structure is available in the update path, whereas `extract --code-only` skips documents; YAML infrastructure is not automatically modeled structurally. Remote semantic processing needs separate approval of corpus, provider and budget.
+
+## Skill Creator — authoring guidance, not an evaluation service
+
+The [skill-creator adaptation](../skills/engineering-skills/skill-creator/README.md) adds one instruction-only skill, three progressive references and two inert templates under the existing specialist glob. Reading/authoring guidance requires no new dependency; use existing local editing/calculation tools when appropriate. No Claude CLI, PyYAML, browser/MCP, server, runner, archive packager or automatic subagent is bundled or installed.
+
+It uses only supplied or explicitly scoped expertise and separates draft authoring from optional behavioral evaluation. Actual model/subagent runs need approved tools/isolation, data recipients, provider/model, budget, bounds and cancellation; an installed CLI is not authorization. The protocol is host-neutral and does not repurpose the constrained network OPS workers. The synthetic plan is unapproved/unrun, not measured efficacy. Existing tester/security-auditor scripts must be inspected before any use; no automatic invocation or replacement is added.
 
 ## Optional Python dependencies
 

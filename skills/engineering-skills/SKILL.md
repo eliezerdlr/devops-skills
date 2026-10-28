@@ -1,11 +1,11 @@
 ---
 name: engineering-skills
-description: "Catalogue of 118 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
+description: "Catalogue of 119 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
 ---
 
 # Engineering Skills — Catalogue
 
-This catalogue lists **118 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
+This catalogue lists **119 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
 
 Copyright and licence notices are preserved in the repository's `LICENSE`, `THIRD_PARTY_NOTICES.md`, and nested licence files. Inclusion is not a security certification.
 
@@ -106,6 +106,14 @@ Copyright and licence notices are preserved in the repository's `LICENSE`, `THIR
 | promote | `self-improving-agent/skills/promote/SKILL.md` |
 | memory-review | `self-improving-agent/skills/memory-review/SKILL.md` |
 | memory-status | `self-improving-agent/skills/memory-status/SKILL.md` |
+
+## Skill authoring and evaluation — Anthropic adaptation (1)
+
+| Skill | Focus | File |
+|---|---|---|
+| skill-creator | Create or refine agent skills from authorized user expertise, with scoped drafts, acceptance cases and optional baseline evaluation | `skill-creator/SKILL.md` |
+
+Use `/skill:skill-creator TASK` or an actual skill-authoring request. No automatic memory/history capture, external-model evals, runner, server or packager. Evaluation execution requires separate data/tool/provider/budget approval. See [scope, provenance and limits](skill-creator/README.md). It complements extract/tester/security-auditor; the teach learning skill is not included.
 
 ## Advanced engineering (37)
 

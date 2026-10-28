@@ -106,13 +106,21 @@ Selected Pi skill/query/update guidance and the explicit save-result/reflect wor
 
 Local changes remove automatic installation/upgrades, implicit provider dispatch, mandatory graph-first behavior and subagent requirements; add bounded queries, optional local use and existing planning/TC handoff integration. The package contains instructions only: no Graphify Python runtime, guard, agents, hooks or session collector. The adapted skill is included by the root manifest; the external Python CLI is not bundled. This is not officially affiliated with Graphify Labs. Runtime dependencies and end-to-end operation remain separately validated requirements.
 
+## Anthropic — adapted skill-creator guidance
+
+Source: https://github.com/anthropics/skills, commit `dbd4588f9e1033efb41dad4bef2f7947c8993d44`, selected `skills/skill-creator/` entrypoint, grader/comparator/analyzer instructions and schema concepts.
+
+Apache License 2.0 — Copyright 2026 Anthropic, PBC.
+
+The original LICENSE.txt is preserved verbatim as `skills/engineering-skills/skill-creator/LICENSE`. UPSTREAM.json records selected source paths/hashes and modifications; SHA256SUMS covers distributed local files. The concise entrypoint, three references and two inert templates are explicitly adapted. No original runner, optimization loop, HTTP/HTML viewer, process cleanup, archive packager, automatic worker or PyYAML dependency is included. Local changes add experience/evidence provenance, authorized source reuse, safe file updates, separate evaluation/data/cost approval, baseline controls and honest metrics. Unrelated source-available document skills, CDN assets and their runtimes are not redistributed. This does not imply Anthropic endorsement, model training or measured behavioral improvement.
+
 ## Licence scope
 
 The root MIT notice consolidates the original copyright strings; it does not imply joint authorship of every file. Engineering content is attributed above and its original root licence is also preserved in `licenses/engineering-MIT.txt`. Nested licences retain the exact spelling `Reza Rezvani`; no assumption about legal identity with `Alireza Rezvani` is required. Do not replace or remove those notices when reorganising files.
 
 ## Local modifications and additions
 
-New independent local contributions are distributed under the MIT terms in the root LICENSE, as authorised by the maintainer. Graphify-derived and AWS Toolkit-derived instructions retain the Apache-2.0 terms indicated in their integrations. This does not replace or transfer upstream copyrights.
+New independent local contributions are distributed under the MIT terms in the root LICENSE, as authorised by the maintainer. Graphify-derived, AWS Toolkit-derived and Anthropic skill-creator-derived instructions retain the Apache-2.0 terms indicated in their respective directories. This does not replace or transfer upstream copyrights.
 
 - The combined engineering index is locally rewritten and adapted for this distribution.
 - Repository README and packaging documentation are local additions.

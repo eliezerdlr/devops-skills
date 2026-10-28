@@ -1,0 +1,23 @@
+{
+  "repository": "https://github.com/anthropics/skills",
+  "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+  "license": "Apache-2.0",
+  "copyright": "Copyright 2026 Anthropic, PBC.",
+  "source_sha256": {
+    "skills/skill-creator/LICENSE.txt": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362",
+    "skills/skill-creator/SKILL.md": "dcd4803e61e913e6fc27294184cd3a71f09f5e924ff20c8a9a20173e7b3c2bcf",
+    "skills/skill-creator/agents/grader.md": "57134da0c1a4eea33fbd74a1c9c44aa814f07d6bc64de303edb586f941e5d21a",
+    "skills/skill-creator/agents/comparator.md": "fe1fc9787c495d864c5d6eada47396478572325fde1b33a96d78bf4b849b7a3e",
+    "skills/skill-creator/agents/analyzer.md": "bf68f4cac5a56c673a928c2e6d619586c5b93ea364026ab37547772cb45a663a",
+    "skills/skill-creator/references/schemas.md": "8e8876180a8989b406a4d3edddf875b04cdfd5805cc8616686d552b11ce4455f"
+  },
+  "source_distribution": "Selected source paths/hashes record provenance; LICENSE.txt is preserved verbatim as LICENSE. Original skill bodies, role files and scripts are not vendored.",
+  "modifications": [
+    "Concise host-neutral authoring workflow based on user-supplied or explicitly scoped expertise, distinguishing evidence and reuse rights.",
+    "Require safe output locations, private source minimization, reviewed updates and separate execution/inference/data/cost authorization.",
+    "Adapt evaluation and grader/comparator/analyst guidance into progressive references; no automatic workers or new prompts.",
+    "Replace upstream layouts/metrics assumptions with a local versioned inert plan, explicit baseline control, null missing metrics and independent final-test guidance.",
+    "Exclude Claude CLI runner, optimization loop, HTTP viewer, process cleanup, packaging scripts and dependencies; preserve existing runtime."
+  ],
+  "registration": "Included through the existing engineering-skills glob in the single root package. No additional extension, prompt or installation."
+}

@@ -18,7 +18,7 @@ pi list
 
 Se já estiver registada, atualizar e recarregar é suficiente. Não registar módulos internos adicionalmente. Ver [pacote único e migração de configurações antigas](UNIFIED-PACKAGE.md); preservar configurações não relacionadas e filtros intencionais.
 
-A raiz expõe **118 especialistas + 1 catálogo = 119 recursos de skills**, **8 prompts** e **2 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
+A raiz expõe **119 especialistas + 1 catálogo = 120 recursos de skills**, **8 prompts** e **2 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
 
 ## 2. Recarregar e conferir
 
@@ -55,6 +55,14 @@ npm run test:package
 
 O contrato falha se um módulo aprovado deixar de ser exportado pelo manifesto raiz, se um snapshot passar a ser descoberto, se houver nomes duplicados, se os guias voltarem a exigir instalações Pi separadas ou se npm test deixar de incluir as suítes aprovadas.
 
+## Skill Creator — autoria documental e avaliação opcional
+
+A skill `skill-creator` é carregada pelo glob existente, sem runner, viewer, servidor, empacotador ou dependências novas. Os sete testes em `tests/skill-creator-integration.test.mjs` verificam registo de creator e ausência de teach, licença/proveniência/integridade/links, limites de fonte autorizada, aprovação de avaliação e consistência do plano sintético versionado. A fixture declara execução não aprovada, isolamento não verificado e métricas nulas. Não foi executado benchmark de modelos; contratos de texto não garantem comportamento, isolamento ou eficácia.
+
+Os dois testes `tests/skill-creator-pi.test.mjs` verificam no loader Pi real que creator aparece com metadata válido para autoria e que teach já não aparece na descoberta ou no prompt. Estes testes medem descoberta/formatação, não a decisão de um modelo sobre quando ativar uma skill.
+
+Validação local após remover teach a pedido e manter skill-creator: **269 testes Node offline + 29 SDK Pi 1.4.0 + 11 planning = 309 testes**, sem falhas/skips. A suíte padrão continua a executar os 41 testes Python NetBird internamente; não são mais 41 testes Node. Descoberta atual: **119 especialistas + catálogo = 120 recursos / 8 prompts / 2 extensões**; com Planning, **121 / 8 / 3**. Os testes verificam ausência de teach no filesystem de skills, na descoberta SDK, no catálogo e nos comandos de testes. Foram retirados os sete contratos offline e dois testes SDK específicos de teach; a cobertura das restantes capacidades foi preservada. Nenhum curso ou ficheiro externo foi apagado. `git diff --check` limpo; sem edição de runtime, instalação, recolha de credenciais, acesso cloud/rede, benchmark de modelos, publicação, novo typecheck, CI remoto ou teste do runtime opcional de routing nesta tarefa.
+
 ## 4. Carregador/núcleo Pi real com transporte simulado
 
 Usar o SDK que já está instalado; não instalar outra cópia no pack:
@@ -71,17 +79,17 @@ PI_SDK_ROOT="$(npm root -g)/@earendil-works/pi-coding-agent" npm run test:pi
 
 Confirmar antes que o caminho existe. Numa instalação pi-web-ui, o SDK pode estar nas dependências dessa aplicação, não diretamente em npm root.
 
-Os testes verificam descoberta de **119 skills / 8 prompts / 2 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os quatro registos legados. Também verificam quatro ferramentas de orquestração, duas commands, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
+Os testes verificam descoberta de **120 skills / 8 prompts / 2 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os quatro registos legados. Também verificam quatro ferramentas de orquestração, duas commands, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
 
 ## 5. Planeamento persistente: teste do addon de runtime
 
-O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 118 skills.
+O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 119 skills.
 
 ```bash
 PI_SDK_ROOT=/caminho/real/@earendil-works/pi-coding-agent npm run test:planning
 ```
 
-A descoberta combinada deve ser **120 skills / 8 prompts / 3 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
+A descoberta combinada deve ser **121 skills / 8 prompts / 3 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
 
 ## 6. Smoke tests manuais sem ações externas
 

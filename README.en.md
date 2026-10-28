@@ -4,7 +4,7 @@
 
 A collection of skills for engineering, DevOps, cybersecurity, and IT operations.
 
-One package includes **118 skills/sub-skills**, **8 prompts** for network/security/testing/performance, and two extensions: **analysis orchestration** and a **NetBird API connector**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
+One package includes **119 skills/sub-skills**, **8 prompts** for network/security/testing/performance, and two extensions: **analysis orchestration** and a **NetBird API connector**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
 
 ## 1. Prerequisites
 
@@ -30,7 +30,7 @@ Edit `~/.pi/agent/settings.json` and add the checkout to the existing `packages`
 
 Replace the path with your actual checkout location. **Do not replace the entire settings file** if it already contains configuration: preserve other fields and paths.
 
-The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 118 specialists, the catalogue, eight prompts and the orchestration extension, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
+The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 119 specialists, the catalogue, eight prompts and the orchestration extension, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
 
 ### Option B — Install the checkout as a Pi package
 
@@ -72,7 +72,7 @@ Already registered individual modules? Follow the [single-package migration guid
 
 ## 3. Enable operational capabilities
 
-**Registering the single root package makes all 118 skills available.** Running their workflows may require additional setup:
+**Registering the single root package makes all 119 skills available.** Running their workflows may require additional setup:
 
 | Capability | Separate setup |
 |---|---|
@@ -123,7 +123,13 @@ Two MIT modules already registered by the root manifest; no separate Pi installa
 - [Addy Engineering](integrations/addy-engineering/README.md): four adapted constraint/context/official-source/simplification skills and two same-session personas, not autonomous subagents. ADR/adversarial-review material is supplementary.
 - [Web Quality & SEO](integrations/web-quality/README.md): six skills for web audits, performance, Core Web Vitals, accessibility, technical/on-page SEO and browser best practices, with product/structured-data/internationalisation references.
 
-Their ten skills and two prompts are part of the package's 118 specialists and eight prompts. Loading them installs no tools, hooks, browsers/MCP or analytics. Complete selected references do not establish enforcement, measured metrics, WCAG conformance or ranking gains. Web quality is not a complete marketing/advertising platform; the guides qualify tool dependencies and non-universal examples.
+Their ten skills and two prompts are part of the package's 119 specialists and eight prompts. Loading them installs no tools, hooks, browsers/MCP or analytics. Complete selected references do not establish enforcement, measured metrics, WCAG conformance or ranking gains. Web quality is not a complete marketing/advertising platform; the guides qualify tool dependencies and non-universal examples.
+
+### Author skills from expertise — skill-creator
+
+The [Anthropic skill-creator adaptation](skills/engineering-skills/skill-creator/README.md) turns supplied or explicitly authorized knowledge into reusable instructions with scope, decisions, failure handling, evidence, safety and acceptance criteria. Use `/skill:skill-creator TASK`. It distinguishes reported experience from observed verification and checks existing coverage before adding a skill.
+
+No automatic memory/history collection, installation, publishing or model evaluations. Optional baseline evaluation requires separate approval of data, tools, provider and budget. No Claude runner, server/viewer or packager is included. Skill authoring is centered on `skill-creator`; the `teach` learning skill was removed on request.
 
 ### Security auditing — included in the package
 
@@ -145,7 +151,7 @@ Prepare the external dependency manually; no automatic installation or implicit 
 
 ### UniFi — optional integration under review
 
-The original project is available in [integrations/unifi-skills](integrations/unifi-skills/README.md), including five skills and a Python helper. **It is not loaded by this pack's Pi manifest** and is not part of the 118 main skills.
+The original project is available in [integrations/unifi-skills](integrations/unifi-skills/README.md), including five skills and a Python helper. **It is not loaded by this pack's Pi manifest** and is not part of the 119 main skills.
 
 **Do not use unchanged in production:** the original helper disables TLS verification, permits writes by default, and may expose sensitive data in responses/dry-run output. Corrections and real-device tests have not been completed. Publication is not operational approval. Do not run examples against a company network with administrative credentials.
 
@@ -179,6 +185,6 @@ New independent local contributions are also distributed under MIT, as authorise
 
 ## Restored skills and optional runtimes
 
-The package exposes **118 specialists + catalogue (119 resources), eight prompts and two active extensions**. Archify, model-resilience, three AWS skills, WireGuard and NetBird are restored. See [restoration scope](docs/RESTORED-SKILLS.md).
+The package exposes **119 specialists + catalogue (120 resources), eight prompts and two active extensions**. Archify, model-resilience, three AWS skills, WireGuard and NetBird are restored. See [restoration scope](docs/RESTORED-SKILLS.md).
 
 Archify/OmniRoute require external tools only for explicitly requested workflows. The [OmniRoute contract](integrations/omniroute/operational-dependency.json) applies only to the optional gateway-managed profile. Native routing is not in the root extension manifest; loading skills starts no service, installation or fallback.
