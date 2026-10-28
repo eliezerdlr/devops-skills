@@ -1,0 +1,16 @@
+{
+  "repository": "https://github.com/ranxianglei/billion-context",
+  "version": "0.1.209",
+  "sourceCommit": "5594c13155184f5bd6f35a898f856415b4990a28",
+  "publishedCommit": "39a0ada58f396ec6e5ee29fdbaa01c01b74f14d9",
+  "integrity": "sha512-Lz43W6+WXlR/FkdWAvYVXrxsK8IqXx4sPjru/cYaxm8/DtO5na9HBFR9Ab46kYuC0Wx5vfKeO6X9rR9W/qs4lw==",
+  "license": "MIT with Additional Term — Attribution on Product Surfaces",
+  "scope": "Local opt-in native Pi bootstrap and restricted profile; upstream runtime not vendored",
+  "modifications": [
+    "Lazy session_start loading; hash checks",
+    "Private process temporary recovery; no persistent session store",
+    "Five context tools only; disable wire injection and bundled delegates",
+    "Explicit export confirmation; suppress proactive registry credential reporting",
+    "Synchronous child registration kill switch restored before await"
+  ]
+}

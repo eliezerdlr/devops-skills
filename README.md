@@ -6,6 +6,8 @@ Pack de skills para engenharia, DevOps, cybersecurity e operações de IT.
 
 Um único pacote com **119 skills/sub-skills**, **8 prompts** de rede, segurança, testes e performance, e três extensões: **orquestração de análise**, **conector API NetBird** e **Ponytail full por defeito**. As skills estão organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
 
+**Contexto opcional:** [perfil nativo billion-context 0.1.209](integrations/billion-context/README.md), externo e opt-in; não é ativado por instalar/atualizar a raiz. Usa [billion-context](https://github.com/ranxianglei/billion-context) e [acp-kernel](https://github.com/ranxianglei/acp-kernel), com licença MIT + termo adicional de atribuição. Sem persistência de sessões Bili, mas com temporários privados de recuperação; exportações exigem aprovação.
+
 ## 1. Pré-requisitos
 
 - Pi **1.2.0** e Node.js **22.14+** para a orquestração; fornecedor/modelo autenticado.

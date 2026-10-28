@@ -1,0 +1,58 @@
+{
+  "host": "127.0.0.1",
+  "autoUpdate": false,
+  "autoRestartOnUpdate": false,
+  "advisoryCheck": false,
+  "releaseNotesCheck": false,
+  "autoModeForge": {
+    "enabled": false
+  },
+  "persist": {
+    "enabled": false
+  },
+  "storage": {
+    "unified": "legacy",
+    "sqliteAutoDownload": false
+  },
+  "pi": {
+    "subagents": false,
+    "inline": false
+  },
+  "native": {
+    "attachExternal": false
+  },
+  "mitm": {
+    "enabled": false
+  },
+  "imageRescale": false,
+  "log": false,
+  "logFile": "off",
+  "debug": false,
+  "diagnostics": {
+    "dumpBody": false,
+    "dumpReq": false,
+    "dump4xx": false,
+    "noInjectTool": true
+  },
+  "guardrails": {
+    "bashTimeout": 0,
+    "maxOutputBytes": 0,
+    "repetition": false,
+    "textRunThreshold": 0
+  },
+  "codexCompact": "pass",
+  "compress": {
+    "ccr": {
+      "enabled": false
+    },
+    "rules": {
+      "enabled": false
+    },
+    "absorb": {
+      "enabled": false
+    },
+    "externalSummary": {
+      "enabled": false
+    }
+  }
+}

@@ -2,6 +2,12 @@
 
 Usar primeiro dados sintéticos/redigidos. Os testes de empacotamento não precisam de credenciais de infraestrutura, downloads, instalação de SDK ou chamadas reais a modelos.
 
+## Perfil opcional billion-context
+
+`npm test` inclui `tests/billion-context.test.mjs`: pins/SRI/licença, configuração restritiva, lazy init, hash/config inválidos antes de efeitos laterais, whitelist, getter de chaves oculto, registry alheio preservado, restauro de env antes de await (incluindo exceção), confirmação de exports e verificador read-only. Fixtures upstream sintéticas em processos isolados, sem rede/contas/SDK e sem alterar o perfil global.
+
+O runtime não é instalado pelos testes ou pela raiz. A [verificação manual](../integrations/billion-context/README.md) do prefixo instalado é read-only; os testes locais anteriores com SDK/transportes simulados não são reproduzidos automaticamente pelo CI nem provam poupança real ou compatibilidade universal. O perfil é adicional opt-in, não altera a contagem de extensões da raiz.
+
 ## 1. Atualizar e registar uma vez
 
 ```bash

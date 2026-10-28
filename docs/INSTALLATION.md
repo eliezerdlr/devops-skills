@@ -2,6 +2,10 @@
 
 Estes guias só se aplicam aos workflows escolhidos explicitamente. Carregar as skills não exige instalar OmniRoute, Archify ou outro serviço. Ver [âmbito da recuperação](RESTORED-SKILLS.md).
 
+## Caminho opcional: billion-context nativo no Pi
+
+[Perfil revisto e fixo em 0.1.209](../integrations/billion-context/README.md): extensão nativa opcional, runtime externo, não incluída no arranque automático da raiz. O guia cobre download npm explícito sem lifecycle scripts/opcionais, checksums, prefixo privado novo, preservação de settings, reinício, `/acp` e rollback. Se já tens o perfil global ativo, não instales/registes outra cópia. Sem store persistente Bili, mas com temporários privados; exportações pedem aprovação. Validação local em macOS/Pi 1.4.0; Windows não homologado.
+
 ## Caminho opcional: OmniRoute
 
 1. Instalar **Node.js LTS com npm** para o sistema/arquitetura em [nodejs.org](https://nodejs.org/en/download), ou reutilizar a instalação existente compatível.

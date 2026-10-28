@@ -1,0 +1,9 @@
+{
+  "name": "devops-bili-runtime",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "billion-context": "0.1.209"
+  }
+}

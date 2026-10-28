@@ -1,5 +1,11 @@
 # Third-party notices
 
+## billion-context / acp-kernel — optional external runtime
+
+This project optionally uses [billion-context](https://github.com/ranxianglei/billion-context) and [acp-kernel](https://github.com/ranxianglei/acp-kernel), by ranxianglei. Copyright (c) 2026 ranxianglei. The upstream MIT license includes an **Additional Term — Attribution on Product Surfaces**; its full text is preserved in [integrations/billion-context/LICENSE](integrations/billion-context/LICENSE). Do not describe it as unqualified MIT.
+
+The local native Pi bootstrap/restricted profile is shipped separately from the root manifest; the upstream npm runtime is pinned to 0.1.209 and provisioned externally only on explicit operator action. See [provenance](integrations/billion-context/UPSTREAM.json) and [operation, data limits and rollback](integrations/billion-context/README.md). No personal settings, runtime binaries or conversation store are distributed.
+
 ## Engineering skills
 
 Source: https://github.com/alirezarezvani/claude-skills
