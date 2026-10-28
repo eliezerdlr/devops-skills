@@ -66,7 +66,7 @@ test('NetBird example is fictitious, not a runtime release or stored credential'
 
 test('NetBird documentary skill coexists with the separately approved API connector', async () => {
   const pkg = await assertUnifiedManifest();
-  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts']);
+  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts', './extensions/ponytail/index.ts']);
   assert.equal(Object.hasOwn(pkg.scripts, 'postinstall'), false);
   assert.equal(Object.hasOwn(pkg, 'dependencies'), false);
   assert.ok(pkg.scripts.test.includes('netbird-skill.test.mjs'));

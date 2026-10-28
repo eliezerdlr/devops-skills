@@ -14,7 +14,7 @@ A contagem atual abaixo inclui também a adição posterior de `skill-creator`, 
 
 ## Descoberta e activação
 
-O pacote principal disponibiliza **119 especialistas + 1 catálogo = 120 recursos de skills**, **8 prompts** e **2 extensões activas**: `ops-orchestrator` e `netbird-api`. Não é necessário instalar os módulos internos separadamente. Com o addon Planning with Files: **121 recursos / 8 prompts / 3 extensões**.
+O pacote principal disponibiliza **119 especialistas + 1 catálogo = 120 recursos de skills**, **8 prompts** e **3 extensões activas**: `ops-orchestrator`, `netbird-api` e `ponytail`. Não é necessário instalar os módulos internos separadamente. Com o addon Planning with Files: **121 recursos / 8 prompts / 4 extensões**.
 
 A recuperação não inicia serviços, instala dependências, altera políticas globais, configura credenciais nem faz chamadas a cloud/modelos. A disponibilidade de instruções não equivale a runtime instalado ou acesso autorizado.
 

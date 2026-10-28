@@ -31,7 +31,7 @@ If not already registered:
 pi install /absolute/path/to/devops-skills
 ```
 
-Restart Pi or run `/reload`. The manifest now loads `extensions/ops-orchestrator/index.ts` in addition to 119 specialist skills, the catalogue and eight same-session role prompts (three network, three security, two testing/performance). The separate [NetBird API connector](NETBIRD-API.md) is also registered by the root manifest. Neither extension starts model calls, background processes or infrastructure connections at startup.
+Restart Pi or run `/reload`. The manifest now loads `extensions/ops-orchestrator/index.ts` in addition to 119 specialist skills, the catalogue and eight same-session role prompts (three network, three security, two testing/performance). The separate [NetBird API connector](NETBIRD-API.md) is also registered by the root manifest. The default-full [Ponytail extension](../integrations/ponytail/README.md) is also registered. None starts model calls, background processes or infrastructure connections at startup; Ponytail adds prompt guidance without changing OPS/NetBird permissions.
 
 If you previously registered only skill directories manually, use a single local `packages` entry instead (see examples/pi-settings.json) so extensions and prompts are discovered too. Resolve duplicate older copies under ~/.agents/skills deliberately.
 

@@ -4,11 +4,15 @@
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares all 119 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator and NetBird API extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares all 119 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator, NetBird API and Ponytail efficiency extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or upstream lifecycle hooks. Ponytail intentionally adds a fixed default-full prompt policy through native Pi events; it makes no external calls. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
 See [ORCHESTRATION.md](ORCHESTRATION.md) for orchestration and [NETBIRD-API.md](NETBIRD-API.md) for persistent API access (macOS/Linux, HTTPS, protected local token and explicit approvals), approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 
 This is not a full workstation bootstrap. Credentials, network access, cloud subscriptions, target software and permissions must be provided separately. Do not install every dependency globally or run `npm install` recursively over all manifests.
+
+## Ponytail full runtime
+
+The [minimal Ponytail adaptation](../integrations/ponytail/README.md) is one root extension, enabled full by default. No external dependency, global settings edit, history import, ledger, band/dashboard, webhook, model call, subprocess or filesystem scanner is added. It uses a constant policy and native session-branch mode metadata only. `/ponytail off` affects subsequent runs; new sessions default full. Existing OPS/NetBird approvals and selected tools are untouched. Prompt composition/state are tested with installed Pi 1.4.0; older-host fallback is not a homologation claim. A small prompt-context overhead exists; no token/latency/SLA improvement has been measured.
 
 ## Pi setup
 

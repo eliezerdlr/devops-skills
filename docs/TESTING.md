@@ -18,7 +18,7 @@ pi list
 
 Se já estiver registada, atualizar e recarregar é suficiente. Não registar módulos internos adicionalmente. Ver [pacote único e migração de configurações antigas](UNIFIED-PACKAGE.md); preservar configurações não relacionadas e filtros intencionais.
 
-A raiz expõe **119 especialistas + 1 catálogo = 120 recursos de skills**, **8 prompts** e **2 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
+A raiz expõe **119 especialistas + 1 catálogo = 120 recursos de skills**, **8 prompts** e **3 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
 
 ## 2. Recarregar e conferir
 
@@ -55,6 +55,14 @@ npm run test:package
 
 O contrato falha se um módulo aprovado deixar de ser exportado pelo manifesto raiz, se um snapshot passar a ser descoberto, se houver nomes duplicados, se os guias voltarem a exigir instalações Pi separadas ou se npm test deixar de incluir as suítes aprovadas.
 
+## Ponytail full por defeito — validação atual
+
+A raiz carrega três extensões: OPS, conector NetBird e Ponytail full. Mantém **119 especialistas + catálogo = 120 recursos / 8 prompts / 3 extensões**; com Planning, **121 / 8 / 4**. Não acrescenta skills concorrentes ou ferramentas de modelo. `/ponytail off`, `full` e `status` controlam o ramo da sessão, com full em sessões novas; o modo não altera aprovações ou acesso.
+
+Validação na cópia isolada e no checkout original, com o SDK instalado **Pi 1.4.0**: **280 testes Node offline + 38 SDK + 11 Planning = 329**, sem falhas/skips. Inclui 11 testes offline de política/proveniência/ausência de IO e nove SDK para registo, prompt composto sem duplicação, off/full/status, modo por ramo/reload, falha de persistência, headless e fallback legado. Um teste usa ExtensionRunner e SessionManager reais em memória e verifica preservação das secções de segurança e das ferramentas. As 41 verificações Python NetBird continuam internas à suíte padrão. O importador da sandbox omitiu uma pasta de skill chamada coverage; foi reposto apenas o SKILL.md original idêntico para a descoberta completa.
+
+O CI foi alinhado nos três peers Pi **1.4.0**, mantendo prefixo isolado/ignore-scripts e TypeScript 5.9.3; o passo estrito inclui a nova extensão. CI remoto e novo typecheck local não foram executados (compilador local indisponível). Não se instalou SDK, alterou configuração global ou executou inferência, benchmark de custos, coleta de histórico, dashboard, webhook, rede ou infraestrutura. Os testes provam contratos de integração, não obediência do modelo, savings de tokens/cache, rapidez de incidentes ou cumprimento de SLA. O fallback string legado é testado sinteticamente, não homologação de SDKs antigos. No checkout original, o Finder acrescentou um `.DS_Store` local e não distribuído no Creator. O inventário de testes ignora apenas esse ficheiro regular, sem apagar dados nem relaxar a rejeição de symlinks/ficheiros inesperados. Resultados anteriores abaixo são históricos.
+
 ## Skill Creator — autoria documental e avaliação opcional
 
 A skill `skill-creator` é carregada pelo glob existente, sem runner, viewer, servidor, empacotador ou dependências novas. Os sete testes em `tests/skill-creator-integration.test.mjs` verificam registo de creator e ausência de teach, licença/proveniência/integridade/links, limites de fonte autorizada, aprovação de avaliação e consistência do plano sintético versionado. A fixture declara execução não aprovada, isolamento não verificado e métricas nulas. Não foi executado benchmark de modelos; contratos de texto não garantem comportamento, isolamento ou eficácia.
@@ -79,7 +87,7 @@ PI_SDK_ROOT="$(npm root -g)/@earendil-works/pi-coding-agent" npm run test:pi
 
 Confirmar antes que o caminho existe. Numa instalação pi-web-ui, o SDK pode estar nas dependências dessa aplicação, não diretamente em npm root.
 
-Os testes verificam descoberta de **120 skills / 8 prompts / 2 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os quatro registos legados. Também verificam quatro ferramentas de orquestração, duas commands, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
+Os testes verificam descoberta de **120 skills / 8 prompts / 3 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os quatro registos legados. Também verificam quatro ferramentas de orquestração, duas commands, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
 
 ## 5. Planeamento persistente: teste do addon de runtime
 
@@ -89,7 +97,7 @@ O [Planning with Files](../integrations/planning-with-files/README.md) inclui ho
 PI_SDK_ROOT=/caminho/real/@earendil-works/pi-coding-agent npm run test:planning
 ```
 
-A descoberta combinada deve ser **121 skills / 8 prompts / 3 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
+A descoberta combinada deve ser **121 skills / 8 prompts / 4 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
 
 ## 6. Smoke tests manuais sem ações externas
 

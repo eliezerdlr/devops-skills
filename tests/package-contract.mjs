@@ -34,7 +34,7 @@ export async function assertUnifiedManifest() {
   }
   assert.equal(pkg.pi.skills.length, 18);
   assert.equal(pkg.pi.prompts.length, promptCount);
-  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts']);
+  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts', './extensions/ponytail/index.ts']);
   assert.deepEqual(pkg.pi.themes, []);
   assert.doesNotMatch(JSON.stringify(pkg.pi), /upstream|unifi|planning-with-files/);
   return pkg;

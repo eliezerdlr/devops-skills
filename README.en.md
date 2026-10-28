@@ -4,7 +4,7 @@
 
 A collection of skills for engineering, DevOps, cybersecurity, and IT operations.
 
-One package includes **119 skills/sub-skills**, **8 prompts** for network/security/testing/performance, and two extensions: **analysis orchestration** and a **NetBird API connector**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
+One package includes **119 skills/sub-skills**, **8 prompts** for network/security/testing/performance, and three extensions: **analysis orchestration**, a **NetBird API connector** and **Ponytail full by default**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
 
 ## 1. Prerequisites
 
@@ -30,7 +30,7 @@ Edit `~/.pi/agent/settings.json` and add the checkout to the existing `packages`
 
 Replace the path with your actual checkout location. **Do not replace the entire settings file** if it already contains configuration: preserve other fields and paths.
 
-The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 119 specialists, the catalogue, eight prompts and the orchestration extension, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
+The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 119 specialists, the catalogue, eight prompts and the OPS, NetBird API and Ponytail extensions, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
 
 ### Option B — Install the checkout as a Pi package
 
@@ -69,6 +69,12 @@ Check loading warnings. If a skill is missing, check paths, permissions, duplica
 Pi advertises skill names/descriptions and loads detailed instructions when needed. You do not need to load every skill's full instructions at once.
 
 Already registered individual modules? Follow the [single-package migration guide](docs/UNIFIED-PACKAGE.md). Do not install Graphify, Security Audit, Addy Engineering or Web Quality as additional Pi packages.
+
+## Ponytail full — on by default
+
+The package applies lean-development guidance in every Pi session loading this root. Safety, relevant tests, approvals and recovery remain required; no token-saving or SLA guarantee. No dashboard, history import, webhook or global configuration writes.
+
+Use `/ponytail status`, `/ponytail off` or `/ponytail full`. Full/off choices live only in native session-branch metadata; new sessions start full. See [scope, controls and rollback](integrations/ponytail/README.md). Reload the registered root; do not install another upstream copy.
 
 ## 3. Enable operational capabilities
 
@@ -185,6 +191,6 @@ New independent local contributions are also distributed under MIT, as authorise
 
 ## Restored skills and optional runtimes
 
-The package exposes **119 specialists + catalogue (120 resources), eight prompts and two active extensions**. Archify, model-resilience, three AWS skills, WireGuard and NetBird are restored. See [restoration scope](docs/RESTORED-SKILLS.md).
+The package exposes **119 specialists + catalogue (120 resources), eight prompts and three active extensions**. Archify, model-resilience, three AWS skills, WireGuard and NetBird are restored. See [restoration scope](docs/RESTORED-SKILLS.md).
 
 Archify/OmniRoute require external tools only for explicitly requested workflows. The [OmniRoute contract](integrations/omniroute/operational-dependency.json) applies only to the optional gateway-managed profile. Native routing is not in the root extension manifest; loading skills starts no service, installation or fallback.

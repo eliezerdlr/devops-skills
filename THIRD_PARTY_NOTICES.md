@@ -114,6 +114,12 @@ Apache License 2.0 — Copyright 2026 Anthropic, PBC.
 
 The original LICENSE.txt is preserved verbatim as `skills/engineering-skills/skill-creator/LICENSE`. UPSTREAM.json records selected source paths/hashes and modifications; SHA256SUMS covers distributed local files. The concise entrypoint, three references and two inert templates are explicitly adapted. No original runner, optimization loop, HTTP/HTML viewer, process cleanup, archive packager, automatic worker or PyYAML dependency is included. Local changes add experience/evidence provenance, authorized source reuse, safe file updates, separate evaluation/data/cost approval, baseline controls and honest metrics. Unrelated source-available document skills, CDN assets and their runtimes are not redistributed. This does not imply Anthropic endorsement, model training or measured behavioral improvement.
 
+## Ponytail — minimal default-full Pi guidance
+
+Source: https://github.com/DietrichGebert/ponytail, version 5.3.2, commit `09c434ab73ca43761c5d8b0c5d341926c2fba710`. MIT License — Copyright (c) 2026 DietrichGebert.
+
+Original licence retained verbatim at `integrations/ponytail/LICENSE`; selected source hashes/modifications in UPSTREAM.json. The local extension under `extensions/ponytail/` and fixed policy adapt the reuse/minimal-complete-change principles with explicit safety, approval, contract and SLA limits. No upstream hooks, band/board, historical-session importer, webhook, global configuration, statusline collector or benchmark runner is bundled. Full/off mode only uses native Pi branch metadata after an explicit command. The root registers the minimal extension full by default, not six upstream skills. Published source benchmarks are not measured savings for this package.
+
 ## Licence scope
 
 The root MIT notice consolidates the original copyright strings; it does not imply joint authorship of every file. Engineering content is attributed above and its original root licence is also preserved in `licenses/engineering-MIT.txt`. Nested licences retain the exact spelling `Reza Rezvani`; no assumption about legal identity with `Alireza Rezvani` is required. Do not replace or remove those notices when reorganising files.

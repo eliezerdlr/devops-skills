@@ -4,7 +4,7 @@
 
 Pack de skills para engenharia, DevOps, cybersecurity e operações de IT.
 
-Um único pacote com **119 skills/sub-skills**, **8 prompts** de rede, segurança, testes e performance, e duas extensões: **orquestração de análise** e **conector API NetBird**. As skills estão organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
+Um único pacote com **119 skills/sub-skills**, **8 prompts** de rede, segurança, testes e performance, e três extensões: **orquestração de análise**, **conector API NetBird** e **Ponytail full por defeito**. As skills estão organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
 
 ## 1. Pré-requisitos
 
@@ -30,7 +30,7 @@ Edita `~/.pi/agent/settings.json` e acrescenta o checkout como pacote local à l
 
 Substitui o caminho pelo local real do checkout. **Não substituas o ficheiro inteiro** se já contém configurações: preserva os restantes campos e caminhos.
 
-O [exemplo de configuração](examples/pi-settings.json) usa `~/devops-skills`; ajusta-o se clonaste para outra pasta. O manifesto principal seleciona as 119 skills, o catálogo, os 8 prompts e a extensão de orquestração, incluindo todos os módulos aprovados sob integrations/. Não registes apenas a pasta do índice em `skills`: o carregador Pi para de descer ao encontrar um SKILL.md numa pasta.
+O [exemplo de configuração](examples/pi-settings.json) usa `~/devops-skills`; ajusta-o se clonaste para outra pasta. O manifesto principal seleciona as 119 skills, o catálogo, os 8 prompts e as extensões OPS, NetBird API e Ponytail, incluindo todos os módulos aprovados sob integrations/. Não registes apenas a pasta do índice em `skills`: o carregador Pi para de descer ao encontrar um SKILL.md numa pasta.
 
 ### Opção B — Instalar o checkout como pacote Pi
 
@@ -69,6 +69,12 @@ Confirma os avisos de carregamento. Se faltar uma skill, verifica caminho, permi
 Pi anuncia os nomes/descrições das skills e carrega as instruções detalhadas conforme a tarefa. Não é necessário carregar todas as instruções de uma vez.
 
 **Já tinhas registado módulos separadamente?** Segue a [migração para o pacote único](docs/UNIFIED-PACKAGE.md). Não precisas de instalar Graphify, Security Audit, Addy Engineering ou Web Quality como pacotes Pi adicionais.
+
+## Ponytail full — ativo por defeito
+
+O pacote aplica orientação de desenvolvimento enxuto em cada sessão Pi onde a raiz é carregada. Mantém segurança, testes relevantes, aprovações e recuperação; não garante poupança de tokens nem cumprimento de SLA. Não inclui dashboard, histórico, webhook ou alterações globais.
+
+Usa `/ponytail status`, `/ponytail off` ou `/ponytail full`. As escolhas full/off ficam apenas nos metadados do ramo da sessão; sessões novas começam full. Ver [âmbito, controlo e reversão](integrations/ponytail/README.md). Recarregar a raiz já registada disponibiliza a extensão; não instalar outra cópia upstream.
 
 ## 3. Ativar capacidades operacionais
 
@@ -185,6 +191,6 @@ As novas contribuições locais independentes são também disponibilizadas sob 
 
 ## Skills recuperadas e runtimes opcionais
 
-O pacote disponibiliza **119 especialistas + catálogo (120 recursos), 8 prompts e 2 extensões activas**. Foram recuperadas Archify, model-resilience, três skills AWS, WireGuard e NetBird. [Âmbito da recuperação](docs/RESTORED-SKILLS.md).
+O pacote disponibiliza **119 especialistas + catálogo (120 recursos), 8 prompts e 3 extensões activas**. Foram recuperadas Archify, model-resilience, três skills AWS, WireGuard e NetBird. [Âmbito da recuperação](docs/RESTORED-SKILLS.md).
 
 Archify e OmniRoute continuam dependentes de ferramentas externas apenas quando o respectivo workflow é pedido. O [contrato OmniRoute](integrations/omniroute/operational-dependency.json) aplica-se só ao perfil opcional gateway-managed. O router nativo não é carregado pelo manifesto; nenhuma instalação, serviço ou fallback é activado ao carregar as skills.
