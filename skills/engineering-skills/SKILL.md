@@ -1,11 +1,11 @@
 ---
 name: engineering-skills
-description: "Catalogue of 111 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
+description: "Catalogue of 118 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
 ---
 
 # Engineering Skills — Catalogue
 
-This catalogue lists **111 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
+This catalogue lists **118 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
 
 Copyright and licence notices are preserved in the repository's `LICENSE`, `THIRD_PARTY_NOTICES.md`, and nested licence files. Inclusion is not a security certification.
 
@@ -159,7 +159,7 @@ These specialists are installed directly in this catalogue's directory. All path
 
 Optional framework dependencies and example limitations are documented in `../../docs/DEPENDENCIES.md`. Load this specialist only when developing Deep Agents applications.
 
-## Network operations and Kubernetes — ECC (8)
+## Network operations and Kubernetes — ECC (9)
 
 | Skill | File |
 |---|---|
@@ -170,9 +170,18 @@ Optional framework dependencies and example limitations are documented in `../..
 | cisco-ios-patterns | `cisco-ios-patterns/SKILL.md` |
 | homelab-network-readiness | `homelab-network-readiness/SKILL.md` |
 | homelab-network-setup | `homelab-network-setup/SKILL.md` |
+| homelab-wireguard-vpn | `homelab-wireguard-vpn/SKILL.md` |
 | kubernetes-patterns | `kubernetes-patterns/SKILL.md` |
 
 The three adapted ECC network role prompts are indexed in `../../agents/README.md`. They run in the current Pi session, not isolated subagents. Network guidance is vendor/version-dependent; host syntax and permissions must be verified.
+
+## Remote access — NetBird (1)
+
+| Skill | Focus | File |
+|---|---|---|
+| netbird-remote-access | Scoped LAN access, Linux routing peer, approval gates and offline privacy checks | `netbird-remote-access/SKILL.md` |
+
+Documentary guidance complements the separate [API connector](../../docs/NETBIRD-API.md). Neither skill loading nor connector registration establishes authenticated access.
 
 ## Reliability and error handling (1)
 
@@ -215,9 +224,19 @@ This Cloudflare-derived MIT skill and its three same-session role prompts are in
 
 This adapted Apache-2.0 skill is included in the main package; see [external tool requirements and limits](../../integrations/graphify/README.md). Installing its external CLI is separate from making the skill available. It adds no agents, subagents, guard or hooks. Do not install the external Graphify runtime or send documents to a model automatically. For task continuity, reuse the existing planning/TC handoff rather than duplicating memory.
 
+## AWS specialization — adapted AWS Agent Toolkit (3)
+
+| Skill | Purpose | File |
+|---|---|---|
+| aws-billing-and-cost-management | AWS FinOps, reproducible cost analysis and separate financial approval | [SKILL.md](../../integrations/aws-toolkit/skills/aws-billing-and-cost-management/SKILL.md) |
+| aws-site-to-site-vpn | AWS IPsec hybrid networking, BGP, two tunnels and rollback; not remote-user WireGuard | [SKILL.md](../../integrations/aws-toolkit/skills/aws-site-to-site-vpn/SKILL.md) |
+| aws-well-architected-review | Bounded evidence-led framework assessment, explicit partial/offline coverage | [SKILL.md](../../integrations/aws-toolkit/skills/aws-well-architected-review/SKILL.md) |
+
+These Apache-2.0 adaptations are included by the root package. No AWS CLI, MCP, hooks, cloud agent or VPN software is installed by loading instructions. Actual operations require approved external tools, temporary credentials, scope and cost/data approval. See [requirements and provenance](../../integrations/aws-toolkit/README.md). The separate ECC WireGuard adaptation is MIT and requires platform-specific VPN tools only for actual deployment.
+
 ## Known coverage gaps for hybrid IT
 
-Focused network guidance is now included, primarily IOS/IOS-XE and small-lab planning; it does not establish comprehensive multi-vendor coverage. Dedicated Windows Server/AD/GPO, Linux administration, VMware/Proxmox, Xen Orchestra/XCP-ng, storage, enterprise backup/disaster recovery, endpoint management and ITIL/ITSM skills remain gaps. Optional UniFi source is separate and not production-approved.
+Focused network guidance includes IOS/IOS-XE, small-lab planning, WireGuard remote access and AWS IPsec Site-to-Site VPN; it does not establish comprehensive multi-vendor or enterprise VPN coverage. Dedicated Windows Server/AD/GPO, Linux administration, VMware/Proxmox, Xen Orchestra/XCP-ng, storage, enterprise backup/disaster recovery, endpoint management and ITIL/ITSM skills remain gaps. Optional UniFi source is separate and not production-approved.
 
 For these areas, use vendor documentation and approved local runbooks. Add specialist skills only after reviewing their provenance, scope, requirements and operational safety. Company-specific versions, network topology, policies and tools must be supplied separately; never embed secrets.
 
@@ -228,3 +247,10 @@ For these areas, use vendor documentation and approved local runbooks. Add speci
 3. Copy approved specialist directories with their scripts, references and assets; do not execute installation hooks automatically.
 4. Rebuild the inventory from local `SKILL.md` files, excluding this index. Verify every listed path exists and every installed specialist is listed.
 5. Update this catalogue and review coverage gaps after changes. Updates are not automatic.
+
+## Visual communication and model availability
+
+| Skill | Use | Path |
+|---|---|---|
+| archify | On-demand native interactive diagrams with pinned external runtime; generic symbols by default, no automatic browser/network/update | [SKILL.md](../../integrations/archify/skills/archify/SKILL.md) |
+| model-resilience | Explicit bounded fallback between existing Pi API/OAuth providers and an approved OmniRoute gateway; no automatic install/start/login changes | [SKILL.md](../../integrations/omniroute/skills/model-resilience/SKILL.md) |

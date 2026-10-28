@@ -18,7 +18,7 @@ pi list
 
 Se já estiver registada, atualizar e recarregar é suficiente. Não registar módulos internos adicionalmente. Ver [pacote único e migração de configurações antigas](UNIFIED-PACKAGE.md); preservar configurações não relacionadas e filtros intencionais.
 
-A raiz expõe **111 especialistas + 1 catálogo = 112 recursos de skills**, **8 prompts** e **2 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
+A raiz expõe **118 especialistas + 1 catálogo = 119 recursos de skills**, **8 prompts** e **2 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
 
 ## 2. Recarregar e conferir
 
@@ -71,17 +71,17 @@ PI_SDK_ROOT="$(npm root -g)/@earendil-works/pi-coding-agent" npm run test:pi
 
 Confirmar antes que o caminho existe. Numa instalação pi-web-ui, o SDK pode estar nas dependências dessa aplicação, não diretamente em npm root.
 
-Os testes verificam descoberta de **112 skills / 8 prompts / 2 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os quatro registos legados. Também verificam quatro ferramentas de orquestração, duas commands, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
+Os testes verificam descoberta de **119 skills / 8 prompts / 2 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os quatro registos legados. Também verificam quatro ferramentas de orquestração, duas commands, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
 
 ## 5. Planeamento persistente: teste do addon de runtime
 
-O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 111 skills.
+O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 118 skills.
 
 ```bash
 PI_SDK_ROOT=/caminho/real/@earendil-works/pi-coding-agent npm run test:planning
 ```
 
-A descoberta combinada deve ser **113 skills / 8 prompts / 3 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
+A descoberta combinada deve ser **120 skills / 8 prompts / 3 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
 
 ## 6. Smoke tests manuais sem ações externas
 

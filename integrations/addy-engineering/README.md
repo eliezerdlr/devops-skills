@@ -30,7 +30,7 @@ No Pi:
 /test-engineer Identificar testes de regressão em falta neste diff, sem executar código.
 ```
 
-As quatro skills e os dois prompts são carregados pelo manifesto principal, dentro dos **111 especialistas e 8 prompts**. Não registar este módulo separadamente nem outra cópia com os mesmos nomes. Para registos antigos, segue a [migração](../../docs/UNIFIED-PACKAGE.md).
+As quatro skills e os dois prompts são carregados pelo manifesto principal, dentro dos **118 especialistas e 8 prompts**. Não registar este módulo separadamente nem outra cópia com os mesmos nomes. Para registos antigos, segue a [migração](../../docs/UNIFIED-PACKAGE.md).
 
 ## Referências e completude
 

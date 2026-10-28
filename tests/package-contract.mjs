@@ -4,9 +4,9 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-export const components = ['graphify', 'security-audit', 'addy-engineering', 'web-quality'];
-export const specialistCount = 111;
-export const skillResourceCount = 112; // specialists + catalogue
+export const components = ['graphify', 'security-audit', 'addy-engineering', 'web-quality', 'omniroute', 'archify', 'aws-toolkit'];
+export const specialistCount = 118;
+export const skillResourceCount = 119; // specialists + catalogue
 export const promptCount = 8;
 export const readJson = async path => JSON.parse(await readFile(path, 'utf8'));
 
@@ -32,7 +32,7 @@ export async function assertUnifiedManifest() {
     assert.deepEqual(pkg.pi[type], expected[type], `root manifest must include every approved ${type} resource exactly once`);
     assert.equal(new Set(pkg.pi[type]).size, pkg.pi[type].length);
   }
-  assert.equal(pkg.pi.skills.length, 13);
+  assert.equal(pkg.pi.skills.length, 18);
   assert.equal(pkg.pi.prompts.length, promptCount);
   assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts']);
   assert.deepEqual(pkg.pi.themes, []);

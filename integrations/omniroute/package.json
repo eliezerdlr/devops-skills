@@ -1,0 +1,14 @@
+{
+  "name": "devops-skills-omniroute-inventory",
+  "version": "0.5.0",
+  "private": true,
+  "description": "Internal inventory, install the root devops-skills package",
+  "pi": {
+    "skills": [
+      "./skills/model-resilience/SKILL.md"
+    ],
+    "prompts": [],
+    "extensions": [],
+    "themes": []
+  }
+}

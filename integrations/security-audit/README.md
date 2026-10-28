@@ -10,7 +10,7 @@ Adaptação da skill [Cloudflare security-audit-skill](https://github.com/cloudf
 - Workflow completo de seis fases preservado, com cobertura explícita, verificação independente e estados `confirmed`, `needs_validation` e `rejected`.
 - Schema, dois validadores Node sem dependências externas e os seus testes.
 
-A skill e os três prompts fazem parte do pacote principal: **111 especialistas e 8 prompts numa única instalação**. O módulo conserva referências e proveniência; não requer instalação adicional. O carregamento não executa uma auditoria, não instala ferramentas nem cria agentes/sandbox.
+A skill e os três prompts fazem parte do pacote principal: **118 especialistas e 8 prompts numa única instalação**. O módulo conserva referências e proveniência; não requer instalação adicional. O carregamento não executa uma auditoria, não instala ferramentas nem cria agentes/sandbox.
 
 ## Ativar no Pi
 

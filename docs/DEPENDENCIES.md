@@ -4,7 +4,7 @@
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares all 111 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator and NetBird API extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares all 118 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator and NetBird API extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
 See [ORCHESTRATION.md](ORCHESTRATION.md) for orchestration and [NETBIRD-API.md](NETBIRD-API.md) for persistent API access (macOS/Linux, HTTPS, protected local token and explicit approvals), approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 
@@ -171,3 +171,9 @@ Completed without running bundled scripts:
 - Three npm manifests classified: two optional MCP integrations and one fixture, not root pack dependencies.
 
 Not completed: dependency installation/resolution, build/integration tests, live CVE/licence databases, exhaustive generated-code dependency resolution, clean-machine Pi loading and subagent execution. Do not publish claims that the whole pack works without setup or has passed security analysis.
+
+## Restored instruction skills; optional runtimes
+
+Reading these Markdown skills requires no new external dependency. Actual AWS queries require existing approved tools, temporary credentials, account/region scope and cost/data approval. Actual WireGuard deployment needs supported platform-specific VPN tools and separate change approval. The restored NetBird skill complements the independent API connector.
+
+[Archify](../integrations/archify/README.md) uses an external pinned renderer only on request. The [OmniRoute operational-dependency.json](../integrations/omniroute/operational-dependency.json) describes an optional gateway-managed profile, not a prerequisite for the whole package. Native model routing is restored as opt-in source, excluded from the root extension manifest. See [scope and activation](RESTORED-SKILLS.md). No external service is installed or activated by this restoration.

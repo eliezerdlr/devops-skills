@@ -12,7 +12,7 @@ Uma **skill adaptada**, três referências e dois workflows para mapear projetos
 
 ## Uma instalação do pacote principal
 
-A skill Graphify faz parte das 111 skills do pacote e é registada pelo manifesto principal. A pasta deste módulo mantém origem, referências e licença; não é uma instalação adicional.
+A skill Graphify faz parte das 118 skills do pacote e é registada pelo manifesto principal. A pasta deste módulo mantém origem, referências e licença; não é uma instalação adicional.
 
 ```bash
 pi install /caminho/absoluto/devops-skills

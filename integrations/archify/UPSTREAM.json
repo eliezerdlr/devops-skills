@@ -1,0 +1,37 @@
+{
+  "project": "Archify",
+  "repository": "https://github.com/tt-a1i/archify",
+  "commit": "25cf37080fc8b1dbe758a4efc3935b55f3327083",
+  "runtimeDirectory": "archify/",
+  "runtimeVersion": "3.2.0",
+  "license": "MIT",
+  "copyright": [
+    "2026 tt-a1i (Archify)",
+    "2025 Cocoon AI"
+  ],
+  "adaptedFrom": [
+    "archify/SKILL.md",
+    "archify/references/delivery-contract.md",
+    "archify/references/update-awareness.md",
+    "archify/bin/delivery-update.mjs",
+    "archify/bin/archify.mjs"
+  ],
+  "retainedVerbatim": [
+    "archify/LICENSE → LICENSE",
+    "archify/THIRD_PARTY_NOTICES.md → THIRD_PARTY_NOTICES.md"
+  ],
+  "runtimePin": {
+    "file": "runtime-lock.json",
+    "algorithm": "sha256",
+    "files": 203,
+    "scope": "All 203 regular files in the supplied archify/ snapshot; content hashes, not vendored content. No dependencies installed."
+  },
+  "modifications": [
+    "On-demand only; no proactive pages, installation or global rules.",
+    "Standard-library adapter; explicit external runtime and approved output root; plan before explicit execution.",
+    "Native JSON diagram delivery plus strict provenance check only; no finalize, browser, export, explainer Markdown or arbitrary CLI forwarding.",
+    "Update checks always disabled via upstream ARCHIFY_UPDATE_CHECK_DISABLED=1; no network-sandbox claim.",
+    "Generic semantic icons only; third-party brands and external resource URLs refused.",
+    "Tests use a generated mock process, not the real renderer or browser."
+  ]
+}

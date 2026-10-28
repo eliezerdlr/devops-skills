@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/affaan-m/ECC",
+  "commit": "90606c8315ee09cafc303515c5f33024db6b9882",
+  "license": "MIT",
+  "source_path": "skills/homelab-wireguard-vpn/SKILL.md",
+  "source_sha256": "38df424e399549d3ba42d6f50c77554d9a88a46b3bac4dd1436158874535c13c",
+  "modifications": [
+    "Rewritten guidance-first skill with private non-overwriting config creation, explicit approval/readiness and rollback.",
+    "Removed privileged copy-paste install/firewall scripts, Python generator and DDNS automation.",
+    "Added scoped NAT/firewall, IPv6/CGNAT handling, peer revocation and bounded validation."
+  ],
+  "registration": "Included by the engineering-skills wildcard in the root manifest."
+}

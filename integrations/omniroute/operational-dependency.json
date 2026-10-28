@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "name": "OmniRoute",
+  "kind": "external-service",
+  "selectedProfile": "gateway-managed",
+  "requiredForSelectedProfile": true,
+  "requiredToLoadSkills": false,
+  "installationOwner": "operator",
+  "automaticInstallation": false,
+  "automaticStartup": false,
+  "fallbackOwner": "gateway",
+  "piVirtualRouterEnabled": false,
+  "dashboardRequired": true,
+  "reference": {
+    "provenance": "./UPSTREAM.json",
+    "sourceVersion": "3.8.53",
+    "sourceCommit": "bdcd6c0088f7a68bb0d18b258fcdc1d6cd44c9ce",
+    "status": "analyzed-candidate-not-runtime-validated"
+  },
+  "deployment": {
+    "status": "pending-operator-installation-and-validation",
+    "installedVersion": null,
+    "artifactDigest": null,
+    "validatedRuntimeVersion": null
+  },
+  "client": {
+    "provider": "omniroute",
+    "exampleBaseUrl": "http://127.0.0.1:20128/v1",
+    "inferenceKeyEnvironment": "OMNIROUTE_API_KEY"
+  },
+  "runbook": "./README.md",
+  "enforcement": "Documentation and offline consistency checks only; not a service manager or runtime policy guard."
+}

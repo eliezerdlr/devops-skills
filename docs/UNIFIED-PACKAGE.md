@@ -4,8 +4,8 @@ A partir de **0.4.0**, o manifesto raiz inclui todos os recursos aprovados:
 
 | Recurso | Quantidade | Disponibilidade |
 |---|---:|---|
-| Skills especialistas | **111** | 99 anteriores + 12 aprovadas, todas no pacote principal |
-| Catálogo | 1 | engineering-skills; 112 recursos de skills ao todo |
+| Skills especialistas | **118** | 101 no catálogo + 17 explícitas, todas no pacote principal |
+| Catálogo | 1 | engineering-skills; 119 recursos de skills ao todo |
 | Prompts de papéis | **8** | 3 rede, 3 segurança, 2 testes/performance |
 | Extensão | 1 | ops-orchestrator, com as aprovações existentes |
 
@@ -66,7 +66,7 @@ Os manifestos dos módulos ficam como inventários internos/compatibilidade com 
 
 ## Disponível não significa executar tudo no arranque
 
-Pi anuncia nome/descrição e carrega instruções completas sob demanda. As 111 skills não iniciam 111 processos ou agentes. O manifesto não instala ferramentas ou credenciais; o conector NetBird regista ferramentas sem ler credenciais ou contactar a API no arranque.
+Pi anuncia nome/descrição e carrega instruções completas sob demanda. As 118 skills não iniciam 118 processos ou agentes. O manifesto não instala ferramentas ou credenciais; o conector NetBird regista ferramentas sem ler credenciais ou contactar a API no arranque.
 
 Dependências de workflows continuam explícitas, como em qualquer ferramenta DevOps:
 
@@ -75,7 +75,7 @@ Dependências de workflows continuam explícitas, como em qualquer ferramenta De
 - **Segurança:** os validadores Node estão incluídos; executar o código do alvo exige o sandbox e as autorizações documentadas. Prompts não implementam isolamento.
 - **Cloud/IT/rede:** CLI, versões, contas e acesso são requisitos por tarefa, não bootstrap automático.
 
-Duas exclusões mantêm uma razão operacional concreta: **Planning with Files** inclui hooks/processos próprios e permanece um addon de runtime opt-in; **UniFi** continua não aprovado e fora do carregamento. Não são dependências ocultas das 111 skills principais.
+Duas exclusões mantêm uma razão operacional concreta: **Planning with Files** inclui hooks/processos próprios e permanece um addon de runtime opt-in; **UniFi** continua não aprovado e fora do carregamento. Não são dependências ocultas das 118 skills principais.
 
 ## Testar o contrato único
 
@@ -84,7 +84,7 @@ npm test
 PI_SDK_ROOT=/caminho/do/pi-coding-agent npm run test:pi
 ```
 
-`npm test` executa o contrato do pacote e as suítes das capacidades aprovadas, não apenas o motor de rede. O teste Pi deve descobrir **112 recursos de skills, 8 prompts e 2 extensões** com apenas a raiz. Não são chamadas APIs reais nem infraestrutura.
+`npm test` executa o contrato do pacote e as suítes das capacidades aprovadas, não apenas o motor de rede. O teste Pi deve descobrir **119 recursos de skills, 8 prompts e 2 extensões** com apenas a raiz. Não são chamadas APIs reais nem infraestrutura.
 
 A suíte de planeamento é separada porque ativa um runtime adicional em ambiente de teste:
 
@@ -92,8 +92,14 @@ A suíte de planeamento é separada porque ativa um runtime adicional em ambient
 PI_SDK_ROOT=/caminho/do/pi-coding-agent npm run test:planning
 ```
 
-Ela deve descobrir 113 recursos de skills, 8 prompts e 3 extensões quando o addon é selecionado. Descoberta correta não comprova qualidade de respostas de modelos, credenciais ou testes em produção.
+Ela deve descobrir 120 recursos de skills, 8 prompts e 3 extensões quando o addon é selecionado. Descoberta correta não comprova qualidade de respostas de modelos, credenciais ou testes em produção.
 
 ## English summary
 
-Version 0.4.0 has one public installation entrypoint: the repository root. It includes 111 specialist skills, their catalogue, eight prompts and the orchestration and NetBird API extensions. Internal modules retain attribution and supporting files but require no separate registration. Remove only legacy module registrations after confirming the root, preserve other settings, and reload. External tools remain explicit workflow prerequisites; no hidden installs, new hooks or automatic audits are introduced.
+Version 0.4.0 has one public installation entrypoint: the repository root. It includes 118 specialist skills, their catalogue, eight prompts and the orchestration and NetBird API extensions. Internal modules retain attribution and supporting files but require no separate registration. Remove only legacy module registrations after confirming the root, preserve other settings, and reload. External tools remain explicit workflow prerequisites; no hidden installs, new hooks or automatic audits are introduced.
+
+## Recuperação de capacidades
+
+A raiz mantém 8 prompts e apenas as 2 extensões activas (orquestração e API NetBird). Acrescenta novamente as skills Archify, model-resilience, AWS billing/VPN/Well-Architected, WireGuard e NetBird: **119 recursos de skills**. Com Planning with Files, são **120 recursos / 8 prompts / 3 extensões**.
+
+O [contrato OmniRoute operational-dependency.json](../integrations/omniroute/operational-dependency.json) só se aplica à escolha explícita desse perfil. Os runtimes externos e o router nativo continuam opcionais. [Detalhes](RESTORED-SKILLS.md).

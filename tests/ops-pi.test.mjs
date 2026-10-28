@@ -57,7 +57,7 @@ async function invoke(ext, name, params, ctx, signal = new AbortController().sig
   return JSON.parse(result.content[0].text);
 }
 
-test('one root package discovers 112 skills, eight prompts and two extensions in actual Pi', async () => {
+test('one root package discovers 119 skills, eight prompts and two extensions in actual Pi', async () => {
   const temp = await mkdtemp(resolve(tmpdir(), 'devops-resource-test-'));
   try {
     const sdkImport = name => import(pathToFileURL(resolve(sdkRoot, `dist/core/${name}.js`)));

@@ -26,6 +26,20 @@ Included unchanged under `skills/engineering-skills/`: `network-interface-health
 
 Adapted from ECC `agents/`: `agents/network-architect.md`, `agents/network-troubleshooter.md`, and `agents/network-config-reviewer.md`. Local modifications remove Claude model/tool frontmatter, add a Pi argument hint and task substitution, and explain same-session execution and approval boundaries. The original role bodies remain otherwise unchanged. These are prompt templates, not a bundled subagent runtime. ECC installers, hooks, rules and extension code are not included.
 
+### ECC — adapted WireGuard VPN guidance
+
+Additional source: `skills/homelab-wireguard-vpn/SKILL.md`, https://github.com/affaan-m/ECC, commit `90606c8315ee09cafc303515c5f33024db6b9882`. MIT — Copyright (c) 2026 Affaan Mustafa.
+
+The local `skills/engineering-skills/homelab-wireguard-vpn/` retains the original LICENSE and records source/hash and modifications in UPSTREAM.json. Its rewritten instruction entrypoint and local checklist add explicit readiness/approval, private non-overwriting configuration handling, scoped firewall/NAT, IPv6/CGNAT behavior, revocation and rollback. Python generation, DDNS automation and privileged copy-paste install scripts are excluded. The eight earlier ECC skills listed above are unchanged; this ninth skill is explicitly adapted.
+
+## AWS — selected Agent Toolkit instructions
+
+Source: https://github.com/aws/agent-toolkit-for-aws, commit `9ab50636d12510dc351ff02fd7966efa4dba4341`.
+
+Apache License 2.0 — Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+Three adapted instruction skills and scoped local references are distributed under `integrations/aws-toolkit/`: billing/cost management, AWS Site-to-Site VPN (renamed from sitetositevpn) and Well-Architected review. Original LICENSE and NOTICE are retained verbatim. UPSTREAM.json records selected source paths/hashes and local modifications; SHA256SUMS records the distributed component. Source skill bodies, scripts, plugins, MCP configuration and hooks are not bundled. Adaptations add bounded guidance-first review, explicit data/cost/change approval, secret-safe handling, rollback and offline/partial modes. They do not install AWS CLI, start agents or confer AWS affiliation, trademark rights or production certification.
+
 ## LangChain — Deep Agents Core
 
 Source: https://github.com/langchain-ai/langchain-skills
@@ -98,7 +112,7 @@ The root MIT notice consolidates the original copyright strings; it does not imp
 
 ## Local modifications and additions
 
-New independent local contributions are distributed under the MIT terms in the root LICENSE, as authorised by the maintainer. Graphify-derived instructions retain the Apache-2.0 terms indicated in their integration. This does not replace or transfer upstream copyrights.
+New independent local contributions are distributed under the MIT terms in the root LICENSE, as authorised by the maintainer. Graphify-derived and AWS Toolkit-derived instructions retain the Apache-2.0 terms indicated in their integrations. This does not replace or transfer upstream copyrights.
 
 - The combined engineering index is locally rewritten and adapted for this distribution.
 - Repository README and packaging documentation are local additions.
@@ -110,3 +124,11 @@ New independent local contributions are distributed under the MIT terms in the r
 ## External tools
 
 Snyk Agent Scan source and Sage source are not distributed in this repository. Links and usage guidance do not relicense those projects or grant API access.
+
+## OmniRoute integration (external runtime)
+
+Integration references OmniRoute 3.8.53, MIT, commit bdcd6c0088f7a68bb0d18b258fcdc1d6cd44c9ce, https://github.com/cheaper-inference/OmniRoute. The MIT text is preserved in integrations/omniroute/LICENSE; provenance in UPSTREAM.json. Gateway code, accounts and credentials are not vendored. The Pi resilience transport is locally authored; source review/runtime tests do not verify the external service.
+
+## Archify integration (external runtime)
+
+Adapted from Archify 3.2.0, commit 25cf37080fc8b1dbe758a4efc3935b55f3327083. Preserve Copyright (c) 2026 tt-a1i and Copyright (c) 2025 Cocoon and their MIT notices in integrations/archify/LICENSE and NOTICE, plus its THIRD_PARTY_NOTICES.md. Runtime assets/fonts/logos are not copied into this package. MIT does not supersede third-party font/icon/logo licences or trademarks; the default business/marketing profile refuses third-party branding and uses generic symbols. See UPSTREAM.json and runtime-lock.json for provenance/pinning.
