@@ -57,14 +57,14 @@ async function invoke(ext, name, params, ctx, signal = new AbortController().sig
   return JSON.parse(result.content[0].text);
 }
 
-test('one root package discovers 113 skills, eight prompts and one extension in actual Pi', async () => {
+test('one root package discovers 112 skills, eight prompts and two extensions in actual Pi', async () => {
   const temp = await mkdtemp(resolve(tmpdir(), 'devops-resource-test-'));
   try {
     const sdkImport = name => import(pathToFileURL(resolve(sdkRoot, `dist/core/${name}.js`)));
     const [{ SettingsManager }, { DefaultPackageManager }, { loadSkills }, { loadPromptTemplates }] = await Promise.all(['settings-manager', 'package-manager', 'skills', 'prompt-templates'].map(sdkImport));
     const paths = await new DefaultPackageManager({ cwd: temp, agentDir: temp, settingsManager: SettingsManager.inMemory({ packages: [root] }) }).resolve();
     const selected = group => paths[group].filter(p => p.enabled && p.path.startsWith(`${root}/`)).map(p => p.path);
-    assert.equal(selected('skills').length, skillResourceCount); assert.equal(selected('prompts').length, promptCount); assert.deepEqual(selected('extensions'), [resolve(root, 'extensions/ops-orchestrator/index.ts')]);
+    assert.equal(selected('skills').length, skillResourceCount); assert.equal(selected('prompts').length, promptCount); assert.deepEqual(selected('extensions'), [resolve(root, 'extensions/ops-orchestrator/index.ts'), resolve(root, 'extensions/netbird-api/index.ts')]);
     const skills = loadSkills({ cwd: temp, agentDir: temp, skillPaths: selected('skills'), includeDefaults: false });
     const prompts = loadPromptTemplates({ cwd: temp, agentDir: temp, promptPaths: selected('prompts'), includeDefaults: false });
     assert.equal(skills.skills.length, skillResourceCount); assert.equal(prompts.templates.length, promptCount); assert.deepEqual(skills.diagnostics, []); assert.deepEqual(prompts.diagnostics, []);
@@ -84,7 +84,7 @@ test('legacy module registrations alongside root load no duplicate skills or pro
     assert.equal(prompts.templates.length, promptCount);
     assert.deepEqual(skills.diagnostics, []);
     assert.deepEqual(prompts.diagnostics, []);
-    assert.deepEqual(selected('extensions'), [resolve(root, 'extensions/ops-orchestrator/index.ts')]);
+    assert.deepEqual(selected('extensions'), [resolve(root, 'extensions/ops-orchestrator/index.ts'), resolve(root, 'extensions/netbird-api/index.ts')]);
   } finally { await rm(temp, { recursive: true, force: true }); }
 });
 test('actual Pi loader registers exactly four tools and two commands', async () => {

@@ -11,11 +11,11 @@
     "typebox": "*"
   },
   "scripts": {
-    "test": "node --test tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs tests/netbird-skill.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
-    "test:pi": "node --test tests/ops-pi.test.mjs",
+    "test": "node --test tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs tests/netbird-api.test.mjs tests/netbird-api-transport.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
+    "test:pi": "node --test tests/ops-pi.test.mjs tests/netbird-api-pi.test.mjs",
     "test:planning": "node --test tests/planning-pi.test.mjs",
     "test:package": "node --test tests/unified-package.test.mjs",
-    "test:netbird": "node --test tests/netbird-skill.test.mjs"
+    "test:netbird": "node --test tests/netbird-api.test.mjs tests/netbird-api-transport.test.mjs"
   },
   "description": "Unified engineering, DevOps, security, project context and web/SEO skills with bounded network analysis workflows.",
   "pi": {
@@ -35,7 +35,8 @@
       "./integrations/web-quality/skills/web-best-practices/SKILL.md"
     ],
     "extensions": [
-      "./extensions/ops-orchestrator/index.ts"
+      "./extensions/ops-orchestrator/index.ts",
+      "./extensions/netbird-api/index.ts"
     ],
     "prompts": [
       "./agents/network-architect.md",

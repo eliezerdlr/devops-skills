@@ -32,7 +32,7 @@ No Pi:
 /skill:core-web-vitals Analisar estes dados de LCP, INP e CLS, sem inventar valores em falta.
 ```
 
-As seis skills são carregadas pelo manifesto principal, dentro dos **112 especialistas**. Regista apenas a raiz do repositório; evita outra cópia com nomes iguais. Para instalações antigas, segue a [migração](../../docs/UNIFIED-PACKAGE.md). Os nomes genéricos upstream foram adaptados para `web-performance`, `web-accessibility`, `web-seo` e `web-best-practices`.
+As seis skills são carregadas pelo manifesto principal, dentro dos **111 especialistas**. Regista apenas a raiz do repositório; evita outra cópia com nomes iguais. Para instalações antigas, segue a [migração](../../docs/UNIFIED-PACKAGE.md). Os nomes genéricos upstream foram adaptados para `web-performance`, `web-accessibility`, `web-seo` e `web-best-practices`.
 
 ## Ferramentas e privacidade
 

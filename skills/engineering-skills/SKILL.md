@@ -1,11 +1,11 @@
 ---
 name: engineering-skills
-description: "Catalogue of 112 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
+description: "Catalogue of 111 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
 ---
 
 # Engineering Skills — Catalogue
 
-This catalogue lists **112 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
+This catalogue lists **111 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
 
 Copyright and licence notices are preserved in the repository's `LICENSE`, `THIRD_PARTY_NOTICES.md`, and nested licence files. Inclusion is not a security certification.
 
@@ -173,14 +173,6 @@ Optional framework dependencies and example limitations are documented in `../..
 | kubernetes-patterns | `kubernetes-patterns/SKILL.md` |
 
 The three adapted ECC network role prompts are indexed in `../../agents/README.md`. They run in the current Pi session, not isolated subagents. Network guidance is vendor/version-dependent; host syntax and permissions must be verified.
-
-## Remote access — NetBird (1)
-
-| Skill | Focus | File |
-|---|---|---|
-| netbird-remote-access | Scoped LAN access through a Linux routing peer, approval gates, synthetic templates and offline privacy checks | `netbird-remote-access/SKILL.md` |
-
-Locally authored, sanitised instructions; no production inventory, credentials, automatic SSH, cloud changes or deployment. Requires separate approval for operational actions. A routing peer does not imply an Internet exit node. The Python validator is heuristic, not DLP or a security boundary; review versions and Linux privileges before using templates.
 
 ## Reliability and error handling (1)
 

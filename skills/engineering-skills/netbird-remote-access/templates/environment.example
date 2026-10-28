@@ -1,8 +1,0 @@
-# Valores fictícios de documentação; não utilizar como inventário.
-# Substituir todos os parâmetros numa cópia externa ao pacote.
-NB_PROJECT_NAME=peer-router
-NB_HOSTNAME=peer-router
-NB_MANAGEMENT_URL=https://vpn.example.com
-NB_IMAGE=netbirdio/netbird:<VERSION>@sha256:<SHA256>
-NB_STATE_DIR=/srv/netbird/state
-NB_SETUP_KEY_PATH=/srv/netbird/bootstrap/setup.key

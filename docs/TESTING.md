@@ -18,7 +18,7 @@ pi list
 
 Se já estiver registada, atualizar e recarregar é suficiente. Não registar módulos internos adicionalmente. Ver [pacote único e migração de configurações antigas](UNIFIED-PACKAGE.md); preservar configurações não relacionadas e filtros intencionais.
 
-A raiz expõe **112 especialistas + 1 catálogo = 113 recursos de skills**, **8 prompts** e **1 extensão**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
+A raiz expõe **111 especialistas + 1 catálogo = 112 recursos de skills**, **8 prompts** e **2 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
 
 ## 2. Recarregar e conferir
 
@@ -55,16 +55,6 @@ npm run test:package
 
 O contrato falha se um módulo aprovado deixar de ser exportado pelo manifesto raiz, se um snapshot passar a ser descoberto, se houver nomes duplicados, se os guias voltarem a exigir instalações Pi separadas ou se npm test deixar de incluir as suítes aprovadas.
 
-## Verificação da skill NetBird
-
-```bash
-npm run test:netbird
-python3 -B skills/engineering-skills/netbird-remote-access/scripts/validate_skill.py
-python3 -B -m unittest discover -s skills/engineering-skills/netbird-remote-access/tests -v
-```
-
-A suíte padrão inclui o contrato NetBird. Se Python 3.9+ não estiver disponível, os dois testes Python são explicitamente ignorados, sem instalação automática; os testes sintéticos POSIX são igualmente ignorados em Windows. Os 41 testes Python e a validação são locais: não contactam Docker, NetBird, AWS ou dispositivos. Um PASS é heurístico e não uma certificação DLP ou teste de infraestrutura.
-
 ## 4. Carregador/núcleo Pi real com transporte simulado
 
 Usar o SDK que já está instalado; não instalar outra cópia no pack:
@@ -81,17 +71,17 @@ PI_SDK_ROOT="$(npm root -g)/@earendil-works/pi-coding-agent" npm run test:pi
 
 Confirmar antes que o caminho existe. Numa instalação pi-web-ui, o SDK pode estar nas dependências dessa aplicação, não diretamente em npm root.
 
-Os testes verificam descoberta de **113 skills / 8 prompts / 1 extensão** a partir de apenas uma entrada raiz e a compatibilidade temporária com os quatro registos legados. Também verificam quatro ferramentas de orquestração, duas commands, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
+Os testes verificam descoberta de **112 skills / 8 prompts / 2 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os quatro registos legados. Também verificam quatro ferramentas de orquestração, duas commands, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
 
 ## 5. Planeamento persistente: teste do addon de runtime
 
-O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 112 skills.
+O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 111 skills.
 
 ```bash
 PI_SDK_ROOT=/caminho/real/@earendil-works/pi-coding-agent npm run test:planning
 ```
 
-A descoberta combinada deve ser **114 skills / 8 prompts / 2 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
+A descoberta combinada deve ser **113 skills / 8 prompts / 3 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
 
 ## 6. Smoke tests manuais sem ações externas
 
@@ -109,25 +99,13 @@ Para um teste autorizado com modelo real de ops_workflow, usar apenas evidência
 
 ## 7. Estado de validação e limites
 
-A validação anterior à integração NetBird do pacote 0.4.0 no SDK instalado **Pi 1.3.0** passou com:
+A validação do pacote 0.4.0 no SDK instalado **Pi 1.3.0** passou com:
 
 - **126 testes** em npm test;
 - **21 testes** do carregador/núcleo Pi real com transporte simulado;
 - **11 testes** do addon de planeamento;
 - total **158**, sem skips nesse ambiente.
 
-Nesse registo anterior, a descoberta foi 112/8/1 para a raiz e 113/8/2 com planeamento, sem diagnostics de skills/prompts. A coexistência com registos legados não duplicou recursos. O runtime de orquestração tinha validação anterior em Pi 1.2.0; não confundir isso com teste da nova descoberta nessa versão. As verificações anteriores de tipos mantêm o seu âmbito/versão documentado.
-
-## 8. Integração NetBird — validação actual
-
-Após incluir `netbird-remote-access`, a validação com **Pi 1.4.0**, **Node 26.12.1** e **Python 3.15.2** passou com:
-
-- **133 testes Node** na suíte `npm test`, incluindo os sete testes de integração NetBird;
-- **41 testes Python sintéticos** executados pelo contrato NetBird, além do validador offline PASS sobre os 12 ficheiros da skill;
-- **21 testes** do carregador/núcleo Pi real, com transporte de modelo simulado;
-- **11 testes** do addon opcional de planeamento;
-- nenhum skip ou falha nesse ambiente.
-
-A descoberta actual é **113 recursos de skills / 8 prompts / 1 extensão** na raiz e **114 / 8 / 2** com o addon. As 41 verificações Python são executadas dentro da suíte padrão; não são mais 41 testes Node. O pacote fornece 112 especialistas mais o catálogo. As configurações globais não foram alteradas e nenhum alvo NetBird, Docker ou AWS foi contactado.
+A descoberta foi 112/8/1 para a raiz e 113/8/2 com planeamento, sem diagnostics de skills/prompts. A coexistência com registos legados não duplicou recursos. O runtime de orquestração tinha validação anterior em Pi 1.2.0; não confundir isso com teste da nova descoberta nessa versão. As verificações anteriores de tipos mantêm o seu âmbito/versão documentado.
 
 Isto não certifica todos os sistemas operativos, ferramentas externas, qualidade dos modelos, contas cloud, segurança independente, métricas web, SEO, WCAG ou equipamentos reais. Registar versões, condições e resultados das verificações operacionais efetivamente realizadas. SSH, redes, Kubernetes, cloud e alterações de produção exigem âmbito, versões, permissões e aprovação específicos.

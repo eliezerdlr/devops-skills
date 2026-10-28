@@ -68,18 +68,18 @@ test('optional package adds one skill and one extension without changing base di
   try {
     const paths = await new DefaultPackageManager({ cwd, agentDir: cwd, settingsManager: SettingsManager.inMemory({ packages: [root, upstream] }) }).resolve();
     const selected = group => paths[group].filter(p => p.enabled && p.path.startsWith(`${root}/`)).map(p => p.path);
-    assert.equal(selected('skills').length, skillResourceCount + 1); assert.equal(selected('extensions').length, 2); assert.equal(selected('prompts').length, promptCount);
+    assert.equal(selected('skills').length, skillResourceCount + 1); assert.equal(selected('extensions').length, 3); assert.equal(selected('prompts').length, promptCount);
     const skills = loadSkills({ cwd, agentDir: cwd, skillPaths: selected('skills'), includeDefaults: false });
     assert.equal(skills.skills.length, skillResourceCount + 1); assert.deepEqual(skills.diagnostics, []);
   } finally { await rm(cwd, { recursive: true, force: true }); }
 });
-test('both real Pi extensions load together without tool or command collisions', async () => {
-  const result = await loadExtensions([resolve(root, 'extensions/ops-orchestrator/index.ts'), entry], root);
+test('all three real Pi extensions load together without tool or command collisions', async () => {
+  const result = await loadExtensions([resolve(root, 'extensions/ops-orchestrator/index.ts'), resolve(root, 'extensions/netbird-api/index.ts'), entry], root);
   assert.deepEqual(result.errors, []);
   const names = result.extensions.flatMap(e => [...e.commands.keys()]);
   assert.equal(new Set(names).size, names.length);
   assert.ok(names.includes('ops-status')); assert.ok(names.includes('plan-execute'));
-  assert.equal(result.extensions.reduce((n, e) => n + e.tools.size, 0), 4);
+  assert.equal(result.extensions.reduce((n, e) => n + e.tools.size, 0), 7);
 });
 test('plan phases and findings are re-read from disk after updates', async () => fixture(async ({ cwd }) => {
   const status = readPlanStatus(cwd);

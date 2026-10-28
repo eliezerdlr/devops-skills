@@ -29,7 +29,7 @@ test('root manifest includes all 12 approved specialists and five added prompts'
   for (const path of pkg.pi.prompts) await access(resolve(root, path));
 });
 
-test('single package has 112 specialists plus catalogue, no duplicate skill/prompt names', async () => {
+test('single package has 111 specialists plus catalogue, no duplicate skill/prompt names', async () => {
   const paths = await registeredSkillFiles();
   assert.equal(paths.length, skillResourceCount);
   const names = await Promise.all(paths.map(async path => nameOf(await readFile(path, 'utf8'))));
@@ -44,8 +44,7 @@ test('single package has 112 specialists plus catalogue, no duplicate skill/prom
 
 test('catalogue counts and links include all approved resources as main package features', async () => {
   const text = await read('skills/engineering-skills/SKILL.md');
-  assert.match(text, /Catalogue of 112 engineering skills/);
-  assert.ok(text.includes('netbird-remote-access/SKILL.md'), 'catalogue must include the local NetBird skill');
+  assert.match(text, /Catalogue of 111 engineering skills/);
   assert.match(text, /All specialists below are included by the main package manifest/);
   assert.doesNotMatch(text, /not in the 99 core|Optional source-first security|Optional project context/);
   const pkg = await assertUnifiedManifest();
@@ -63,15 +62,15 @@ test('one public install entrypoint replaces per-module installation instruction
   assert.match(migration, /não edita as tuas configurações globais automaticamente/);
   assert.match(migration, /pi remove .*integrations\/graphify/);
   assert.match(migration, /Não remover a entrada raiz/);
-  assert.match(migration, /113 recursos de skills, 8 prompts e 1 extensão/);
+  assert.match(migration, /112 recursos de skills, 8 prompts e 2 extensões/);
 });
 
 test('standard npm test covers all included capability suites and source validators', async () => {
   const pkg = await assertUnifiedManifest();
-  for (const file of ['ops-engine.test.mjs', 'graphify-integration.test.mjs', 'security-audit-integration.test.mjs', 'addy-integrations.test.mjs', 'unified-package.test.mjs', 'netbird-skill.test.mjs', 'validate-findings.test.cjs', 'validate-coverage-ledger.test.cjs']) {
+  for (const file of ['ops-engine.test.mjs', 'graphify-integration.test.mjs', 'security-audit-integration.test.mjs', 'addy-integrations.test.mjs', 'unified-package.test.mjs', 'validate-findings.test.cjs', 'validate-coverage-ledger.test.cjs']) {
     assert.ok(pkg.scripts.test.includes(file), `default test must run ${file}`);
   }
   assert.doesNotMatch(pkg.scripts.test, /npm install|npx|pip|curl/);
-  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts']);
+  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts']);
   assert.equal(Object.hasOwn(pkg.scripts, 'postinstall'), false);
 });

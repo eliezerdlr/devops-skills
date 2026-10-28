@@ -150,7 +150,7 @@ test('web adaptation qualifies SEO, field/lab, accessibility and browser consent
 
 test('catalogue and notices expose the integrated selection and unified count', async () => {
   const catalogue = await read(resolve(root, 'skills/engineering-skills/SKILL.md'));
-  assert.match(catalogue, /Catalogue of 112 engineering skills/);
+  assert.match(catalogue, /Catalogue of 111 engineering skills/);
   for (const config of configs) {
     const base = resolve(integrations, config.name), pkg = await json(resolve(base, 'package.json'));
     for (const path of pkg.pi.skills) assert.ok(catalogue.includes(`../../integrations/${config.name}/${path.slice(2)}`), path);

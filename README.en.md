@@ -4,7 +4,7 @@
 
 A collection of skills for engineering, DevOps, cybersecurity, and IT operations.
 
-One package includes **112 skills/sub-skills**, **8 prompts** for network/security/testing/performance, and an extension with **real subagents and declarative analysis workflows**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
+One package includes **111 skills/sub-skills**, **8 prompts** for network/security/testing/performance, and two extensions: **analysis orchestration** and a **NetBird API connector**. The skills are organized in the [main catalogue](skills/engineering-skills/SKILL.md). Each skill contains instructions and, where applicable, scripts, references, and assets.
 
 ## 1. Prerequisites
 
@@ -12,7 +12,7 @@ One package includes **112 skills/sub-skills**, **8 prompts** for network/securi
 - Git to obtain and update the repository.
 - Task-specific tools only for the workflows you intend to run; see [dependencies and compatibility](docs/DEPENDENCIES.md).
 
-Skills are instructions, not services. The package also loads an executable orchestration extension; review its [scope, approvals and limits](docs/ORCHESTRATION.md). It does not install Terraform, kubectl, Python, browsers or credentials.
+Skills are instructions, not services. The package loads orchestration and [persistent NetBird API access](docs/NETBIRD-API.md) extensions, without automatic API calls; review its [scope, approvals and limits](docs/ORCHESTRATION.md). It does not install Terraform, kubectl, Python, browsers or credentials.
 
 ## 2. Enable skills in Pi
 
@@ -30,7 +30,7 @@ Edit `~/.pi/agent/settings.json` and add the checkout to the existing `packages`
 
 Replace the path with your actual checkout location. **Do not replace the entire settings file** if it already contains configuration: preserve other fields and paths.
 
-The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 112 specialists, the catalogue, eight prompts and the orchestration extension, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
+The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 111 specialists, the catalogue, eight prompts and the orchestration extension, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
 
 ### Option B — Install the checkout as a Pi package
 
@@ -72,7 +72,7 @@ Already registered individual modules? Follow the [single-package migration guid
 
 ## 3. Enable operational capabilities
 
-**Registering the single root package makes all 112 skills available.** Running their workflows may require additional setup:
+**Registering the single root package makes all 111 skills available.** Running their workflows may require additional setup:
 
 | Capability | Separate setup |
 |---|---|
@@ -91,12 +91,6 @@ The [dependency guide](docs/DEPENDENCIES.md) distinguishes optional libraries, e
 ### Building with Deep Agents
 
 The [deep-agents-core](skills/engineering-skills/deep-agents-core/SKILL.md) skill from the LangChain project guides development of Deep Agents applications. It does not install the framework or add subagents or memory to Pi. Read the [dependencies and example limitations](docs/DEPENDENCIES.md#deep-agents-core-langchain) before running code.
-
-### NetBird remote access — included in the package
-
-The locally authored [netbird-remote-access](skills/engineering-skills/netbird-remote-access/README.md) skill covers restricted LAN resource access through a Linux routing peer, with parameterised templates, approval gates and evidence-led documentation. Examples are fictitious; no production inventory or credentials are included. Loading it does not install NetBird, create AWS resources, run SSH or change networking.
-
-Its offline validator and 41 synthetic tests use Python 3.9+ and the standard library. These are heuristic package checks, not DLP certification or infrastructure validation. Load it with `/skill:netbird-remote-access`.
 
 ### Reliability and error handling
 
@@ -129,7 +123,7 @@ Two MIT modules already registered by the root manifest; no separate Pi installa
 - [Addy Engineering](integrations/addy-engineering/README.md): four adapted constraint/context/official-source/simplification skills and two same-session personas, not autonomous subagents. ADR/adversarial-review material is supplementary.
 - [Web Quality & SEO](integrations/web-quality/README.md): six skills for web audits, performance, Core Web Vitals, accessibility, technical/on-page SEO and browser best practices, with product/structured-data/internationalisation references.
 
-Their ten skills and two prompts are part of the package's 112 specialists and eight prompts. Loading them installs no tools, hooks, browsers/MCP or analytics. Complete selected references do not establish enforcement, measured metrics, WCAG conformance or ranking gains. Web quality is not a complete marketing/advertising platform; the guides qualify tool dependencies and non-universal examples.
+Their ten skills and two prompts are part of the package's 111 specialists and eight prompts. Loading them installs no tools, hooks, browsers/MCP or analytics. Complete selected references do not establish enforcement, measured metrics, WCAG conformance or ranking gains. Web quality is not a complete marketing/advertising platform; the guides qualify tool dependencies and non-universal examples.
 
 ### Security auditing — included in the package
 
@@ -151,7 +145,7 @@ Prepare the external dependency manually; no automatic installation or implicit 
 
 ### UniFi — optional integration under review
 
-The original project is available in [integrations/unifi-skills](integrations/unifi-skills/README.md), including five skills and a Python helper. **It is not loaded by this pack's Pi manifest** and is not part of the 112 main skills.
+The original project is available in [integrations/unifi-skills](integrations/unifi-skills/README.md), including five skills and a Python helper. **It is not loaded by this pack's Pi manifest** and is not part of the 111 main skills.
 
 **Do not use unchanged in production:** the original helper disables TLS verification, permits writes by default, and may expose sensitive data in responses/dry-run output. Corrections and real-device tests have not been completed. Publication is not operational approval. Do not run examples against a company network with administrative credentials.
 

@@ -4,9 +4,9 @@
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares all 112 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator extension. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares all 111 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator and NetBird API extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or automatic hooks. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
-See [ORCHESTRATION.md](ORCHESTRATION.md) for the executable integration, approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
+See [ORCHESTRATION.md](ORCHESTRATION.md) for orchestration and [NETBIRD-API.md](NETBIRD-API.md) for persistent API access (macOS/Linux, HTTPS, protected local token and explicit approvals), approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 
 This is not a full workstation bootstrap. Credentials, network access, cloud subscriptions, target software and permissions must be provided separately. Do not install every dependency globally or run `npm install` recursively over all manifests.
 
@@ -67,12 +67,6 @@ The [Graphify module](../integrations/graphify/README.md) contributes an adapted
 CLI examples target the externally prepared `graphifyy==0.9.93` distribution (`graphify` executable). Its core requires Python and NetworkX/NumPy/RapidFuzz/tree-sitter grammars; extras such as Terraform require separate review. This pack does not install those dependencies. Do not invoke upstream installers/guards or assume the host subagent API matches upstream examples. Structural checks here do not validate a clean installation or the complete runtime.
 
 The adapted instructions require child-process settings `GRAPHIFY_BACKEND=none`, `GRAPHIFY_NO_AUTO_REFRESH=1` and `GRAPHIFY_QUERY_LOG_DISABLE=1`, plus an approved project output root. These are workflow guidance, not network/filesystem isolation. Markdown structure is available in the update path, whereas `extract --code-only` skips documents; YAML infrastructure is not automatically modeled structurally. Remote semantic processing needs separate approval of corpus, provider and budget.
-
-## NetBird remote access — local instructions and offline validation
-
-The `netbird-remote-access` specialist is included by the existing specialist glob. Its validator uses Python 3.9+ and the standard library only; no Docker daemon, network connection or credentials are required. The 41 regression tests use temporary synthetic fixtures on Linux/macOS; the POSIX suite is not homologated on Windows. Root Node integration tests explicitly skip the Python branches when a compatible interpreter is unavailable rather than installing it.
-
-The Docker templates target a Linux routing peer with Engine/Compose/TUN and require explicit parameters, a verified official image version/architecture/digest and separate operational approval. They are not an installer or a live inventory. Host networking and capabilities must be reviewed for the selected release. The validator is heuristic and only supports a trusted stable package tree; it is not DLP, sandboxing, an image registry check or infrastructure validation.
 
 ## Optional Python dependencies
 

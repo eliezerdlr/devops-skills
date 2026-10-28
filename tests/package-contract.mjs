@@ -5,8 +5,8 @@ import { fileURLToPath } from 'node:url';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const components = ['graphify', 'security-audit', 'addy-engineering', 'web-quality'];
-export const specialistCount = 112;
-export const skillResourceCount = 113; // specialists + catalogue
+export const specialistCount = 111;
+export const skillResourceCount = 112; // specialists + catalogue
 export const promptCount = 8;
 export const readJson = async path => JSON.parse(await readFile(path, 'utf8'));
 
@@ -34,7 +34,7 @@ export async function assertUnifiedManifest() {
   }
   assert.equal(pkg.pi.skills.length, 13);
   assert.equal(pkg.pi.prompts.length, promptCount);
-  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts']);
+  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts']);
   assert.deepEqual(pkg.pi.themes, []);
   assert.doesNotMatch(JSON.stringify(pkg.pi), /upstream|unifi|planning-with-files/);
   return pkg;

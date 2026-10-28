@@ -2,7 +2,7 @@
 
 Snapshot do pacote Pi oficial de [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files), versão **3.24.0**, commit **96b79bf1d64f22ab5f68442e0a45704eef06ddfc**. Os 46 ficheiros em `upstream/` preservam o conteúdo original; apenas acrescentámos a licença MIT do repositório ao pacote. Proveniência em [UPSTREAM.json](UPSTREAM.json), integridade em [SHA256SUMS](SHA256SUMS), licença em [upstream/LICENSE](upstream/LICENSE).
 
-**Não é carregado pelo manifesto principal.** Ativação explícita evita instalar hooks, ler planos ou iniciar processos por surpresa ao atualizar o pack. O pacote principal inclui 112 skills; a instalação opcional acrescenta uma skill e uma extensão. Não registes simultaneamente outra cópia npm/global de planning-with-files.
+**Não é carregado pelo manifesto principal.** Ativação explícita evita instalar hooks, ler planos ou iniciar processos por surpresa ao atualizar o pack. O pacote principal inclui 111 skills; a instalação opcional acrescenta uma skill e uma extensão. Não registes simultaneamente outra cópia npm/global de planning-with-files.
 
 ## Ativar no Pi 1.2.0
 
