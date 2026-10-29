@@ -2,6 +2,16 @@
 
 Estes guias só se aplicam aos workflows escolhidos explicitamente. Carregar as skills não exige instalar OmniRoute, Archify ou outro serviço. Ver [âmbito da recuperação](RESTORED-SKILLS.md).
 
+## Ponytail — extensão incluída e registo global
+
+O código está em `extensions/ponytail/index.ts` e `extensions/ponytail/policy.mjs`, dentro do checkout `devops-skills`; o manifesto raiz já o inclui. Não exige instalação npm global nem uma segunda cópia upstream.
+
+Para registo global explícito no Pi, fazer backup de `~/.pi/agent/settings.json` e acrescentar o caminho absoluto de `extensions/ponytail/index.ts` à lista `extensions`, preservando as entradas existentes. Se `PI_CODING_AGENT_DIR` estiver definido, usar o diretório de configuração correspondente. Um registo em `<projeto>/.pi/settings.json` é apenas local ao projeto.
+
+No ambiente local documentado, o código fica em `/Users/erodrigues/Workspaces/devops_agents/devops-skills/extensions/ponytail/index.ts`. O registo global em `/Users/erodrigues/.pi/agent/settings.json` aponta diretamente para esse ficheiro; não existe uma cópia instalada separadamente. Esse ficheiro de configuração resolve nesta máquina para `/Users/erodrigues/Workspaces/devops_agents/.pi/agent/settings.json`.
+
+Ver [configuração, exemplo multiplataforma, verificação e reversão](../integrations/ponytail/README.md#location-and-explicit-global-registration). O registo foi validado sem duplicação no Pi 1.4.0; isso não comprova ativação numa sessão já aberta. `/reload` seguido de `/ponytail status` verifica a sessão; se o comando continuar indisponível, investigar erros/filtros do host. A extensão não altera configurações globais por si própria.
+
 ## Caminho opcional: billion-context nativo no Pi
 
 [Perfil revisto e fixo em 0.1.209](../integrations/billion-context/README.md): extensão nativa opcional, runtime externo, não incluída no arranque automático da raiz. O guia cobre download npm explícito sem lifecycle scripts/opcionais, checksums, prefixo privado novo, preservação de settings, reinício, `/acp` e rollback. Se já tens o perfil global ativo, não instales/registes outra cópia. Sem store persistente Bili, mas com temporários privados; exportações pedem aprovação. Validação local em macOS/Pi 1.4.0; Windows não homologado.
@@ -63,4 +73,4 @@ Suítes SDK anteriores: Pi 1.3.0. Pi 1.4.0 foi observado instalado, sem nova hom
 
 ## Âmbito após recuperação
 
-Este índice é referência para ferramentas **opcionais**, não uma sequência a executar ao instalar o pacote. Nenhum perfil OmniRoute é imposto ao projecto principal. O manifesto principal carrega apenas orquestração e API NetBird; o router nativo exige activação explícita. As receitas e o inventário não comprovam instalação actual nem homologação das versões publicadas. Nesta recuperação não se executam instaladores, wrappers de serviço ou credenciais; `npm test` valida skills e contratos com fixtures. Ver [skills recuperadas e runtimes opcionais](RESTORED-SKILLS.md).
+Este índice é referência para ferramentas **opcionais**, não uma sequência a executar ao instalar o pacote. Nenhum perfil OmniRoute é imposto ao projecto principal. O manifesto principal carrega orquestração, API NetBird e a orientação Ponytail; o router nativo exige activação explícita. As receitas e o inventário não comprovam instalação actual nem homologação das versões publicadas. Nesta recuperação não se executam instaladores, wrappers de serviço ou credenciais; `npm test` valida skills e contratos com fixtures. Ver [skills recuperadas e runtimes opcionais](RESTORED-SKILLS.md).
