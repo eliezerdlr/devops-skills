@@ -9,7 +9,7 @@ import shutil
 import subprocess
 import tempfile
 
-VERSION = '2.1.0'
+VERSION = '2.2.0'
 
 
 def rewrite_images(markdown, mapping):
@@ -98,11 +98,13 @@ def valid_cache(cache):
 
 def extract(source, stage, args):
     import pymupdf
+    from fidelity import technical_regions, restore_code
     with pymupdf.open(source) as document:
         if document.needs_pass:
             raise RuntimeError('Encrypted PDF requires an unlocked local copy')
         pages = len(document)
         source_counts = [len(page.get_text().strip()) for page in document]
+        source_regions = [technical_regions(page) for page in document]
     assets = stage / 'assets'
     assets.mkdir()
     if args.engine == 'docling':
@@ -158,15 +160,20 @@ def extract(source, stage, args):
               'limitations': 'Heuristic coverage, not proof of semantic fidelity.'}
     sections = []
     for number, text in enumerate(page_markdown, 1):
-        warnings = []
-        if not text.strip():
+        raw_text = text
+        text, code_records = restore_code(text, source_regions[number - 1])
+        warnings = sorted({warning for record in code_records for warning in record['warnings']})
+        if any(heading.endswith(':') for heading in re.findall(r'^#{1,6} (.+)$', text, re.M)):
+            warnings.append('heading-hierarchy-needs-review')
+        if not raw_text.strip():
             warnings.append('empty-output-page')
         if source_counts[number - 1] > 100 and len(text.strip()) < source_counts[number - 1] * 0.4:
             warnings.append('possible-text-loss')
         if source_counts[number - 1] == 0:
             warnings.append('no-source-text-layer-review-image-or-ocr')
         report['pages'].append({'page': number, 'source_text_characters': source_counts[number - 1],
-                                'markdown_characters': len(text.strip()), 'warnings': warnings})
+                                'markdown_characters': len(text.strip()),
+                                'code_blocks': code_records, 'warnings': warnings})
         sections.append(f'<!-- PDF_PAGE: {number} -->\n\n' + text)
     markdown = rewrite_images('\n\n'.join(sections), asset_mapping(assets, 'assets'))
     (stage / 'report.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
@@ -187,6 +194,8 @@ def main():
     parser.add_argument('--ocr', choices=('none', 'tesseract'), default='none')
     parser.add_argument('--languages', default='eng+por')
     parser.add_argument('--force-ocr', action='store_true')
+    parser.add_argument('--strict', action='store_true',
+                        help='Write output/report but exit 2 if review warnings remain')
     parser.add_argument('--cache-dir', type=Path,
                         default=Path.home() / '.cache' / 'pdf-to-markdown')
     parser.add_argument('--no-cache', action='store_true')
@@ -254,6 +263,8 @@ def main():
     report = json.loads(report_out.read_text())
     warnings = sum(len(page['warnings']) for page in report['pages'])
     print(f'Converted to {args.output}; cache={"hit" if hit else "miss"}; page_warnings={warnings}; report={report_out}')
+    if args.strict and warnings:
+        raise SystemExit(2)
 
 
 if __name__ == '__main__':

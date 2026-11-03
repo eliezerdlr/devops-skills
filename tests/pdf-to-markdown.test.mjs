@@ -48,6 +48,11 @@ with tempfile.TemporaryDirectory() as directory:
   assert.equal(result.status, 0, result.stderr);
 });
 
+test('technical fidelity exact-string regressions pass offline', () => {
+  const result = spawnSync('python3', [join(base, 'scripts/test_fidelity.py'), '-v'], { encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+});
+
 test('help works without optional Python libraries', () => {
   const result = run(['--help']);
   assert.equal(result.status, 0, result.stderr);

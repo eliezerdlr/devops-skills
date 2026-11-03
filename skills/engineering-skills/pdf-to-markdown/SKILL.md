@@ -29,6 +29,12 @@ Use Python 3.12 and an isolated environment. Requirements pin PyMuPDF, PyMuPDF4L
 
 Default ~/.cache/pdf-to-markdown contains sensitive extracted content. Use --no-cache for no persistent conversion cache, --cache-dir for an approved location or --clear-cache to refresh only this source/settings entry. Source content, selected options, converter and key dependency versions determine the key. Cached file hashes are checked. Clear after changing models/traineddata. Avoid concurrent writes to the same key; never share caches with untrusted users. Refer to README.md for exact limits.
 
+## Technical acceptance criteria
+
+Use --strict for technical documents requiring a review gate. Exit 2 means outputs were written but warnings remain; never present this as validated fidelity. Inspect source-line recovery records, source bounding boxes and similarity scores. Compare complete commands, newlines, continuation backslashes, quotes, indentation and separate invocations, not just keywords. Monospaced source recovery cannot restore missing text or verify OCR-only code. Ambiguous regions are explicitly warned and source excerpts may duplicate backend text; reconcile them manually rather than guessing. Heading-hierarchy warnings also require source review. A command split across pages must remain visibly incomplete until reviewed.
+
+Do not claim 'complete and verified' based solely on page/section counts or successful library execution. Acceptance requires reviewed technical blocks and justified warnings, with no invented arguments. Use the offline exact-string tests and real-engine fixtures before changes to extraction settings or dependencies.
+
 ## Failure handling
 
 No automatic fallback, package installation, overwrite or global deletion. Missing OCR executables/languages, encrypted PDFs, partial or empty conversions must be reported. Preserve previous outputs. Read error messages before choosing another engine. Windows/Linux support is documented, not fully verified by the macOS tests.

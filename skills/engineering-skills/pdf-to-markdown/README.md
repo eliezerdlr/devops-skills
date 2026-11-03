@@ -72,6 +72,21 @@ Default: `~/.cache/pdf-to-markdown/`. Each entry is keyed by source SHA256, engi
 
 Cache contains document text and images: apply the same permissions/retention rules as the source. Models, OCR traineddata and every transitive library are not individually hashed: use `--clear-cache` after changing them. Cache writes are not concurrency-locked; avoid simultaneous writes for the same source/settings. Do not share a cache across untrusted users. Invalid/corrupt cache entries are regenerated. No automatic global cache deletion occurs.
 
+## Technical fidelity and review gate
+
+Version 2.2 recovers monospaced technical lines from the PDF text layer using font flags and coordinates. It aligns fenced output against unique source regions, restores line breaks and position-derived indentation, and records similarity and source bounding boxes. Adjacent fences may be grouped before alignment. Missing command arguments, quotes and delimiters are NEVER invented. PDF tabs cannot be recovered exactly; indentation is estimated from glyph positions.
+
+Ambiguous matches remain visibly unverified. Unmatched technical regions are preserved as explicitly labelled source excerpts on the correct page; the backend's text may duplicate or misplace them, requiring manual reconciliation. This intentionally favours preserving evidence over silently deleting text. Non-monospaced code and OCR-only code cannot be recovered by this method. Font-based classification and similarity matching are heuristics, not proof of correctness.
+
+Right-edge text, unbalanced quotes/delimiters and heading-like lead-ins trigger review warnings. Quote counting is not a shell/parser validator and may flag legitimate literals or blocks continuing across pages. The converter does not execute code or silently rewrite heading semantics. Check the original before accepting these blocks.
+
+```bash
+# Outputs are retained for inspection; exit status 2 means review is required.
+.venv/bin/python scripts/convert.py input.pdf checked.md --engine docling --strict
+```
+
+Exit 0 without strict mode means conversion completed, NOT that all warnings are resolved. Use the report and exact command comparison as acceptance gates. Strict mode returns 2 whenever page warnings remain, including legitimate scan/blank-page warnings. Reviewers must decide which warnings are acceptable; do not label a warned document execution-ready.
+
 ## Page traceability and validation report
 
 Every output includes `<!-- PDF_PAGE: N -->` markers and a sibling `<output-stem>.report.json`. The report records source-text and extracted-Markdown character counts for every page and warns about empty output, missing text layers and possible text loss (less than 40% of source text length for pages with over 100 source characters). These are heuristics, not detection of every omission, clipped command or semantic error. A blank page may legitimately trigger warnings; scan warnings require OCR/manual review. The report is included in cache integrity validation and cannot overwrite an existing report.
@@ -93,14 +108,15 @@ Image relocation changes only exact generated Markdown image destinations outsid
 From the repository root, `node --test tests/pdf-to-markdown.test.mjs` runs offline contract/cache tests without optional engines. After approving dependencies and model downloads, run from this skill directory:
 
 ```bash
+python3 scripts/test_fidelity.py -v
 .venv/bin/python scripts/test_conversion.py -v
 ```
 
-These real-engine tests create only temporary synthetic PDFs. They verify both engines, image links, cache hits, source-change invalidation, scanned-page OCR, a three-page technical fixture with columns/table/command paths and blank-page warnings. Offline regressions also check that image relocation leaves code and ordinary asset paths unchanged. OCR skips if Tesseract is absent; it requires English language data when present. They do not certify complex-table fidelity or all supported languages.
+These real-engine tests create only temporary synthetic PDFs. They verify both engines, image links, cache hits, source-change invalidation, scanned-page OCR, a four-page technical fixture with columns, a table, exact multiline command comparison and blank-page warnings. Offline regressions also check that image relocation leaves code and ordinary asset paths unchanged. OCR skips if Tesseract is absent; it requires English language data when present. They do not certify complex-table fidelity or all supported languages.
 
 ## Validation evidence and limits
 
-macOS arm64/Python 3.12: both engines converted a synthetic PDF with an image; relative links existed; second conversions hit the cache. A scanned synthetic PDF was converted with Tesseract 5.5.4 and forced OCR, recovering its expected text. Tesseract emitted an orientation warning on this short sample. A separate real 10-page technical PDF was processed locally with all 10 page markers and 20 numbered sections retained; that private input/output is not bundled. This is not comprehensive OCR/language/table accuracy certification. Other platforms and complex real-world layouts need validation.
+macOS arm64/Python 3.12: both engines converted a synthetic PDF with an image; relative links existed; second conversions hit the cache. A scanned synthetic PDF was converted with Tesseract 5.5.4 and forced OCR, recovering its expected text. Tesseract emitted an orientation warning on this short sample. A separate real 10-page technical PDF was processed locally. Source-line recovery restored separated preflight commands and query continuations and flagged clipping/ambiguity instead of declaring the commands valid. Remaining warnings require review; that private input/output is not bundled. This is not comprehensive OCR/language/table accuracy certification. Other platforms and complex real-world layouts need validation.
 
 ## Provenance and licences
 

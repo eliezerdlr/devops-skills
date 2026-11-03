@@ -61,6 +61,7 @@ class ConversionTests(unittest.TestCase):
         first = doc.new_page()
         first.insert_text((72, 72), 'Technical validation document', fontsize=18)
         first.insert_text((72, 110), 'Command: cp assets/config.json output.json')
+        code_page = None
         first.insert_textbox(pymupdf.Rect(72, 150, 260, 300),
                              'LEFT COLUMN validation. Preserve identifiers and numbers.')
         first.insert_textbox(pymupdf.Rect(300, 150, 500, 300),
@@ -75,6 +76,9 @@ class ConversionTests(unittest.TestCase):
                            (80, 165, 'timeout_seconds'), (260, 165, '30'),
                            (80, 205, 'retry_count'), (260, 205, '3')]:
             second.insert_text((x, y), text)
+        code_page = doc.new_page()
+        expected_code = 'tool inspect \\\n  --region example \\\n  --limit 30\n\ntool status'
+        code_page.insert_text((72, 72), expected_code, fontname='cour', fontsize=10)
         doc.new_page()
         doc.save(source)
         doc.close()
@@ -87,10 +91,11 @@ class ConversionTests(unittest.TestCase):
             self.assertIn('30', markdown)
             self.assertIn('LEFT COLUMN', markdown)
             self.assertIn('RIGHT COLUMN', markdown)
-            self.assertEqual(markdown.count('<!-- PDF_PAGE:'), 3)
+            self.assertEqual(markdown.count('<!-- PDF_PAGE:'), 4)
+            self.assertIn(expected_code, markdown)
             report = json.loads(output.with_suffix('.report.json').read_text())
-            self.assertEqual([p['page'] for p in report['pages']], [1, 2, 3])
-            self.assertIn('empty-output-page', report['pages'][2]['warnings'])
+            self.assertEqual([p['page'] for p in report['pages']], [1, 2, 3, 4])
+            self.assertIn('empty-output-page', report['pages'][3]['warnings'])
 
     @unittest.skipUnless(shutil.which('tesseract'), 'Tesseract not installed')
     def test_scanned_pdf_ocr(self):
@@ -105,6 +110,14 @@ class ConversionTests(unittest.TestCase):
         self.convert(source, output, '--engine', 'docling', '--ocr', 'tesseract',
                      '--languages', 'eng', '--force-ocr', '--no-cache')
         self.assertIn('Generic OCR validation', output.read_text())
+        strict_output = self.root / 'scan-strict.md'
+        strict = subprocess.run([sys.executable, str(self.cli), str(source), str(strict_output),
+                                 '--engine', 'docling', '--ocr', 'tesseract', '--languages', 'eng',
+                                 '--force-ocr', '--strict', '--cache-dir', str(self.root / 'cache')],
+                                capture_output=True, text=True, timeout=180)
+        self.assertEqual(strict.returncode, 2, strict.stderr)
+        self.assertTrue(strict_output.exists())
+        self.assertTrue(strict_output.with_suffix('.report.json').exists())
 
 
 if __name__ == '__main__':
