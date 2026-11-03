@@ -1,0 +1,4 @@
+pymupdf==2.1
+pymupdf4llm==2.1
+docling==2.146.0
+docling-core==2.105.0

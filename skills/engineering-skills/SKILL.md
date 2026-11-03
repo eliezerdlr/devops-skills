@@ -1,11 +1,11 @@
 ---
 name: engineering-skills
-description: "Catalogue of 119 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
+description: "Catalogue of 120 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
 ---
 
 # Engineering Skills — Catalogue
 
-This catalogue lists **119 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
+This catalogue lists **120 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
 
 Copyright and licence notices are preserved in the repository's `LICENSE`, `THIRD_PARTY_NOTICES.md`, and nested licence files. Inclusion is not a security certification.
 
@@ -247,6 +247,12 @@ These Apache-2.0 adaptations are included by the root package. No AWS CLI, MCP, 
 Focused network guidance includes IOS/IOS-XE, small-lab planning, WireGuard remote access and AWS IPsec Site-to-Site VPN; it does not establish comprehensive multi-vendor or enterprise VPN coverage. Dedicated Windows Server/AD/GPO, Linux administration, VMware/Proxmox, Xen Orchestra/XCP-ng, storage, enterprise backup/disaster recovery, endpoint management and ITIL/ITSM skills remain gaps. Optional UniFi source is separate and not production-approved.
 
 For these areas, use vendor documentation and approved local runbooks. Add specialist skills only after reviewing their provenance, scope, requirements and operational safety. Company-specific versions, network topology, policies and tools must be supplied separately; never embed secrets.
+
+## Document conversion (1)
+
+| Skill | Purpose | File |
+|---|---|---|
+| pdf-to-markdown | Optional local PDF extraction with fast and advanced engines, explicit dependency approval and fidelity checks | [SKILL.md](pdf-to-markdown/SKILL.md) |
 
 ## Maintenance
 

@@ -5,8 +5,8 @@ import { fileURLToPath } from 'node:url';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const components = ['graphify', 'security-audit', 'addy-engineering', 'web-quality', 'omniroute', 'archify', 'aws-toolkit'];
-export const specialistCount = 119;
-export const skillResourceCount = 120; // specialists + catalogue
+export const specialistCount = 120;
+export const skillResourceCount = 121; // specialists + catalogue
 export const promptCount = 8;
 export const readJson = async path => JSON.parse(await readFile(path, 'utf8'));
 

@@ -30,7 +30,7 @@ test('root manifest includes all 17 explicit approved specialists and five added
   for (const path of pkg.pi.prompts) await access(resolve(root, path));
 });
 
-test('single package has 119 specialists plus catalogue, no duplicate skill/prompt names', async () => {
+test('single package has 120 specialists plus catalogue, no duplicate skill/prompt names', async () => {
   const paths = await registeredSkillFiles();
   assert.equal(paths.length, skillResourceCount);
   const names = await Promise.all(paths.map(async path => nameOf(await readFile(path, 'utf8'))));
@@ -45,7 +45,7 @@ test('single package has 119 specialists plus catalogue, no duplicate skill/prom
 
 test('catalogue counts and links include all approved resources as main package features', async () => {
   const text = await read('skills/engineering-skills/SKILL.md');
-  assert.match(text, /Catalogue of 119 engineering skills/);
+  assert.match(text, /Catalogue of 120 engineering skills/);
   assert.match(text, /All specialists below are included by the main package manifest/);
   assert.doesNotMatch(text, /not in the 99 core|Optional source-first security|Optional project context/);
   const pkg = await assertUnifiedManifest();
@@ -63,7 +63,7 @@ test('one public install entrypoint replaces per-module installation instruction
   assert.match(migration, /não edita as tuas configurações globais automaticamente/);
   assert.match(migration, /pi remove .*integrations\/graphify/);
   assert.match(migration, /Não remover a entrada raiz/);
-  assert.match(migration, /120 recursos de skills, 8 prompts e 3 extensões/);
+  assert.match(migration, /121 recursos de skills, 8 prompts e 3 extensões/);
 });
 
 test('standard npm test covers all included capability suites and source validators', async () => {
