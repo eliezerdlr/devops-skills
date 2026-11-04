@@ -1,0 +1,15 @@
+{
+  "name": "devops-skills-grafana-dashboards",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "description": "Internal inventory: official Grafana dashboarding with bounded local guidance; root installation only.",
+  "pi": {
+    "skills": [
+      "./skills/grafana-dashboards/SKILL.md"
+    ],
+    "extensions": [],
+    "prompts": [],
+    "themes": []
+  }
+}

@@ -1,5 +1,10 @@
 # Third-party notices
 
+## Grafana dashboarding
+
+The complete selected dashboarding skill and reference from https://github.com/grafana/skills, commit 8fb72a527961f05e708f53d2a0500709e12d7970, are preserved unchanged under integrations/grafana-dashboards/upstream/. Copyright 2026 Grafana Labs, Apache-2.0; LICENSE is included. UPSTREAM.json records source hashes. The local grafana-dashboards entrypoint adds approval, provisioning, compatibility and percentage-semantics corrections and is identified as modified guidance. No wshobson/agents content is included.
+
+
 ## billion-context / acp-kernel — optional external runtime
 
 This project optionally uses [billion-context](https://github.com/ranxianglei/billion-context) and [acp-kernel](https://github.com/ranxianglei/acp-kernel), by ranxianglei. Copyright (c) 2026 ranxianglei. The upstream MIT license includes an **Additional Term — Attribution on Product Surfaces**; its full text is preserved in [integrations/billion-context/LICENSE](integrations/billion-context/LICENSE). Do not describe it as unqualified MIT.

@@ -1,0 +1,17 @@
+{
+  "repository": "https://github.com/grafana/skills",
+  "commit": "8fb72a527961f05e708f53d2a0500709e12d7970",
+  "license": "Apache-2.0",
+  "source_skill": "dashboarding",
+  "registered_skill": "grafana-dashboards",
+  "snapshot_root": "upstream",
+  "source_sha256": {
+    "LICENSE": "efb4d91baa7cd9559d3452f79deb2b3d9dc819c83d7058a1f90ac70484a1a23e",
+    "skills/grafana-core/dashboarding/SKILL.md": "dca785650631cb087228adf9a720a05d68e49ee6ec9ba151af9897a86d531c84",
+    "skills/grafana-core/dashboarding/references/json-schema.md": "fc056e7a202a1fe3bbfe5e8bc62a331c538bcf9a7ab5270b72ff4ef1ccfc90e4"
+  },
+  "modifications": [
+    "Unchanged full selected skill/reference/license snapshot; local named adapter adds approval, provisioning, compatibility and percentage safeguards."
+  ],
+  "excluded": "Other skills, marketplace manifests, hooks and scripts; no mandatory runtime dependency omitted."
+}

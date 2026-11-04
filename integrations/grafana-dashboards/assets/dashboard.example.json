@@ -1,0 +1,89 @@
+{
+  "uid": "example-service-overview",
+  "title": "Example service — replace placeholders",
+  "schemaVersion": 39,
+  "tags": [
+    "example"
+  ],
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "refresh": "1m",
+  "templating": {
+    "list": []
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Error ratio — requires real counters",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "REPLACE_DATASOURCE_UID"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(example_errors_total[5m])) / (sum(rate(example_requests_total[5m])) > 0)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "noValue": "No Data",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Request rate — illustrative counter",
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 18,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "REPLACE_DATASOURCE_UID"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(example_requests_total[5m]))",
+          "legendFormat": "Requests"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "noValue": "No Data"
+        },
+        "overrides": []
+      }
+    }
+  ]
+}

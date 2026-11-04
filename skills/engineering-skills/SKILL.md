@@ -1,11 +1,11 @@
 ---
 name: engineering-skills
-description: "Catalogue of 122 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
+description: "Catalogue of 123 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
 ---
 
 # Engineering Skills — Catalogue
 
-This catalogue lists **122 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
+This catalogue lists **123 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
 
 Copyright and licence notices are preserved in the repository's `LICENSE`, `THIRD_PARTY_NOTICES.md`, and nested licence files. Inclusion is not a security certification.
 
@@ -243,6 +243,14 @@ This adapted Apache-2.0 skill is included in the main package; see [external too
 | setting-up-cloudwatch-alarm-notifications | Complete SNS notification procedures with local KMS, preservation and test-approval safeguards | [SKILL.md](../../integrations/aws-toolkit/skills/setting-up-cloudwatch-alarm-notifications/SKILL.md) |
 
 These Apache-2.0 integrations (three adapted guides and two complete-source skills with local entrypoints) are included by the root package. No AWS CLI, MCP, hooks, cloud agent or VPN software is installed by loading instructions. Actual operations require approved external tools, temporary credentials, scope and cost/data approval. See [requirements and provenance](../../integrations/aws-toolkit/README.md). The separate ECC WireGuard adaptation is MIT and requires platform-specific VPN tools only for actual deployment.
+
+## Grafana dashboard authoring (1)
+
+| Skill | Purpose | File |
+|---|---|---|
+| grafana-dashboards | Official Grafana dashboarding, complete reference and bounded modern authoring/provisioning | [SKILL.md](../../integrations/grafana-dashboards/skills/grafana-dashboards/SKILL.md) |
+
+Apache-2.0 source from grafana/skills, pinned with unchanged references. No Grafana connection, production update or tool installation occurs on load. See [requirements and local corrections](../../integrations/grafana-dashboards/README.md).
 
 ## Known coverage gaps for hybrid IT
 
