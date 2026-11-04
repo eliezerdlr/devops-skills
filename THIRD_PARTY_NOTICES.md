@@ -44,7 +44,13 @@ Source: https://github.com/aws/agent-toolkit-for-aws, commit `9ab50636d12510dc35
 
 Apache License 2.0 — Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
-Three adapted instruction skills and scoped local references are distributed under `integrations/aws-toolkit/`: billing/cost management, AWS Site-to-Site VPN (renamed from sitetositevpn) and Well-Architected review. Original LICENSE and NOTICE are retained verbatim. UPSTREAM.json records selected source paths/hashes and local modifications; SHA256SUMS records the distributed component. Source skill bodies, scripts, plugins, MCP configuration and hooks are not bundled. Adaptations add bounded guidance-first review, explicit data/cost/change approval, secret-safe handling, rollback and offline/partial modes. They do not install AWS CLI, start agents or confer AWS affiliation, trademark rights or production certification.
+Three adapted instruction skills and scoped local references are distributed under `integrations/aws-toolkit/`: billing/cost management, AWS Site-to-Site VPN (renamed from sitetositevpn) and Well-Architected review. Original LICENSE and NOTICE are retained verbatim. UPSTREAM.json records selected source paths/hashes and local modifications; SHA256SUMS records the distributed component. For these original three adaptations, source skill bodies and scripts are not bundled. Plugins, MCP configuration and hooks remain excluded. Adaptations add bounded guidance-first review, explicit data/cost/change approval, secret-safe handling, rollback and offline/partial modes. They do not install AWS CLI, start agents or confer AWS affiliation, trademark rights or production certification.
+
+### AWS — complete CloudWatch source snapshot
+
+Additional snapshot: `b2a94d85e6673f54511df0b5d78b82b0e716d73b` from the same repository, Apache-2.0, Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+`integrations/aws-toolkit/upstream/cloudwatch/` preserves all 120 tracked files from the complete aws-observability and setting-up-cloudwatch-alarm-notifications skills, their complete setting-up-cloudwatch-observability onboarding dependency, and LICENSE/NOTICE, byte-for-byte. References, assets, Python helpers and upstream tests are included. Two local Pi entrypoints and CLOUDWATCH.md add approval/data/cost boundaries and operational corrections; they do not modify the snapshot. CLOUDWATCH-UPSTREAM.json records the exact commit and every source hash. Supporting onboarding material is not separately registered; no plugins, MCP configuration, hooks, automatic runtime installs or AWS changes are added. Optional external SDK/toolchain dependencies remain subject to separate approval and validation.
 
 ## LangChain — Deep Agents Core
 

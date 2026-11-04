@@ -10,11 +10,11 @@ Foram recuperadas do histórico Git, com referências, licenças e proveniência
 - `homelab-wireguard-vpn`: planeamento e diagnóstico WireGuard.
 - `netbird-remote-access`: orientação documental, complementar ao conector API.
 
-A contagem atual abaixo inclui também a adição posterior de `skill-creator`, que não faz parte da recuperação original. A skill `teach` foi removida a pedido. Não há runtime novo.
+A contagem atual abaixo inclui também as adições posteriores de `skill-creator`, `aws-observability` e `setting-up-cloudwatch-alarm-notifications`, que não fazem parte da recuperação original. As duas skills CloudWatch incluem fontes e dependência de onboarding completas; ver [dependências e limites](../integrations/aws-toolkit/CLOUDWATCH.md). A skill `teach` foi removida a pedido. Não há runtime novo.
 
 ## Descoberta e activação
 
-O pacote principal disponibiliza **120 especialistas + 1 catálogo = 121 recursos de skills**, **8 prompts** e **3 extensões activas**: `ops-orchestrator`, `netbird-api` e `ponytail`. Não é necessário instalar os módulos internos separadamente. Com o addon Planning with Files: **122 recursos / 8 prompts / 4 extensões**.
+O pacote principal disponibiliza **122 especialistas + 1 catálogo = 123 recursos de skills**, **8 prompts** e **3 extensões activas**: `ops-orchestrator`, `netbird-api` e `ponytail`. Não é necessário instalar os módulos internos separadamente. Com o addon Planning with Files: **124 recursos / 8 prompts / 4 extensões**.
 
 A recuperação não inicia serviços, instala dependências, altera políticas globais, configura credenciais nem faz chamadas a cloud/modelos. A disponibilidade de instruções não equivale a runtime instalado ou acesso autorizado.
 

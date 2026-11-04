@@ -1,0 +1,5 @@
+# Optional upstream Python helpers only; not installed by Pi or npm.
+# Minimum declared by the upstream Dynamic Instrumentation SDK guard.
+# Not a lockfile or a tested clean-environment runtime guarantee.
+boto3>=1.43.35
+botocore>=1.43.35

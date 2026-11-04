@@ -2,6 +2,14 @@
 
 Usar primeiro dados sintéticos/redigidos. Os testes de empacotamento não precisam de credenciais de infraestrutura, downloads, instalação de SDK ou chamadas reais a modelos.
 
+## Integração CloudWatch completa — validação atual
+
+Inclui dois entrypoints e as três árvores upstream completas (120 ficheiros, incluindo LICENSE/NOTICE). Os sete testes em `tests/aws-cloudwatch-integration.test.mjs` verificam registo único, exclusão do snapshot da descoberta, hashes/inventário e atribuição, links relativos, parsing AST dos 26 ficheiros Python e imports diretos, requisitos opcionais e limites/correções locais. Nenhum helper é importado ou executado; não se instala boto3, botocore, CDK ou MCP.
+
+Validação local em Node 26.13.0: **303 testes Node offline + 38 SDK Pi 1.4.0 + 11 Planning = 352**, sem falhas/skips. Os 41 testes Python NetBird permanecem internos à suíte padrão. A descoberta no SDK é **123 recursos de skills / 8 prompts / 3 extensões**, ou **124 / 8 / 4** com Planning. Os dois novos nomes aparecem uma vez; a dependência de onboarding e snapshots não são descobertos. Todos os 120 ficheiros foram também comparados byte a byte com o commit Git fixado; `git diff --check` limpo.
+
+Não foram executados scripts AWS, instalações opcionais, compilação CDK, modelos, operações cloud, testes de entrega real, SDK AWS em ambiente limpo, CI remoto, commit ou push. Os mínimos de SDK não são um lockfile nem certificação de compatibilidade operacional. Ver [dependências, revisão estática e limites](../integrations/aws-toolkit/CLOUDWATCH.md). Resultados de integrações anteriores abaixo são históricos quando identificados como tal.
+
 ## Perfil opcional billion-context
 
 `npm test` inclui `tests/billion-context.test.mjs`: pins/SRI/licença, configuração restritiva, lazy init, hash/config inválidos antes de efeitos laterais, whitelist, getter de chaves oculto, registry alheio preservado, restauro de env antes de await (incluindo exceção), confirmação de exports e verificador read-only. Fixtures upstream sintéticas em processos isolados, sem rede/contas/SDK e sem alterar o perfil global.
@@ -24,7 +32,7 @@ pi list
 
 Se já estiver registada, atualizar e recarregar é suficiente. Não registar módulos internos adicionalmente. Ver [pacote único e migração de configurações antigas](UNIFIED-PACKAGE.md); preservar configurações não relacionadas e filtros intencionais.
 
-A raiz expõe **120 especialistas + 1 catálogo = 121 recursos de skills**, **8 prompts** e **3 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
+A raiz expõe **122 especialistas + 1 catálogo = 123 recursos de skills**, **8 prompts** e **3 extensões**. Snapshots upstream, UniFi e o runtime adicional de Planning with Files não entram nessa descoberta. A presença dos ficheiros em integrations/ não implica execução de código ou instalação separada.
 
 ## 2. Recarregar e conferir
 
@@ -63,7 +71,7 @@ O contrato falha se um módulo aprovado deixar de ser exportado pelo manifesto r
 
 ## Ponytail full por defeito — validação atual
 
-A raiz carrega três extensões: OPS, conector NetBird e Ponytail full. Mantém **120 especialistas + catálogo = 121 recursos / 8 prompts / 3 extensões**; com Planning, **122 / 8 / 4**. Não acrescenta skills concorrentes ou ferramentas de modelo. `/ponytail off`, `full` e `status` controlam o ramo da sessão, com full em sessões novas; o modo não altera aprovações ou acesso.
+A raiz carrega três extensões: OPS, conector NetBird e Ponytail full. Mantém **122 especialistas + catálogo = 123 recursos / 8 prompts / 3 extensões**; com Planning, **124 / 8 / 4**. Não acrescenta skills concorrentes ou ferramentas de modelo. `/ponytail off`, `full` e `status` controlam o ramo da sessão, com full em sessões novas; o modo não altera aprovações ou acesso.
 
 Validação na cópia isolada e no checkout original, com o SDK instalado **Pi 1.4.0**: **280 testes Node offline + 38 SDK + 11 Planning = 329**, sem falhas/skips. Inclui 11 testes offline de política/proveniência/ausência de IO e nove SDK para registo, prompt composto sem duplicação, off/full/status, modo por ramo/reload, falha de persistência, headless e fallback legado. Um teste usa ExtensionRunner e SessionManager reais em memória e verifica preservação das secções de segurança e das ferramentas. As 41 verificações Python NetBird continuam internas à suíte padrão. O importador da sandbox omitiu uma pasta de skill chamada coverage; foi reposto apenas o SKILL.md original idêntico para a descoberta completa.
 
@@ -75,7 +83,7 @@ A skill `skill-creator` é carregada pelo glob existente, sem runner, viewer, se
 
 Os dois testes `tests/skill-creator-pi.test.mjs` verificam no loader Pi real que creator aparece com metadata válido para autoria e que teach já não aparece na descoberta ou no prompt. Estes testes medem descoberta/formatação, não a decisão de um modelo sobre quando ativar uma skill.
 
-Validação local após remover teach a pedido e manter skill-creator: **269 testes Node offline + 29 SDK Pi 1.4.0 + 11 planning = 309 testes**, sem falhas/skips. A suíte padrão continua a executar os 41 testes Python NetBird internamente; não são mais 41 testes Node. Descoberta atual: **120 especialistas + catálogo = 121 recursos / 8 prompts / 2 extensões**; com Planning, **122 / 8 / 3**. Os testes verificam ausência de teach no filesystem de skills, na descoberta SDK, no catálogo e nos comandos de testes. Foram retirados os sete contratos offline e dois testes SDK específicos de teach; a cobertura das restantes capacidades foi preservada. Nenhum curso ou ficheiro externo foi apagado. `git diff --check` limpo; sem edição de runtime, instalação, recolha de credenciais, acesso cloud/rede, benchmark de modelos, publicação, novo typecheck, CI remoto ou teste do runtime opcional de routing nesta tarefa.
+Validação histórica após remover teach a pedido e manter skill-creator: **269 testes Node offline + 29 SDK Pi 1.4.0 + 11 planning = 309 testes**, sem falhas/skips. A suíte padrão continua a executar os 41 testes Python NetBird internamente; não são mais 41 testes Node. Descoberta nessa validação: **120 especialistas + catálogo = 121 recursos / 8 prompts / 2 extensões**; com Planning, **122 / 8 / 3**. Os testes verificam ausência de teach no filesystem de skills, na descoberta SDK, no catálogo e nos comandos de testes. Foram retirados os sete contratos offline e dois testes SDK específicos de teach; a cobertura das restantes capacidades foi preservada. Nenhum curso ou ficheiro externo foi apagado. `git diff --check` limpo; sem edição de runtime, instalação, recolha de credenciais, acesso cloud/rede, benchmark de modelos, publicação, novo typecheck, CI remoto ou teste do runtime opcional de routing nesta tarefa.
 
 ## 4. Carregador/núcleo Pi real com transporte simulado
 
@@ -93,17 +101,17 @@ PI_SDK_ROOT="$(npm root -g)/@earendil-works/pi-coding-agent" npm run test:pi
 
 Confirmar antes que o caminho existe. Numa instalação pi-web-ui, o SDK pode estar nas dependências dessa aplicação, não diretamente em npm root.
 
-Os testes verificam descoberta de **121 skills / 8 prompts / 3 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os quatro registos legados. Também verificam quatro ferramentas de orquestração, duas commands, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
+Os testes verificam descoberta de **123 skills / 8 prompts / 3 extensões** a partir de apenas uma entrada raiz e a compatibilidade temporária com os quatro registos legados. Também verificam quatro ferramentas de orquestração, duas commands, isolamento de contexto dos workers, zero ferramentas nos workers, recusa/cancelamento/timeout, bloqueio de dependências e limites de saída. Só usam configuração temporária/em memória e um transporte de modelo sintético.
 
 ## 5. Planeamento persistente: teste do addon de runtime
 
-O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 120 skills.
+O [Planning with Files](../integrations/planning-with-files/README.md) inclui hooks próprios, pelo que continua separado da instalação normal das skills. Não é uma dependência oculta das 122 skills.
 
 ```bash
 PI_SDK_ROOT=/caminho/real/@earendil-works/pi-coding-agent npm run test:planning
 ```
 
-A descoberta combinada deve ser **121 skills / 8 prompts / 4 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
+A descoberta combinada deve ser **124 skills / 8 prompts / 4 extensões**. Os testes verificam integridade do snapshot, coexistência, modo passivo/notify, ativação/reset, leitura do plano, alteração/seleção inválida e ausência de continuação após erro/abort. Não exercitam toda a suíte upstream, modelos reais, recuperação de históricos ou loops periódicos.
 
 ## 6. Smoke tests manuais sem ações externas
 

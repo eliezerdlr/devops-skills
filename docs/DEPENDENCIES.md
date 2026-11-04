@@ -4,7 +4,7 @@
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares all 120 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator, NetBird API and Ponytail efficiency extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or upstream lifecycle hooks. Ponytail intentionally adds a fixed default-full prompt policy through native Pi events; it makes no external calls. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares all 122 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator, NetBird API and Ponytail efficiency extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or upstream lifecycle hooks. Ponytail intentionally adds a fixed default-full prompt policy through native Pi events; it makes no external calls. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
 See [ORCHESTRATION.md](ORCHESTRATION.md) for orchestration and [NETBIRD-API.md](NETBIRD-API.md) for persistent API access (macOS/Linux, HTTPS, protected local token and explicit approvals), approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 
@@ -28,7 +28,7 @@ Clone to a chosen directory, then merge a `packages` entry into the existing `~/
 }
 ```
 
-Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 12 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
+Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 19 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
 
 ### Register the checkout as a local Pi package
 
@@ -181,6 +181,12 @@ Completed without running bundled scripts:
 - Three npm manifests classified: two optional MCP integrations and one fixture, not root pack dependencies.
 
 Not completed: dependency installation/resolution, build/integration tests, live CVE/licence databases, exhaustive generated-code dependency resolution, clean-machine Pi loading and subagent execution. Do not publish claims that the whole pack works without setup or has passed security analysis.
+
+## Complete CloudWatch skills and optional dependencies
+
+`aws-observability` and `setting-up-cloudwatch-alarm-notifications` include their full source trees, assets, scripts and the complete `setting-up-cloudwatch-observability` supporting dependency. Only the two bounded local entrypoints are discovered; no plugin, MCP proxy, hooks, collector, credentials or SDK is installed by the package.
+
+See the [dependency matrix and operational corrections](../integrations/aws-toolkit/CLOUDWATCH.md) and [source provenance](../integrations/aws-toolkit/CLOUDWATCH-UPSTREAM.json). Optional Python helpers require a reviewed isolated environment with boto3/botocore >=1.43.35 and the service operations actually used; these are upstream minimums, not a tested lockfile or latest-version claim. CDK examples require the target application's compatible TypeScript, aws-cdk-lib and constructs. Collector/ADOT and language instrumentation prerequisites remain platform-specific and are fully documented in the bundled onboarding guides. Reading/design needs none of those runtimes. Real execution, sensitive capture, notification tests and model/evaluation spend require separate scope and approval. No AWS runtime was tested by this integration.
 
 ## Restored instruction skills; optional runtimes
 

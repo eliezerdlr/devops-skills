@@ -81,9 +81,11 @@ test('distributed AWS and WireGuard content has complete local integrity records
   }
 });
 
-test('new instruction resources are document-only, bounded, and have valid local links', async () => {
+test('original AWS adaptations and local entrypoints remain bounded; snapshots have separate completeness tests', async () => {
   for (const dir of [aws, vpn]) {
     for (const path of await files(dir)) {
+      // Complete CloudWatch source includes scripts/assets; audited by its own suite.
+      if (path.startsWith(resolve(aws, 'upstream') + '/') || path === resolve(aws, 'requirements-cloudwatch.txt')) continue;
       assert.ok(/\.(?:md|json)$|\/(?:LICENSE|NOTICE|SHA256SUMS)$/.test(path), path);
       if (!path.endsWith('.md')) continue;
       const content = await read(path);
