@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "helper": "skills/unifi-connect/scripts/udm.py",
+  "declaredOrigin": "https://github.com/dlewis7444/unifi-claude-skill",
+  "licenseSnapshotCommit": "027676de61263568afc43036df5ac3de634ca119",
+  "licenseUrl": "https://raw.githubusercontent.com/dlewis7444/unifi-claude-skill/027676de61263568afc43036df5ac3de634ca119/LICENSE",
+  "licenseFile": "LICENSE.helper-origin",
+  "licenseSha256": "06459200b42b1b841363ab6cc24d784dad65015212a7b1ede7affb18ce66bc28",
+  "copyright": "Copyright (c) 2026 dlewis7444",
+  "license": "MIT",
+  "verification": "Original repository LICENSE retrieved at the immutable commit above; full notice retained alongside derivative helper. Existing helper/README derivation credits retained. This pins license evidence, not the unknown exact historical derivation commit; no byte-for-byte ancestry or legal certification claimed.",
+  "automaticLoading": false
+}

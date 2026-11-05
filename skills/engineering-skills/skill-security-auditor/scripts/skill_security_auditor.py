@@ -8,7 +8,7 @@ Usage:
     python3 skill_security_auditor.py /path/to/skill/ --strict --json
 
 Exit codes:
-    0 = PASS (safe to install)
+    0 = PASS (no critical/high patterns detected; safety remains unverified)
     1 = FAIL (critical findings, do not install)
     2 = WARN (review manually before installing)
 """
@@ -976,7 +976,7 @@ def print_report(report: AuditReport):
     print("╚" + "═" * 54 + "╝")
 
     if not report.findings:
-        print("\n  No security issues found. Skill is safe to install.\n")
+        print("\n  No matching security patterns found. Safety remains unverified; review source and permissions.\n")
         return
 
     print()

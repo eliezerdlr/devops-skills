@@ -101,11 +101,11 @@ A suíte de planeamento é separada porque ativa um runtime adicional em ambient
 PI_SDK_ROOT=/caminho/do/pi-coding-agent npm run test:planning
 ```
 
-Ela deve descobrir 131 recursos de skills, 8 prompts e 4 extensões quando o addon é selecionado. Descoberta correta não comprova qualidade de respostas de modelos, credenciais ou testes em produção.
+Ela deve descobrir 131 recursos de skills, 8 prompts e 5 extensões quando o addon é selecionado. Descoberta correta não comprova qualidade de respostas de modelos, credenciais ou testes em produção.
 
 ## English summary
 
-Version 0.4.0 has one public installation entrypoint: the repository root. It includes 129 specialist skills, their catalogue, eight prompts and the orchestration, NetBird API and default-full Ponytail extensions. Internal modules retain attribution and supporting files but require no separate registration. Remove only legacy module registrations after confirming the root, preserve other settings, and reload. External tools remain explicit workflow prerequisites; no hidden installs, new hooks or automatic audits are introduced.
+Version 0.4.0 has one public installation entrypoint: the repository root. It includes 129 specialist skills, their catalogue, eight prompts and the orchestration, NetBird API, default-full Ponytail and local Ghidra extensions. Internal modules retain attribution and supporting files but require no separate registration. Remove only legacy module registrations after confirming the root, preserve other settings, and reload. External tools remain explicit workflow prerequisites; no hidden installs, new hooks or automatic audits are introduced.
 
 ## Recuperação de capacidades
 

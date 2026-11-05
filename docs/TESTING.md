@@ -1,6 +1,14 @@
 # Verificar o pacote unificado / Unified package testing
 
-## Audit behavior regressions
+## Follow-up F11 / G01–G04
+
+The five follow-up contracts in `tests/audit-governance.test.mjs` run in the mandatory npm gate. They check honest scanner scope, CI coverage of every registered root extension plus Planning, manifest-derived documentation counts, historical/current separation and the pinned original UniFi helper MIT notice. No new CVE/reputation lookup or production approval is implied.
+
+Local strict **TypeScript 5.9.3 / Pi SDK 1.4.0** checking passed for all four root extensions and optional Planning. The compiler was extracted from the existing npm cache without lifecycle scripts or network downloads; the existing SDK was used, and the temporary dependency-resolution link was removed. This is local evidence, not a remote CI result. The earlier no-typecheck statement below records the eleven-fix tranche only.
+
+Follow-up validation: **334 Node tests** (including the five new contracts and the runner for 28 Python regressions), **42 Pi SDK tests**, and **11 Planning tests**, all passed without failures/skips. The nested Python cases are not additional Node tests. No remote CI, live CVE lookup, cloud/device/database operation or new Ghidra live run was performed for this follow-up.
+
+## Audit behavior regressions — previous eleven-fix tranche
 
 `npm test` now requires Python 3.11+ (or an executable supplied as `PYTHON`) and runs 28 offline Python regression cases through the Node gate. Missing prerequisites fail, not skip. The cases invert the eleven reproduced F01–F10/F12 defects, with positive controls; they do not certify all scripts or close F11/G01–G04. See [behavior matrix and compatibility changes](AUDIT-REMEDIATION.md). Six ML/data scaffolds now deliberately fail as `not_implemented`; their functionality was not implemented by this tranche.
 
@@ -12,7 +20,19 @@ Expected discovery: **130 skill resources / 8 prompts / 4 extensions**, or **131
 
 Commands: `npm test`; `PI_SDK_ROOT=/absolute/pi-sdk npm run test:pi`; same SDK for `npm run test:planning`. Separate opt-in `npm run test:ghidra:live` compiles a benign fixture and checks actual Ghidra analysis/decompiled C without executing the fixture. Requires configured Ghidra 12.2 / Java 25 and a system C compiler; missing prerequisites fail, never silently pass/skip. Artifacts are retained locally. Real runtime validation is macOS arm64 only; no malware isolation, Windows/Linux runtime validation, cloud/DB operations or campaign execution is claimed. See [Ghidra setup](install/ghidra.md).
 
-## Historical results below
+## Current operator checklist
+
+The root manifest is the discovery authority: **129 specialists + catalogue = 130 skill resources / 8 prompts / 4 extensions** (OPS, NetBird, Ponytail, Ghidra). With the optional Planning addon: **131 / 8 / 5**. Loading guidance is not an operational test.
+
+1. Keep one root package registration; preserve unrelated host settings. Run `/reload` after updating.
+2. Run `npm test` with Node 22.14+ and Python 3.11+.
+3. Use an already installed SDK: `PI_SDK_ROOT=/absolute/pi-sdk npm run test:pi`; then `npm run test:planning` with the same environment.
+4. CI's strict TypeScript gate includes **all four root extensions** plus the optional Planning extension. It uses Pi 1.4.0 and TypeScript 5.9.3; a configured gate is not evidence that remote CI ran.
+5. The separately approved Ghidra live test needs the external runtime and a benign fixture; no automatic runtime install occurs. Cloud, database, device changes and paid model tests need separate approval.
+
+The appendix below is retained as historical evidence only: old counts, commands, versions and phrases such as “deve” apply to their recorded stage, not this checkout. Use this current checklist and the root manifest instead.
+
+## Historical validation archive — not current instructions
 
 All following counts/results describe earlier stages, not the current executable Ghidra validation.
 
@@ -25,7 +45,7 @@ Usar primeiro dados sintéticos/redigidos. Os testes de empacotamento não preci
 
 ## Prometheus label strategy — integração oficial
 
-A nova suite tests/prometheus-label-strategy-integration.test.mjs verifica fonte integral, licença/pin/hashes, links, descoberta única sem runtime, correções locais e fixtures sintéticas de colisão de identidade, cardinalidade e histogramas. Nenhum teste instala ferramentas nem consulta Prometheus, Grafana ou AWS. A descoberta esperada atual é 125 recursos / 8 prompts / 3 extensões; com Planning, 126 / 8 / 4.
+A nova suite tests/prometheus-label-strategy-integration.test.mjs verifica fonte integral, licença/pin/hashes, links, descoberta única sem runtime, correções locais e fixtures sintéticas de colisão de identidade, cardinalidade e histogramas. Nenhum teste instala ferramentas nem consulta Prometheus, Grafana ou AWS. A descoberta esperada nessa etapa era 125 recursos / 8 prompts / 3 extensões; com Planning, 126 / 8 / 4.
 
 Validação local: **315 testes Node + 38 testes SDK Pi + 11 Planning = 364**, sem falhas ou skips nas execuções finais. A primeira tentativa SDK parou por PI_SDK_ROOT ausente; repetida com o diretório do SDK instalado, passou integralmente. Fonte e licença têm hashes fixos verificados; a integração adiciona sete testes offline. `git diff --check` limpo. Sem consultas operacionais, mudanças de configuração global, commit, push ou deploy. Recarregar a sessão para atualizar o catálogo já registado.
 
@@ -102,7 +122,7 @@ npm run test:package
 
 O contrato falha se um módulo aprovado deixar de ser exportado pelo manifesto raiz, se um snapshot passar a ser descoberto, se houver nomes duplicados, se os guias voltarem a exigir instalações Pi separadas ou se npm test deixar de incluir as suítes aprovadas.
 
-## Ponytail full por defeito — validação atual
+## Ponytail full por defeito — validação histórica
 
 A raiz carrega três extensões: OPS, conector NetBird e Ponytail full. Mantém **124 especialistas + catálogo = 125 recursos / 8 prompts / 3 extensões**; com Planning, **126 / 8 / 4**. Não acrescenta skills concorrentes ou ferramentas de modelo. `/ponytail off`, `full` e `status` controlam o ramo da sessão, com full em sessões novas; o modo não altera aprovações ou acesso.
 

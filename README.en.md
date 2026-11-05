@@ -38,7 +38,7 @@ Edit `~/.pi/agent/settings.json` and add the checkout to the existing `packages`
 
 Replace the path with your actual checkout location. **Do not replace the entire settings file** if it already contains configuration: preserve other fields and paths.
 
-The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 129 specialists, the catalogue, eight prompts and the OPS, NetBird API and Ponytail extensions, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
+The [configuration example](examples/pi-settings.json) uses `~/devops-skills`; adjust it if you cloned elsewhere. The root manifest explicitly selects 129 specialists, the catalogue, eight prompts and the OPS, NetBird API, Ponytail and Ghidra extensions, including all approved modules under integrations/. Do not register only the catalogue directory under `skills`: Pi stops descending once it finds a SKILL.md in a directory.
 
 ### Option B — Install the checkout as a Pi package
 
@@ -203,6 +203,6 @@ New independent local contributions are also distributed under MIT, as authorise
 
 ## Restored skills and optional runtimes
 
-The package exposes **129 specialists + catalogue (130 resources), eight prompts and three active extensions**. Archify, model-resilience, three AWS skills, WireGuard and NetBird are restored. See [restoration scope](docs/RESTORED-SKILLS.md).
+The package exposes **129 specialists + catalogue (130 resources), eight prompts and four active extensions**. Archify, model-resilience, three AWS skills, WireGuard and NetBird are restored. See [restoration scope](docs/RESTORED-SKILLS.md).
 
 Archify/OmniRoute require external tools only for explicitly requested workflows. The [OmniRoute contract](integrations/omniroute/operational-dependency.json) applies only to the optional gateway-managed profile. Native routing is not in the root extension manifest; loading skills starts no service, installation or fallback.

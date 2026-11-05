@@ -87,7 +87,7 @@ MIT License — Copyright (c) 2026 t3chnaztea.
 
 The original project is distributed in `integrations/unifi-skills/`, with its original LICENSE and README attribution retained. Its licence is also preserved in `licenses/unifi-MIT.txt`. It is not automatically loaded by the Pi manifest and is not approved for production use.
 
-The helper explicitly credits derivation from `dlewis7444/unifi-claude-skill` under MIT; that attribution is retained unchanged. Verification of the precise original helper copyright/licence remains outstanding; the derivative project's MIT notice is not a claim that upstream attribution requirements have been independently resolved.
+The helper explicitly credits derivation from `dlewis7444/unifi-claude-skill`; that attribution is retained unchanged. The original repository's MIT LICENSE, Copyright (c) 2026 dlewis7444, was verified at immutable commit `027676de61263568afc43036df5ac3de634ca119` and is preserved verbatim in `integrations/unifi-skills/LICENSE.helper-origin`. `HELPER-PROVENANCE.json` records the exact source URL and scope. This supplies the original permission/disclaimer notice in addition to the derivative project's MIT notice; it does not establish the exact historical derivation commit, legal certification or operational approval.
 
 ## DeepSeek Harness — error-handling skill only
 

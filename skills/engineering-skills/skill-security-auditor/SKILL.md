@@ -1,7 +1,7 @@
 ---
 name: "skill-security-auditor"
 description: >
-  Security audit and vulnerability scanner for AI agent skills before installation.
+  Static heuristic security triage for AI agent skills before installation.
   Use when: (1) evaluating a skill from an untrusted source, (2) auditing a skill
   directory or git repo URL for malicious code, (3) pre-install security gate for
   Claude Code plugins, OpenClaw skills, or Codex skills, (4) scanning Python scripts
@@ -15,7 +15,9 @@ description: >
 # Skill Security Auditor
 
 Scan and audit AI agent skills for security risks before installation. Produces a
-clear **PASS / WARN / FAIL** verdict with findings and remediation guidance.
+heuristic **PASS / WARN / FAIL** verdict with findings and remediation guidance.
+This is static triage, not a safety certificate, vulnerability database client or
+package-reputation service. No code from the target is executed.
 
 ## Quick Start
 
@@ -70,11 +72,13 @@ For skills with `requirements.txt`, `package.json`, or inline `pip install`:
 
 | Check | What It Does | Severity |
 |-------|-------------|----------|
-| **Known vulnerabilities** | Cross-reference with PyPI/npm advisory databases | 🔴 CRITICAL |
 | **Typosquatting** | Flag packages similar to popular ones (e.g., `reqeusts`) | 🟡 HIGH |
 | **Unpinned versions** | Flag `requests>=2.0` vs `requests==2.31.0` | ⚪ INFO |
 | **Install commands in code** | `pip install` or `npm install` inside scripts | 🟡 HIGH |
-| **Suspicious packages** | Low download count, recent creation, single maintainer | ⚪ INFO |
+
+Advisory/CVE lookup, download counts, creation dates and maintainer reputation are
+**not implemented**. A separate approved tool/feed is required to assess these;
+absence of local findings must never be reported as a clean CVE/reputation result.
 
 ### 4. File System & Structure
 
@@ -91,7 +95,7 @@ For skills with `requirements.txt`, `package.json`, or inline `pip install`:
 1. **Run the scanner** on the skill directory or repo URL
 2. **Review the report** — findings grouped by severity
 3. **Verdict interpretation:**
-   - **✅ PASS** — No critical or high findings. Safe to install.
+   - **✅ PASS** — No critical or high patterns detected by this scanner. Safety remains unverified; review the source and permissions before installation.
    - **⚠️ WARN** — High/medium findings detected. Review manually before installing.
    - **❌ FAIL** — Critical findings. Do NOT install without remediation.
 4. **Remediation** — each finding includes specific fix guidance
@@ -164,8 +168,8 @@ For the complete threat model, detection patterns, and known attack vectors agai
 
 - Cannot detect logic bombs or time-delayed payloads with certainty
 - Obfuscation detection is pattern-based — a sufficiently creative attacker may bypass it
-- Network destination reputation checks require internet access
+- Network destination and package reputation are not checked, even when internet access is available
 - Does not execute code — static analysis only (safe but less complete than dynamic analysis)
-- Dependency vulnerability checks use local pattern matching, not live CVE databases
+- Dependency checks cover local typosquatting/version/install patterns only, not known-vulnerability or CVE assessment
 
 When in doubt after an audit, **don't install**. Ask the skill author for clarification.

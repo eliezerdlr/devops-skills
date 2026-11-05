@@ -1,6 +1,6 @@
 # Remediation of the eleven reproduced audit behaviors
 
-Scope: F01–F10 and F12 from the local global audit. The original audit and reproductions remain historical evidence; they are not overwritten or reused as passing tests. F11 and G01–G04 are separate residual findings, not closed by this tranche. Passing the following regressions does **not** certify the whole package or establish cloud/database/platform readiness.
+Scope: F01–F10 and F12 from the local global audit. The original audit and reproductions remain historical evidence; they are not overwritten or reused as passing tests. F11 and G01–G04 were outside the original eleven-fix tranche; their follow-up corrections are recorded below. Passing the following regressions does **not** certify the whole package or establish cloud/database/platform readiness.
 
 ## Behavior and acceptance matrix
 
@@ -35,7 +35,17 @@ The standard npm gate runs the 28 Python regression cases through `tests/audit-r
 - The ML/data skills remain useful as design instructions; their six bundled scripts are **not executable implementations** of monitoring, deployment, RAG, feature engineering, experiments or evaluation.
 - No SQL, payload, infrastructure change, paid model call or credential access is performed by this remediation gate. SQL generation tests cannot prove a production migration safe.
 - Ghidra host analysis is not an OS sandbox. Previous macOS arm64 benign runtime validation does not establish Windows/Linux/malware safety.
-- Residual governance work includes G01 typecheck coverage, G02/G03 documentation consistency and G04 precise UniFi helper attribution review. No blanket “fully functional” or external-audit certification claim is made.
+## Follow-up: F11 and G01–G04
+
+| Finding | Follow-up correction | Verification scope |
+|---|---|---|
+| F11 | Removed unsupported advisory/reputation promises and “safe to install”; explicitly states static triage only. | Documentation contract; no new CVE/reputation service claimed. |
+| G01 | Strict CI gate names all four root TypeScript extensions and optional Planning. | Gate coverage regression; local compiler results are recorded in TESTING.md, not inferred from CI configuration. |
+| G02 | English README, unified-package guide and dependency inventory agree with the manifest (130/8/4; Planning 131/8/5; 26 explicit integration skills). | Manifest-derived documentation regressions. |
+| G03 | Current operator checklist and results are separated from an explicitly historical archive; old “current” section labels corrected. | Documentation regression checks the current section independently of the archive. |
+| G04 | Original UniFi helper MIT notice, Copyright (c) 2026 dlewis7444, retained from immutable source commit 027676de61263568afc43036df5ac3de634ca119 with provenance. | Full original LICENSE preserved; exact historical derivation commit remains unknown, not misrepresented as verified. UniFi remains unapproved and unloaded. |
+
+No blanket “fully functional”, live vulnerability lookup, legal certification or external-audit certification claim is made.
 
 ## Rollback
 

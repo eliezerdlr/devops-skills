@@ -9,7 +9,7 @@ Four [agency adaptations](../integrations/agency-agents/README.md) require no ru
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares all 129 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator, NetBird API, Ponytail efficiency and Ghidra extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or upstream lifecycle hooks. Ponytail intentionally adds a fixed default-full prompt policy through native Pi events; it makes no external calls. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares all 129 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator, NetBird API, Ponytail efficiency and Ghidra extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or upstream lifecycle hooks. Ponytail intentionally adds a fixed default-full prompt policy through native Pi events; it makes no external calls. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; current loader/extension tests use Pi 1.4.0; Pi 1.2.0 / Node 22.23.1 results below are historical. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
 See [ORCHESTRATION.md](ORCHESTRATION.md) for orchestration and [NETBIRD-API.md](NETBIRD-API.md) for persistent API access (macOS/Linux, HTTPS, protected local token and explicit approvals), approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 
@@ -41,7 +41,7 @@ Clone to a chosen directory, then merge a `packages` entry into the existing `~/
 }
 ```
 
-Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 21 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
+Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 26 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
 
 ### Register the checkout as a local Pi package
 
@@ -92,6 +92,11 @@ The [skill-creator adaptation](../skills/engineering-skills/skill-creator/README
 It uses only supplied or explicitly scoped expertise and separates draft authoring from optional behavioral evaluation. Actual model/subagent runs need approved tools/isolation, data recipients, provider/model, budget, bounds and cancellation; an installed CLI is not authorization. The protocol is host-neutral and does not repurpose the constrained network OPS workers. The synthetic plan is unapproved/unrun, not measured efficacy. Existing tester/security-auditor scripts must be inspected before any use; no automatic invocation or replacement is added.
 
 ## Optional Python dependencies
+
+The inventory and validation counts in this section and the historical validation
+section below describe the earlier review, not the current checkout. For current
+scope, prerequisites and results use [TESTING.md](TESTING.md). The mandatory offline
+regression gate now requires Python 3.11+; optional scripts have their own prerequisites.
 
 A static AST inventory parsed 171 bundled Python files without syntax errors on Python 3.14.8. This is not a claim of runtime compatibility with every Python version. Python 3.10+ is a provisional baseline for modern type syntax; supported runtime versions must be verified for the chosen scripts. One inherited invalid-escape warning occurs in `ms365-tenant-manager/scripts/powershell_generator.py`; script source has not been modified.
 
@@ -184,7 +189,7 @@ Not bundled or installed here. The inspected repository uses a pnpm 10.29.3 work
 
 The documented connectors target Claude Code, Cursor/VS Code, OpenClaw and OpenCode, not a verified Pi connector. It is runtime protection, not an automatic pre-install approval gate. Cloud skill uploads default to enabled per its documentation. Separate licensing applies to detection rules.
 
-## Validation status and publication limits
+## Historical validation status and publication limits
 
 Completed without running bundled scripts:
 - Python AST parsing: 171 files; no syntax errors on the review interpreter, one inherited escape warning.

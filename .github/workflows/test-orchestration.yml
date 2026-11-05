@@ -47,4 +47,4 @@ jobs:
         run: |
           "$RUNNER_TEMP/pi-test/node_modules/.bin/tsc" --noEmit --allowJs --checkJs false \
             --module nodenext --moduleResolution nodenext --target es2022 \
-            --skipLibCheck --strict --types node extensions/ops-orchestrator/index.ts extensions/ponytail/index.ts
+            --skipLibCheck --strict --types node extensions/ops-orchestrator/index.ts extensions/netbird-api/index.ts extensions/ponytail/index.ts extensions/ghidra/index.ts
