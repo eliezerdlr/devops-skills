@@ -89,7 +89,9 @@ def run_quality_checker(repo_path: Path) -> Dict:
 
 
 def calculate_review_score(pr_analysis: Dict, quality_analysis: Dict) -> int:
-    """Calculate overall review score (0-100)."""
+    """Calculate a heuristic score only when both analyses completed."""
+    if not valid_analysis(pr_analysis, "pr") or not valid_analysis(quality_analysis, "quality"):
+        raise ValueError("Incomplete analyses cannot receive a review score")
     score = 100
 
     # Deduct for PR risks
@@ -360,6 +362,35 @@ def format_text_report(report: Dict) -> str:
     return "\n".join(lines)
 
 
+def normalize_quality_analysis(value):
+    """Accept the bundled quality checker output without inventing an empty success."""
+    if not isinstance(value, dict) or "error" in value or value.get("status") == "error":
+        return value
+    if value.get("status") == "analyzed":
+        return value
+    files = value.get("files")
+    if not isinstance(files, list) or not files or value.get("files_analyzed") != len(files):
+        return value
+    issues = []
+    for file in files:
+        if not isinstance(file, dict) or not isinstance(file.get("smells"), list) or not isinstance(file.get("solid_violations"), list):
+            return value
+        for issue in file["smells"] + file["solid_violations"]:
+            if not isinstance(issue, dict):
+                return value
+            issues.append({**issue, "file": file.get("file", ""), "severity": issue.get("severity", "medium")})
+    return {"status": "analyzed", "summary": {"files_analyzed": len(files), "scope": "supported local files only"}, "issues": issues}
+
+
+def valid_analysis(value, kind):
+    if not isinstance(value, dict) or value.get("status") != "analyzed" or not isinstance(value.get("summary"), dict):
+        return False
+    if kind == "pr":
+        risks = value.get("risks")
+        return isinstance(risks, dict) and all(isinstance(risks.get(k), list) and all(isinstance(i, dict) for i in risks[k]) for k in ("critical", "high", "medium", "low"))
+    return isinstance(value.get("issues"), list) and all(isinstance(i, dict) for i in value["issues"])
+
+
 def generate_report(
     repo_path: Path,
     pr_analysis: Optional[Dict] = None,
@@ -373,6 +404,14 @@ def generate_report(
     if quality_analysis is None:
         quality_analysis = run_quality_checker(repo_path)
 
+    quality_analysis = normalize_quality_analysis(quality_analysis)
+    errors = [name for name, value in (("pr", pr_analysis), ("quality", quality_analysis)) if not valid_analysis(value, name)]
+    if errors:
+        return {"status": "not_assessed", "analysis_errors": errors,
+                "metadata": {"generated_at": datetime.now().isoformat(), "repository": str(repo_path)},
+                "summary": {"score": None, "verdict": "not_assessed", "rationale": "Required analyses failed or returned invalid/incomplete data",
+                            "issue_counts": {k: 0 for k in ("critical", "high", "medium", "low")}},
+                "findings": [], "action_items": []}
     # Generate findings
     findings = generate_findings_list(pr_analysis, quality_analysis)
 
@@ -472,12 +511,12 @@ def main():
     if args.pr_analysis:
         pr_analysis = load_json_file(args.pr_analysis)
         if not pr_analysis:
-            print(f"Warning: Could not load PR analysis from {args.pr_analysis}")
+            pr_analysis = {"status": "error", "message": "Could not load supplied PR analysis"}
 
     if args.quality_analysis:
         quality_analysis = load_json_file(args.quality_analysis)
         if not quality_analysis:
-            print(f"Warning: Could not load quality analysis from {args.quality_analysis}")
+            quality_analysis = {"status": "error", "message": "Could not load supplied quality analysis"}
 
     # Generate report
     report = generate_report(repo_path, pr_analysis, quality_analysis)
@@ -499,6 +538,8 @@ def main():
         print(f"Report written to {args.output}")
     else:
         print(output)
+    if report.get("status") == "not_assessed":
+        sys.exit(2)
 
 
 if __name__ == "__main__":

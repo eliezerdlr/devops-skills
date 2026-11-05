@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Ml Monitoring Suite
-Production-grade tool for senior ml/ai engineer
+Unimplemented scaffold for senior ml/ai engineer
 """
 
 import os
@@ -20,7 +20,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class MlMonitoringSuite:
-    """Production-grade ml monitoring suite"""
+    """Unimplemented ml monitoring suite"""
     
     def __init__(self, config: Dict):
         self.config = config
@@ -35,35 +35,22 @@ class MlMonitoringSuite:
         """Validate configuration"""
         logger.info("Validating configuration...")
         # Add validation logic
-        logger.info("Configuration validated")
-        return True
+        logger.warning("Validation unavailable: domain implementation is absent")
+        return False
     
     def process(self) -> Dict:
-        """Main processing logic"""
-        logger.info("Starting processing...")
-        
-        try:
-            self.validate_config()
-            
-            # Main processing
-            result = self._execute()
-            
-            self.results['status'] = 'completed'
-            self.results['end_time'] = datetime.now().isoformat()
-            
-            logger.info("Processing completed successfully")
-            return self.results
-            
-        except Exception as e:
-            self.results['status'] = 'failed'
-            self.results['error'] = str(e)
-            logger.error(f"Processing failed: {e}")
-            raise
-    
+        """Report unavailable functionality without producing artifacts."""
+        self.results.update(self._execute())
+        self.results['end_time'] = datetime.now().isoformat()
+        return self.results
+
     def _execute(self) -> Dict:
-        """Execute main logic"""
-        # Implementation here
-        return {'success': True}
+        """Fail closed: this scaffold has no domain implementation."""
+        return {
+            'status': 'not_implemented',
+            'success': False,
+            'message': 'This scaffold is not implemented; no output artifacts were created.'
+        }
 
 def main():
     """Main entry point"""
@@ -90,7 +77,7 @@ def main():
         results = processor.process()
         
         print(json.dumps(results, indent=2))
-        sys.exit(0)
+        sys.exit(1)
         
     except Exception as e:
         logger.error(f"Fatal error: {e}")

@@ -19,12 +19,15 @@ EXT_WEIGHTS = {
 }
 
 
-def iter_files(root: Path) -> Iterable[Path]:
+def iter_files(root: Path, include_build: bool = False) -> Iterable[Path]:
     for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [d for d in dirnames if d not in {".git", "node_modules", ".next", "dist", "build", "coverage", "__pycache__"}]
+        excluded = {".git", "node_modules", "coverage", "__pycache__"}
+        if not include_build:
+            excluded |= {".next", "dist", "build", "out"}
+        dirnames[:] = [d for d in dirnames if d not in excluded and not (Path(dirpath) / d).is_symlink()]
         for filename in filenames:
             path = Path(dirpath) / filename
-            if path.is_file():
+            if path.is_file() and not path.is_symlink():
                 yield path
 
 
@@ -82,6 +85,7 @@ def bundle_indicators(root: Path) -> Dict[str, object]:
         "build_dirs_present": [],
         "bundle_like_files": 0,
         "estimated_bundle_weight": 0.0,
+        "metric_scope": "source-and-build-static-file-weight-KiB; not transferred/compressed bundle size",
     }
     for d in ["dist", "build", ".next", "out"]:
         if (root / d).exists():
@@ -89,7 +93,7 @@ def bundle_indicators(root: Path) -> Dict[str, object]:
 
     bundle_files = 0
     weight = 0.0
-    for path in iter_files(root):
+    for path in iter_files(root, include_build=True):
         ext = path.suffix.lower()
         if ext in EXT_WEIGHTS:
             bundle_files += 1

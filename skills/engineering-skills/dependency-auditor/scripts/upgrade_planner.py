@@ -89,10 +89,26 @@ class UpgradePlan:
 class UpgradePlanner:
     """Main upgrade planning and risk analysis class."""
     
-    def __init__(self):
+    def __init__(self, catalog=None):
+        # Offline, caller-supplied snapshot. Never pretend demo versions are live registry data.
+        self.catalog = catalog
+        if catalog is not None:
+            if not isinstance(catalog, dict) or catalog.get('schemaVersion') != 1:
+                raise ValueError('catalog requires schemaVersion=1')
+            if not all(isinstance(catalog.get(k), str) and catalog[k].strip() for k in ('source', 'asOf')):
+                raise ValueError('catalog requires source and asOf')
+            datetime.fromisoformat(catalog['asOf'].replace('Z', '+00:00'))
+            if not isinstance(catalog.get('packages'), dict):
+                raise ValueError('catalog packages must map ecosystems to version maps')
+            for ecosystem, packages in catalog['packages'].items():
+                if not isinstance(ecosystem, str) or not isinstance(packages, dict):
+                    raise ValueError('invalid ecosystem/version map')
+                for name, version in packages.items():
+                    if not isinstance(name, str) or not name or not isinstance(version, str) or not self._parse_version(version):
+                        raise ValueError('invalid catalog package/version')
         self.breaking_change_patterns = self._build_breaking_change_patterns()
         self.ecosystem_knowledge = self._build_ecosystem_knowledge()
-        self.security_advisories = self._build_security_advisories()
+        self.security_advisories = {}  # No advisory feed assessed by this offline planner.
     
     def _build_breaking_change_patterns(self) -> Dict[str, List[str]]:
         """Build patterns for detecting breaking changes."""
@@ -228,15 +244,24 @@ class UpgradePlanner:
             'upgrade_statistics': {},
             'risk_assessment': {},
             'upgrade_plans': [],
-            'recommendations': []
+            'recommendations': [],
+            'catalog': None if self.catalog is None else {k: self.catalog[k] for k in ('source', 'asOf')},
+            'security_advisories_status': 'not_assessed',
+            'unassessed_dependencies': [],
+            'status': 'ok' if self.catalog is not None else 'not_assessed',
         }
         
-        # Analyze each dependency for upgrades
+        # Unknown packages remain visible; an empty upgrade list is not proof of currency.
         for dep in dependencies:
+            if not self._get_latest_version(dep.get('name', ''), dep.get('ecosystem', '')) or not self._parse_version(dep.get('version', '').lstrip('^~')):
+                analysis_results['unassessed_dependencies'].append({'name': dep.get('name'), 'ecosystem': dep.get('ecosystem'), 'reason': 'missing_catalog_version_or_unsupported_current_version'})
+                continue
             upgrade_info = self._analyze_dependency_upgrade(dep)
             if upgrade_info:
                 analysis_results['available_upgrades'].append(upgrade_info)
         
+        if analysis_results['unassessed_dependencies'] and self.catalog is not None:
+            analysis_results['status'] = 'partial'
         # Generate upgrade statistics
         analysis_results['upgrade_statistics'] = self._generate_upgrade_statistics(
             analysis_results['available_upgrades']
@@ -262,21 +287,12 @@ class UpgradePlanner:
     
     def _load_dependency_inventory(self, inventory_path: str) -> List[Dict[str, Any]]:
         """Load dependency inventory from JSON file."""
-        try:
-            with open(inventory_path, 'r') as f:
-                data = json.load(f)
-            
-            if 'dependencies' in data:
-                return data['dependencies']
-            elif isinstance(data, list):
-                return data
-            else:
-                print("Warning: Unexpected inventory format")
-                return []
-        
-        except Exception as e:
-            print(f"Error loading dependency inventory: {e}")
-            return []
+        with open(inventory_path, 'r') as f:
+            data = json.load(f)
+        dependencies = data.get('dependencies') if isinstance(data, dict) else data
+        if not isinstance(dependencies, list) or any(not isinstance(d, dict) or not all(isinstance(d.get(k), str) and d[k] for k in ('name', 'version', 'ecosystem')) for d in dependencies):
+            raise ValueError('inventory must contain dependency objects with name, version and ecosystem')
+        return dependencies
     
     def _analyze_dependency_upgrade(self, dependency: Dict[str, Any]) -> Optional[DependencyUpgrade]:
         """Analyze upgrade possibilities for a single dependency."""
@@ -392,27 +408,10 @@ class UpgradePlanner:
             return 0
     
     def _get_latest_version(self, package_name: str, ecosystem: str) -> Optional[str]:
-        """Get latest version from package registry (simulated)."""
-        # Simulated latest versions for common packages
-        mock_versions = {
-            'lodash': '4.17.21',
-            'express': '4.18.2',
-            'react': '18.2.0',
-            'axios': '1.6.0',
-            'django': '4.2.11',
-            'requests': '2.31.0',
-            'numpy': '1.24.0',
-            'flask': '2.3.0',
-            'fastapi': '0.104.0',
-            'pytest': '7.4.0'
-        }
-        
-        # In production, would query actual package registries:
-        # npm: npm view <package> version
-        # pypi: pip index versions <package>
-        # maven: maven metadata API
-        
-        return mock_versions.get(package_name.lower())
+        """Return a supplied snapshot version, not a claim about current registry state."""
+        if self.catalog is None:
+            return None
+        return self.catalog['packages'].get(ecosystem, {}).get(package_name)
     
     def _determine_update_type(self, current: VersionInfo, latest: VersionInfo) -> UpdateType:
         """Determine the type of update based on semantic versioning."""
@@ -623,9 +622,6 @@ class UpgradePlanner:
     
     def _generate_upgrade_statistics(self, upgrades: List[DependencyUpgrade]) -> Dict[str, Any]:
         """Generate statistics about available upgrades."""
-        if not upgrades:
-            return {}
-        
         return {
             'total_upgrades': len(upgrades),
             'by_type': {
@@ -643,7 +639,7 @@ class UpgradePlanner:
             },
             'security_updates': len([u for u in upgrades if u.security_updates]),
             'direct_dependencies': len([u for u in upgrades if u.direct]),
-            'average_priority': sum(u.priority_score for u in upgrades) / len(upgrades)
+            'average_priority': sum(u.priority_score for u in upgrades) / len(upgrades) if upgrades else None
         }
     
     def _perform_risk_assessment(self, upgrades: List[DependencyUpgrade]) -> Dict[str, Any]:
@@ -895,6 +891,10 @@ class UpgradePlanner:
         report.append("=" * 60)
         report.append("DEPENDENCY UPGRADE PLAN")
         report.append("=" * 60)
+        report.append(f"Status: {analysis_results['status']}")
+        report.append(f"Offline catalog: {analysis_results['catalog']}")
+        report.append(f"Unassessed dependencies: {len(analysis_results['unassessed_dependencies'])}")
+        report.append('Security advisories: not assessed; risk estimates are heuristics, not approval')
         report.append(f"Generated: {analysis_results['timestamp']}")
         report.append(f"Timeline: {analysis_results['timeline_days']} days")
         report.append("")
@@ -985,13 +985,20 @@ Examples:
                        choices=['safe', 'low', 'medium', 'high', 'critical'],
                        default='high',
                        help='Maximum risk level to include (default: high)')
+    parser.add_argument('--catalog', help='Offline JSON catalog: schemaVersion=1, source, asOf, packages by ecosystem')
     parser.add_argument('--security-only', action='store_true',
                        help='Only plan upgrades with security fixes')
     
     args = parser.parse_args()
     
     try:
-        planner = UpgradePlanner()
+        if args.security_only:
+            raise ValueError('--security-only requires an advisory feed, which is not implemented')
+        catalog = None
+        if args.catalog:
+            with open(args.catalog) as f:
+                catalog = json.load(f)
+        planner = UpgradePlanner(catalog)
         results = planner.analyze_upgrades(args.inventory_file, args.timeline)
         
         # Filter by risk threshold if specified
@@ -1012,6 +1019,14 @@ Examples:
                 if u.security_updates
             ]
         
+        # Filtered output and plans must describe the same candidate set.
+        upgrades = results['available_upgrades']
+        results['upgrade_statistics'] = planner._generate_upgrade_statistics(upgrades)
+        results['risk_assessment'] = planner._perform_risk_assessment(upgrades)
+        if results['status'] != 'ok':
+            results['risk_assessment']['overall_risk'] = 'NOT_ASSESSED'
+        results['upgrade_plans'] = planner._create_upgrade_plans(upgrades, args.timeline)
+        results['recommendations'] = planner._generate_upgrade_recommendations(results)
         report = planner.generate_report(results, args.format)
         
         if args.output:
@@ -1020,6 +1035,8 @@ Examples:
             print(f"Upgrade plan saved to {args.output}")
         else:
             print(report)
+        if results['status'] != 'ok':
+            sys.exit(2)
     
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)

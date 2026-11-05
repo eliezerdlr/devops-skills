@@ -19,9 +19,10 @@ const approvedNames = [
   'core-web-vitals', 'web-accessibility', 'web-seo', 'web-best-practices',
   'model-resilience', 'archify', 'aws-billing-and-cost-management', 'aws-site-to-site-vpn', 'aws-well-architected-review',
   'aws-observability', 'setting-up-cloudwatch-alarm-notifications', 'grafana-dashboards', 'prometheus-label-strategy',
+  'finops-operating-model', 'database-reliability', 'automation-governance', 'email-lifecycle-strategy', 'ghidra-binary-analysis',
 ];
 
-test('root manifest includes all 21 explicit approved specialists and five added prompts', async () => {
+test('root manifest includes all 26 explicit approved specialists and five added prompts', async () => {
   const pkg = await assertUnifiedManifest();
   assert.equal(pkg.version, '0.4.0');
   const names = [];
@@ -31,7 +32,7 @@ test('root manifest includes all 21 explicit approved specialists and five added
   for (const path of pkg.pi.prompts) await access(resolve(root, path));
 });
 
-test('single package has 124 specialists plus catalogue, no duplicate skill/prompt names', async () => {
+test('single package has 129 specialists plus catalogue, no duplicate skill/prompt names', async () => {
   const paths = await registeredSkillFiles();
   assert.equal(paths.length, skillResourceCount);
   const names = await Promise.all(paths.map(async path => nameOf(await readFile(path, 'utf8'))));
@@ -46,7 +47,7 @@ test('single package has 124 specialists plus catalogue, no duplicate skill/prom
 
 test('catalogue counts and links include all approved resources as main package features', async () => {
   const text = await read('skills/engineering-skills/SKILL.md');
-  assert.match(text, /Catalogue of 124 engineering skills/);
+  assert.match(text, /Catalogue of 129 engineering skills/);
   assert.match(text, /All specialists below are included by the main package manifest/);
   assert.doesNotMatch(text, /not in the 99 core|Optional source-first security|Optional project context/);
   const pkg = await assertUnifiedManifest();
@@ -64,7 +65,7 @@ test('one public install entrypoint replaces per-module installation instruction
   assert.match(migration, /não edita as tuas configurações globais automaticamente/);
   assert.match(migration, /pi remove .*integrations\/graphify/);
   assert.match(migration, /Não remover a entrada raiz/);
-  assert.match(migration, /125 recursos de skills, 8 prompts e 3 extensões/);
+  assert.match(migration, /130 recursos de skills, 8 prompts e 4 extensões/);
 });
 
 test('standard npm test covers all included capability suites and source validators', async () => {
@@ -73,6 +74,6 @@ test('standard npm test covers all included capability suites and source validat
     assert.ok(pkg.scripts.test.includes(file), `default test must run ${file}`);
   }
   assert.doesNotMatch(pkg.scripts.test, /npm install|npx|pip|curl/);
-  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts', './extensions/ponytail/index.ts']);
+  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts', './extensions/ponytail/index.ts', './extensions/ghidra/index.ts']);
   assert.equal(Object.hasOwn(pkg.scripts, 'postinstall'), false);
 });

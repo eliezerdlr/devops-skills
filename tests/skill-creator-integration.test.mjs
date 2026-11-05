@@ -30,7 +30,7 @@ test('creator registers once and teach is absent without new runtime or dependen
   await assert.rejects(access(resolve(root, 'skills/engineering-skills/teach')), { code: 'ENOENT' });
   assert.doesNotMatch(pkg.scripts.test, /teach-integration/);
   assert.doesNotMatch(pkg.scripts['test:pi'], /teach-pi/);
-  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts', './extensions/ponytail/index.ts']);
+  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts', './extensions/ponytail/index.ts', './extensions/ghidra/index.ts']);
   assert.equal(Object.hasOwn(pkg, 'dependencies'), false);
   assert.equal(Object.hasOwn(pkg.scripts, 'postinstall'), false);
   assert.ok(pkg.scripts.test.includes('skill-creator-integration.test.mjs'));

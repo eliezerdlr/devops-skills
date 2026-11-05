@@ -10,6 +10,7 @@
     { "id": "omniroute", "scope": "external-runtime", "required": "gateway-managed", "guide": "docs/install/omniroute.md", "sourceVersion": "3.8.53", "publishedCandidate": "3.8.52", "validation": "documented-not-runtime-tested" },
     { "id": "graphify", "scope": "external-runtime", "required": "graph-operations", "guide": "docs/install/graphify.md", "version": "0.9.93", "validation": "documented-not-clean-install-tested" },
     { "id": "archify", "scope": "external-runtime", "required": "diagram-rendering", "guide": "docs/install/archify.md", "version": "3.2.0", "validation": "documented-not-runtime-tested" },
+    { "id": "ghidra", "scope": "external-runtime", "required": "binary-analysis", "guide": "docs/install/ghidra.md", "version": "12.2", "validation": "macOS-arm64-real-benign-static-analysis-tested; Linux-Windows-not-runtime-tested" },
     { "id": "planning", "scope": "optional-addon", "required": "opt-in", "guide": "integrations/planning-with-files/README.md", "version": "3.24.0", "validation": "historical-synthetic-tests-only" },
     { "id": "workflow-tools", "scope": "workflow-only", "required": "selected-workflow", "guide": "docs/install/workflow-tools.md", "validation": "version-and-task-approval-required" }
   ]

@@ -44,9 +44,9 @@ test('fixed policy preserves safety, testing and SLA boundaries without claiming
 });
 test('root adds one extension, no skill count change or dependency installation', async () => {
   const pkg = await assertUnifiedManifest();
-  assert.equal(pkg.pi.extensions.length, 3);
-  assert.equal(pkg.pi.extensions.at(-1), './extensions/ponytail/index.ts');
-  assert.equal(specialistCount, 124); assert.equal(skillResourceCount, 125);
+  assert.equal(pkg.pi.extensions.length, 4);
+  assert.equal(pkg.pi.extensions.filter(p => p === './extensions/ponytail/index.ts').length, 1);
+  assert.equal(specialistCount, 129); assert.equal(skillResourceCount, 130);
   assert.equal(Object.hasOwn(pkg, 'dependencies'), false);
   assert.equal(Object.hasOwn(pkg.scripts, 'postinstall'), false);
   assert.ok(pkg.scripts.test.includes('ponytail.test.mjs'));

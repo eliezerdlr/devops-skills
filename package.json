@@ -11,8 +11,9 @@
     "typebox": "*"
   },
   "scripts": {
-    "test": "node --test tests/pdf-to-markdown.test.mjs tests/billion-context.test.mjs tests/ponytail.test.mjs tests/skill-creator-integration.test.mjs tests/netbird-skill.test.mjs tests/model-resilience.test.mjs tests/omniroute-contract.test.mjs tests/archify-integration.test.mjs tests/aws-vpn-integration.test.mjs tests/aws-cloudwatch-integration.test.mjs tests/grafana-dashboards-integration.test.mjs tests/prometheus-label-strategy-integration.test.mjs tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs tests/netbird-api.test.mjs tests/netbird-api-transport.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
-    "test:pi": "node --test tests/ops-pi.test.mjs tests/netbird-api-pi.test.mjs tests/skill-creator-pi.test.mjs tests/ponytail-pi.test.mjs",
+    "test": "node --test tests/audit-regressions.test.mjs tests/pdf-to-markdown.test.mjs tests/billion-context.test.mjs tests/ponytail.test.mjs tests/skill-creator-integration.test.mjs tests/netbird-skill.test.mjs tests/model-resilience.test.mjs tests/omniroute-contract.test.mjs tests/archify-integration.test.mjs tests/aws-vpn-integration.test.mjs tests/aws-cloudwatch-integration.test.mjs tests/grafana-dashboards-integration.test.mjs tests/prometheus-label-strategy-integration.test.mjs tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs tests/agency-ghidra-integration.test.mjs tests/ghidra-runtime.test.mjs tests/netbird-api.test.mjs tests/netbird-api-transport.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
+    "test:pi": "node --test tests/ops-pi.test.mjs tests/netbird-api-pi.test.mjs tests/skill-creator-pi.test.mjs tests/ponytail-pi.test.mjs tests/ghidra-pi.test.mjs",
+    "test:ghidra:live": "node --test tests/ghidra-live.test.mjs",
     "test:planning": "node --test tests/planning-pi.test.mjs",
     "test:package": "node --test tests/unified-package.test.mjs",
     "test:netbird": "node --test tests/netbird-skill.test.mjs tests/netbird-api.test.mjs tests/netbird-api-transport.test.mjs",
@@ -45,12 +46,18 @@
       "./integrations/aws-toolkit/skills/aws-observability/SKILL.md",
       "./integrations/aws-toolkit/skills/setting-up-cloudwatch-alarm-notifications/SKILL.md",
       "./integrations/grafana-dashboards/skills/grafana-dashboards/SKILL.md",
-      "./integrations/prometheus-label-strategy/skills/prometheus-label-strategy/SKILL.md"
+      "./integrations/prometheus-label-strategy/skills/prometheus-label-strategy/SKILL.md",
+      "./integrations/agency-agents/skills/finops-operating-model/SKILL.md",
+      "./integrations/agency-agents/skills/database-reliability/SKILL.md",
+      "./integrations/agency-agents/skills/automation-governance/SKILL.md",
+      "./integrations/agency-agents/skills/email-lifecycle-strategy/SKILL.md",
+      "./integrations/ghidra/skills/ghidra-binary-analysis/SKILL.md"
     ],
     "extensions": [
       "./extensions/ops-orchestrator/index.ts",
       "./extensions/netbird-api/index.ts",
-      "./extensions/ponytail/index.ts"
+      "./extensions/ponytail/index.ts",
+      "./extensions/ghidra/index.ts"
     ],
     "prompts": [
       "./agents/network-architect.md",

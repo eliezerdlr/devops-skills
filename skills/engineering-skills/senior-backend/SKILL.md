@@ -16,7 +16,7 @@ Backend development patterns, API design, database optimization, and security pr
 python scripts/api_scaffolder.py openapi.yaml --framework express --output src/routes/
 
 # Analyze database schema and generate migrations
-python scripts/database_migration_tool.py --connection postgres://localhost/mydb --analyze
+python scripts/database_migration_tool.py schema/current.sql --analyze
 
 # Load test an API endpoint
 python scripts/api_load_tester.py https://api.example.com/users --concurrency 50 --duration 30
@@ -55,24 +55,22 @@ python scripts/api_scaffolder.py src/routes/ --generate-spec --output openapi.ya
 
 ### 2. Database Migration Tool
 
-Analyzes database schemas, detects changes, and generates migration files with rollback support.
+Analyzes exported SQL schemas and generates migration/rollback suggestions only. It never connects to a database or applies SQL. Concurrent indexes produce non-transactional scripts: partial failures require a reviewed recovery plan; generated rollback is not proof of data restoration.
 
-**Input:** Database connection string or schema files
+**Input:** Exported SQL schema files only; no database connection, execution or dry-run.
 **Output:** Migration files, schema diff report, optimization suggestions
 
 **Usage:**
 ```bash
 # Analyze current schema and suggest optimizations
-python scripts/database_migration_tool.py --connection postgres://localhost/mydb --analyze
+python scripts/database_migration_tool.py schema/current.sql --analyze
 # Output: Missing indexes, N+1 query risks, and suggested migration files
 
 # Generate migration from schema diff
-python scripts/database_migration_tool.py --connection postgres://localhost/mydb \
-  --compare schema/v2.sql --output migrations/
+python scripts/database_migration_tool.py schema/current.sql  --compare schema/v2.sql --output migrations/
 
-# Dry-run a migration
-python scripts/database_migration_tool.py --connection postgres://localhost/mydb \
-  --migrate migrations/20240115_add_user_indexes.sql --dry-run
+# Generate SQL for review only (no connection or execution)
+# Dry-run/apply is not implemented by this helper; use a separately approved DB tool.
 ```
 
 ---
@@ -176,9 +174,9 @@ python scripts/api_scaffolder.py src/routes/ --generate-spec --output openapi.ya
 
 Use when queries are slow or database performance needs improvement.
 
-**Step 1: Analyze current performance**
+**Step 1: Analyze an exported SQL schema (not live performance)**
 ```bash
-python scripts/database_migration_tool.py --connection $DATABASE_URL --analyze
+python scripts/database_migration_tool.py schema/current.sql --analyze
 ```
 
 **Step 2: Identify slow queries**
@@ -194,24 +192,21 @@ LIMIT 10;
 
 **Step 3: Generate index migrations**
 ```bash
-python scripts/database_migration_tool.py --connection $DATABASE_URL \
-  --suggest-indexes --output migrations/
+python scripts/database_migration_tool.py schema/current.sql  --suggest-indexes --output migrations/
 ```
 
-**Step 4: Test migration (dry-run)**
+**Step 4: Review generated SQL and plan a separately approved database test**
 ```bash
-python scripts/database_migration_tool.py --connection $DATABASE_URL \
-  --migrate migrations/add_indexes.sql --dry-run
+# Dry-run/apply is not implemented by this helper; use a separately approved DB tool.
 ```
 
 **Step 5: Apply and verify**
 ```bash
 # Apply migration
-python scripts/database_migration_tool.py --connection $DATABASE_URL \
-  --migrate migrations/add_indexes.sql
+# Dry-run/apply is not implemented by this helper; use a separately approved DB tool.
 
 # Verify improvement
-python scripts/database_migration_tool.py --connection $DATABASE_URL --analyze
+python scripts/database_migration_tool.py schema/current.sql --analyze
 ```
 
 ---
@@ -356,8 +351,8 @@ python scripts/api_scaffolder.py openapi.yaml --framework express
 python scripts/api_scaffolder.py src/routes/ --generate-spec
 
 # Database Operations
-python scripts/database_migration_tool.py --connection $DATABASE_URL --analyze
-python scripts/database_migration_tool.py --connection $DATABASE_URL --migrate file.sql
+python scripts/database_migration_tool.py schema/current.sql --analyze
+# Dry-run/apply is not implemented by this helper; use a separately approved DB tool.
 
 # Performance Testing
 python scripts/api_load_tester.py https://api.example.com/endpoint --concurrency 50

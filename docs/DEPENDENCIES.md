@@ -1,10 +1,15 @@
 # Dependencies and host integration
 
+## Agency guidance and executable Ghidra
+
+Four [agency adaptations](../integrations/agency-agents/README.md) require no runtime to read. Optional cloud/DB/CRM/ESP operations require approved external tooling, scoped access and budget; no tools are installed on load. [Ghidra binary analysis](../integrations/ghidra/README.md) also loads without a runtime. Actual analysis requires a separately approved fixed official Ghidra release and its release-specific Java/platform prerequisites; PyGhidra/CPython/JPype is optional. The root Ghidra extension provides ghidra_status and ghidra_analyse with a fixed local reporting script and interactive approval; see [runtime setup](install/ghidra.md). Ghidra 12.2 / Java 25 native decompiler are external, never installed on load. macOS arm64 was tested; Linux/Windows runtime execution was not. No runtime binaries, upstream plugins or mandatory npm dependencies are bundled. OS isolation for untrusted samples is external, not supplied by -readOnly or by this package.
+
+
 ## What loading this pack requires
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares all 124 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator, NetBird API and Ponytail efficiency extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or upstream lifecycle hooks. Ponytail intentionally adds a fixed default-full prompt policy through native Pi events; it makes no external calls. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares all 129 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator, NetBird API, Ponytail efficiency and Ghidra extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or upstream lifecycle hooks. Ponytail intentionally adds a fixed default-full prompt policy through native Pi events; it makes no external calls. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
 See [ORCHESTRATION.md](ORCHESTRATION.md) for orchestration and [NETBIRD-API.md](NETBIRD-API.md) for persistent API access (macOS/Linux, HTTPS, protected local token and explicit approvals), approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 

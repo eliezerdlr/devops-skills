@@ -1,0 +1,16 @@
+{
+  "repository": "https://github.com/msitarzewski/agency-agents",
+  "commit": "b37b5bb33b78f2c1d6567d98e25ca818e3259219",
+  "source_sha256": {
+    "LICENSE": "9a45258434d5cedf0af73c9ad4771373701225038d246c49219026c33677f66f",
+    "engineering/engineering-finops-engineer.md": "2971ce273c45e96002127fd8456cfcb3dce761595aab5b6428cd1f5036dc9cd1",
+    "engineering/engineering-database-reliability-engineer.md": "0096dc3c1b31e33814c509fda43853cc77cef6252bb94da527b833be13b53a5a",
+    "specialized/automation-governance-architect.md": "8aab89104fec352f1f601ec5e6db11c9628d0b2072e6324484fd7e4c8462f55e",
+    "marketing/marketing-email-strategist.md": "605c98066a4a1b5538d76476a11316247316ecb8da88beda68a21f2c8918f19b"
+  },
+  "source_distribution": "Selected paths/hashes record provenance; source bodies, installers and runtime are not bundled. Licenses/notices preserved verbatim.",
+  "modifications": [
+    "Locally rewritten documentary guidance; removed fictional experience, presumed tools and automatic actions.",
+    "Added authorization, data/cost boundaries, uncertainty and recovery; no external execution on load."
+  ]
+}

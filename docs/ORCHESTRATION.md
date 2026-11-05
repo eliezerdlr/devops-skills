@@ -1,6 +1,10 @@
 # Pi operations orchestration
 
-## Supported scope
+## Separate Ghidra executable capability
+
+The root now also registers `extensions/ghidra/index.ts`: ghidra_status checks local prerequisites without launching, ghidra_analyse launches a fixed real Ghidra headless analysis only after interactive approval. It is separate from the tool-free OPS workers below: no worker inherits Ghidra tools. Unknown/malicious inputs require external OS isolation; this host launcher supports trusted benign binaries only and provides no sandbox or network isolation. See [usage and limits](../integrations/ghidra/README.md) and [setup](install/ghidra.md). Current root discovery: 130 skills including catalogue, eight prompts, four extensions (five with optional Planning).
+
+## Supported OPS scope
 
 The pack now includes an executable Pi extension, not just agent-role prompts. It supports separate **Pi core Agent** instances for network analysis and declarative multi-step workflows. The workers have independent in-memory conversations and **zero tools**. They do not inherit shell access, files, MCP, project context, extensions, prompts or other sessions.
 
@@ -31,7 +35,7 @@ If not already registered:
 pi install /absolute/path/to/devops-skills
 ```
 
-Restart Pi or run `/reload`. The manifest now loads `extensions/ops-orchestrator/index.ts` in addition to 124 specialist skills, the catalogue and eight same-session role prompts (three network, three security, two testing/performance). The separate [NetBird API connector](NETBIRD-API.md) is also registered by the root manifest. The default-full [Ponytail extension](../integrations/ponytail/README.md) is also registered. None starts model calls, background processes or infrastructure connections at startup; Ponytail adds prompt guidance without changing OPS/NetBird permissions.
+Restart Pi or run `/reload`. The manifest now loads `extensions/ops-orchestrator/index.ts` in addition to 129 specialist skills, the catalogue and eight same-session role prompts (three network, three security, two testing/performance). The separate [NetBird API connector](NETBIRD-API.md) is also registered by the root manifest. The default-full [Ponytail extension](../integrations/ponytail/README.md) is also registered. None starts model calls, background processes or infrastructure connections at startup; Ponytail adds prompt guidance without changing OPS/NetBird permissions.
 
 If you previously registered only skill directories manually, use a single local `packages` entry instead (see examples/pi-settings.json) so extensions and prompts are discovered too. Resolve duplicate older copies under ~/.agents/skills deliberately.
 

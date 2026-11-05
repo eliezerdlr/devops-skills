@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "ghidra": {
+    "version": "12.2",
+    "url": "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_12.2_build/ghidra_12.2_PUBLIC_20261016.zip",
+    "sha256": "2c2cd776db3c1f6a097ba418922378ac3649cadd5e844a6f5f088ae628a7be67",
+    "size": 569712708
+  },
+  "javaMacArm64": {
+    "vendor": "Eclipse Temurin",
+    "version": "25.0.5+8",
+    "url": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_aarch64_mac_hotspot_25.0.5_8.tar.gz",
+    "sha256": "36dc14d797aaff6d89aab302cd053fdba6207dfdcf772052fa7b023a94b0e857"
+  },
+  "macArm64NativeBuild": {
+    "source": "Ghidra/Features/Decompiler/src/decompile/cpp in verified Ghidra release",
+    "argv": ["make", "-j4", "ghidra_opt", "ARCH_TYPE=-arch arm64", "ADDITIONAL_FLAGS=-mmacosx-version-min=11.0"],
+    "destination": "Ghidra/Features/Decompiler/os/mac_arm_64/decompile",
+    "observedLocalSha256": "92ec1fa51f6914731c05c805a57e2e0014b804a3184f0b9eb6f3071623127081",
+    "note": "Local build receipt, not an upstream checksum or portable reproducible-build guarantee. No native binary is redistributed."
+  },
+  "validatedHost": "macOS arm64 only; Linux/Windows runtime execution not validated"
+}

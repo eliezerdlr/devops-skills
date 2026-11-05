@@ -1,0 +1,15 @@
+{
+  "name": "devops-skills-ghidra",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Internal documentary inventory; install only the repository root.",
+  "license": "Apache-2.0",
+  "pi": {
+    "skills": [
+      "./skills/ghidra-binary-analysis/SKILL.md"
+    ],
+    "extensions": [],
+    "prompts": [],
+    "themes": []
+  }
+}

@@ -1,5 +1,26 @@
 # Verificar o pacote unificado / Unified package testing
 
+## Audit behavior regressions
+
+`npm test` now requires Python 3.11+ (or an executable supplied as `PYTHON`) and runs 28 offline Python regression cases through the Node gate. Missing prerequisites fail, not skip. The cases invert the eleven reproduced F01–F10/F12 defects, with positive controls; they do not certify all scripts or close F11/G01–G04. See [behavior matrix and compatibility changes](AUDIT-REMEDIATION.md). Six ML/data scaffolds now deliberately fail as `not_implemented`; their functionality was not implemented by this tranche.
+
+Post-remediation local validation: **329 Node tests** (including the Python-gate runner), **28 Python regression cases**, **42 Pi SDK 1.4.0**, **11 Planning**, **6 optional routing**, **53 security-scorer Python**, **41 NetBird-validator Python**, and **1 real benign Ghidra** test passed, with no failures/skips. The Python regression suite was also invoked directly; that is a repeat execution, not another 28 distinct cases. All 210 Python files parsed; a pre-existing invalid-escape SyntaxWarning remains in the MS365 PowerShell generator. Host: macOS arm64, Node 26.13.0, Python 3.15.2. No new TypeScript check or remote CI was run; no cloud/database operations were performed.
+
+## Current executable Ghidra integration
+
+Expected discovery: **130 skill resources / 8 prompts / 4 extensions**, or **131 / 8 / 5** with Planning. The root Ghidra extension registers two executable tools without launching Java on load; the four agency skills remain instruction-based. Offline tests cover version/path/input limits, snapshot integrity, approval refusal/non-boolean response, configuration changes, timeout, cancellation, nonzero exit, spawn failure and log limits. Pi SDK tests load the actual extension and verify UI/headless boundaries and refusal with no analysis artifacts.
+
+Commands: `npm test`; `PI_SDK_ROOT=/absolute/pi-sdk npm run test:pi`; same SDK for `npm run test:planning`. Separate opt-in `npm run test:ghidra:live` compiles a benign fixture and checks actual Ghidra analysis/decompiled C without executing the fixture. Requires configured Ghidra 12.2 / Java 25 and a system C compiler; missing prerequisites fail, never silently pass/skip. Artifacts are retained locally. Real runtime validation is macOS arm64 only; no malware isolation, Windows/Linux runtime validation, cloud/DB operations or campaign execution is claimed. See [Ghidra setup](install/ghidra.md).
+
+## Historical results below
+
+All following counts/results describe earlier stages, not the current executable Ghidra validation.
+
+### Agency/Ghidra documentary tranche — historical discovery
+
+At that documentary-only stage, expected discovery was **130 skill resources / 8 prompts / 3 extensions**, or **131 / 8 / 4** with Planning. The five new instruction skills add no runtime, tools or prompts. tests/agency-ghidra-integration.test.mjs checks provenance, component hashes, safe boundaries and local references. Validation of this tranche: **318 offline Node tests + 38 Pi SDK 1.4.0 tests + 11 Planning tests = 367 passed**, with no failures or skips; `git diff --check` clean. SDK discovery is 130 resources (131 with Planning). No Ghidra runtime, cloud/database operation, email campaign or cross-platform operational trial was executed. Earlier result/count sections below are historical and are not new validation of Ghidra, cloud/database operations or campaigns.
+
+
 Usar primeiro dados sintéticos/redigidos. Os testes de empacotamento não precisam de credenciais de infraestrutura, downloads, instalação de SDK ou chamadas reais a modelos.
 
 ## Prometheus label strategy — integração oficial

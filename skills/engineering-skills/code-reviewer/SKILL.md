@@ -5,6 +5,8 @@ description: Code review automation for TypeScript, JavaScript, Python, Go, Swif
 
 # Code Reviewer
 
+> **Operational boundary:** `review_report_generator.py` requires both PR and code-quality analyses to complete with valid data. Errors, missing/invalid supplied reports or unsupported analysis return `not_assessed`, no score and exit 2, never approval. Positive scores are local heuristics, not release authorization.
+
 Automated code review tools for analyzing pull requests, detecting code quality issues, and generating review reports.
 
 ---

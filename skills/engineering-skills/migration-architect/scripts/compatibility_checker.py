@@ -268,7 +268,7 @@ class SchemaCompatibilityChecker:
         # Check for removed endpoints
         for path in before_paths:
             if path not in after_paths:
-                for method in before_paths[path]:
+                for method in set(before_paths[path]) & {'get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace'}:
                     issues.append(CompatibilityIssue(
                         type="endpoint_removed",
                         severity="breaking",
@@ -537,7 +537,16 @@ class SchemaCompatibilityChecker:
         issues = []
         scripts = []
         
-        for method in set(before_endpoint.keys()) & set(after_endpoint.keys()):
+        methods = {'get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace'}
+        for method in sorted((set(before_endpoint) - set(after_endpoint)) & methods):
+            issues.append(CompatibilityIssue(
+                type='endpoint_removed', severity='breaking',
+                description=f'Endpoint {method.upper()} {path} has been removed',
+                field_path=f'paths.{path}.{method}', old_value=before_endpoint[method], new_value=None,
+                impact='Clients using this operation will fail',
+                suggested_migration='Preserve the operation or coordinate a versioned migration',
+                affected_operations=[f'{method.upper()} {path}']))
+        for method in (set(before_endpoint) & set(after_endpoint)) & methods:
             before_method = before_endpoint[method]
             after_method = after_endpoint[method]
             

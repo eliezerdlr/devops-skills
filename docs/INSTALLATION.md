@@ -2,6 +2,10 @@
 
 Estes guias só se aplicam aos workflows escolhidos explicitamente. Carregar as skills não exige instalar OmniRoute, Archify ou outro serviço. Ver [âmbito da recuperação](RESTORED-SKILLS.md).
 
+## Ghidra — análise binária executável
+
+A raiz inclui `ghidra_status`, `ghidra_analyse` e `/ghidra-status`. A extensão não instala/inicia Java na carga. A análise real exige Ghidra 12.2, Java 25 e decompiler nativo configurados e aprovação humana por amostra; ver [instalação, validação e reversão](install/ghidra.md). Instalação privada e smoke real benigno foram validados em macOS arm64; Linux/Windows não foram homologados. Não é sandbox OS nem adequado a malware desconhecido neste host.
+
 ## Ponytail — extensão incluída e registo global
 
 O código está em `extensions/ponytail/index.ts` e `extensions/ponytail/policy.mjs`, dentro do checkout `devops-skills`; o manifesto raiz já o inclui. Não exige instalação npm global nem uma segunda cópia upstream.
@@ -40,6 +44,7 @@ omniroute --version
 | OmniRoute | Perfil `gateway-managed` escolhido | [Instalação npm, configuração e lifecycle — três sistemas](install/omniroute.md) |
 | Graphify | Mapeamento/consulta de projetos | [CLI Python — macOS/Linux e Windows](install/graphify.md) |
 | Archify | Renderização de diagramas | [Runtime pinado — macOS/Linux e Windows](install/archify.md) |
+| Ghidra | Análise estática binária aprovada | [Runtime pinado, Java privado e decompiler nativo](install/ghidra.md) |
 | Planning with Files | Addon opt-in | [Ativação, helpers e remoção](../integrations/planning-with-files/README.md) |
 | Ferramentas das skills | Só no workflow escolhido | [Ferramentas e fontes por sistema](install/workflow-tools.md) |
 
@@ -65,7 +70,9 @@ Isto é documentação, não instalação automática nem certificação. Não i
 
 Da raiz: `npm test`. Valida as skills, a integridade dos módulos e contratos com fixtures sintéticas; as receitas de serviço deste índice não são executadas nesta suite. Os testes usam Node, Bash e Python disponíveis; **esses requisitos são dos testes de contribuição, não da instalação OmniRoute**. PowerShell é documentado, mas não foi executado neste host. Não se executam instaladores, servidor, launchctl, criação de credenciais ou inferência.
 
-## Estado
+## Estado histórico dos guias OmniRoute
+
+O estado abaixo antecede a integração executável Ghidra e não descreve a validação atual desta. Ver [testes atuais](TESTING.md).
 
 Suítes SDK anteriores: Pi 1.3.0. Pi 1.4.0 foi observado instalado, sem nova homologação SDK. Instalações reais macOS/Linux/Windows, serviços persistentes e benchmarks não foram executados nesta alteração. **Nenhum código de runtime, dependência ou processo adicional foi introduzido por estes guias.**
 
@@ -73,4 +80,4 @@ Suítes SDK anteriores: Pi 1.3.0. Pi 1.4.0 foi observado instalado, sem nova hom
 
 ## Âmbito após recuperação
 
-Este índice é referência para ferramentas **opcionais**, não uma sequência a executar ao instalar o pacote. Nenhum perfil OmniRoute é imposto ao projecto principal. O manifesto principal carrega orquestração, API NetBird e a orientação Ponytail; o router nativo exige activação explícita. As receitas e o inventário não comprovam instalação actual nem homologação das versões publicadas. Nesta recuperação não se executam instaladores, wrappers de serviço ou credenciais; `npm test` valida skills e contratos com fixtures. Ver [skills recuperadas e runtimes opcionais](RESTORED-SKILLS.md).
+Este índice é referência para ferramentas **opcionais**, não uma sequência a executar ao instalar o pacote. Nenhum perfil OmniRoute é imposto ao projecto principal. O manifesto principal carrega orquestração, API NetBird, Ponytail e as ferramentas Ghidra; o router nativo exige activação explícita. As receitas e o inventário não comprovam instalação actual nem homologação das versões publicadas. Nesta recuperação não se executam instaladores, wrappers de serviço ou credenciais; `npm test` valida skills e contratos com fixtures. Ver [skills recuperadas e runtimes opcionais](RESTORED-SKILLS.md).

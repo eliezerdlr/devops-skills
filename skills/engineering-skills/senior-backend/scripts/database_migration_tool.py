@@ -669,13 +669,20 @@ class DatabaseMigrationTool:
             up_file = self.output_dir / f"{timestamp}_migration.sql"
             down_file = self.output_dir / f"{timestamp}_migration_rollback.sql"
 
+            # PostgreSQL concurrent index operations cannot run in a transaction.
+            # Mark the whole generated script non-atomic rather than emit invalid SQL.
+            def transaction_body(sql):
+                if re.search(r'\b(?:CREATE|DROP)\s+(?:UNIQUE\s+)?INDEX\s+CONCURRENTLY\b', sql, re.IGNORECASE):
+                    return '-- NON-TRANSACTIONAL: execute in autocommit, one statement at a time.\n-- Not atomic: review partial-failure recovery before execution.\n' + sql + '\n'
+                return f'BEGIN;\n\n{sql}\n\nCOMMIT;\n'
+
             up_file.write_text(f"-- Migration: {self.schema_path} -> {self.compare_path}\n"
                               f"-- Generated: {datetime.now().isoformat()}\n\n"
-                              f"BEGIN;\n\n{up_sql}\n\nCOMMIT;\n")
+                              + transaction_body(up_sql))
 
             down_file.write_text(f"-- Rollback for migration {timestamp}\n"
                                 f"-- Generated: {datetime.now().isoformat()}\n\n"
-                                f"BEGIN;\n\n{down_sql}\n\nCOMMIT;\n")
+                                + transaction_body(down_sql))
 
             print(f"\nGenerated files:")
             print(f"  Migration: {up_file}")

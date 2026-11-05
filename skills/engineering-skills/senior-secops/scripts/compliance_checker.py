@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Compliance Checker - Verify security compliance against SOC 2, PCI-DSS, HIPAA, GDPR.
+Compliance repository triage - heuristic leads, not operational compliance validation.
 
 Table of Contents:
     ComplianceChecker - Main class for compliance verification
@@ -28,6 +28,8 @@ import sys
 import json
 import re
 import argparse
+import contextlib
+import io
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass, asdict
@@ -46,6 +48,11 @@ class ComplianceControl:
     evidence: List[str]
     recommendation: str
     severity: str  # critical, high, medium, low
+
+    def __post_init__(self):
+        # Repository keywords/config files are leads, never operational control validation.
+        if self.status in ('passed', 'failed'):
+            self.status = 'candidate' if self.evidence else 'not_assessed'
 
 
 class ComplianceChecker:
@@ -111,7 +118,9 @@ class ComplianceChecker:
         compliance_score = self._calculate_compliance_score()
 
         result = {
-            "status": "completed",
+            "status": "not_assessed",
+            "evidence_type": "repository_heuristics_only",
+            "limitations": "No operational controls, legal compliance or certification validated.",
             "target": str(self.target_path),
             "framework": self.framework,
             "scan_duration_seconds": round(scan_duration, 2),
@@ -122,6 +131,8 @@ class ComplianceChecker:
                 "failed": failed,
                 "warnings": warnings,
                 "not_applicable": na,
+                "candidates": sum(c.status == "candidate" for c in self.controls),
+                "not_assessed": sum(c.status == "not_assessed" for c in self.controls),
                 "total": len(self.controls)
             },
             "controls": [asdict(c) for c in self.controls]
@@ -974,36 +985,12 @@ class ComplianceChecker:
 
         return matches[:10]  # Limit results
 
-    def _calculate_compliance_score(self) -> float:
-        """Calculate overall compliance score (0-100)."""
-        if not self.controls:
-            return 0.0
+    def _calculate_compliance_score(self) -> Optional[float]:
+        """Lexical hints cannot establish a compliance percentage."""
+        return None
 
-        # Weight by severity
-        severity_weights = {'critical': 4.0, 'high': 3.0, 'medium': 2.0, 'low': 1.0}
-        status_scores = {'passed': 1.0, 'warning': 0.5, 'failed': 0.0, 'not_applicable': None}
-
-        total_weight = 0.0
-        total_score = 0.0
-
-        for control in self.controls:
-            score = status_scores.get(control.status)
-            if score is not None:  # Skip N/A
-                weight = severity_weights.get(control.severity, 1.0)
-                total_weight += weight
-                total_score += score * weight
-
-        return round((total_score / total_weight) * 100, 1) if total_weight > 0 else 0.0
-
-    def _get_compliance_level(self, score: float) -> str:
-        """Get compliance level from score."""
-        if score >= 90:
-            return "COMPLIANT"
-        elif score >= 70:
-            return "PARTIALLY_COMPLIANT"
-        elif score >= 50:
-            return "NON_COMPLIANT"
-        return "CRITICAL_GAPS"
+    def _get_compliance_level(self, score) -> str:
+        return "NOT_ASSESSED"
 
     def _print_summary(self, result: Dict):
         """Print compliance summary."""
@@ -1013,7 +1000,7 @@ class ComplianceChecker:
         print(f"Target: {result['target']}")
         print(f"Framework: {result['framework'].upper()}")
         print(f"Scan duration: {result['scan_duration_seconds']}s")
-        print(f"Compliance score: {result['compliance_score']}% ({result['compliance_level']})")
+        print(f"Compliance status: {result['compliance_level']} (repository hints only)")
         print()
 
         summary = result['summary']
@@ -1037,7 +1024,7 @@ class ComplianceChecker:
 def main():
     """Main entry point for CLI."""
     parser = argparse.ArgumentParser(
-        description="Check compliance against SOC 2, PCI-DSS, HIPAA, GDPR",
+        description="Collect repository compliance hints; does not validate controls or certify compliance",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -1081,7 +1068,9 @@ Examples:
         verbose=args.verbose
     )
 
-    result = checker.check()
+    # Preserve stdout as one machine-readable document in JSON mode.
+    with contextlib.redirect_stdout(io.StringIO()) if args.json else contextlib.nullcontext():
+        result = checker.check()
 
     if args.json:
         output = json.dumps(result, indent=2)
@@ -1096,6 +1085,8 @@ Examples:
             json.dump(result, f, indent=2)
         print(f"\nResults written to {args.output}")
 
+    if result.get('status') != 'completed':
+        sys.exit(1 if result.get('status') == 'error' else 2)
     # Exit with error code based on compliance level
     if result.get('compliance_level') == 'CRITICAL_GAPS':
         sys.exit(2)

@@ -177,7 +177,7 @@ test('integration ships only public profile, source verifier, attribution and do
         if (fs.statSync(filename).isFile()) assert.doesNotMatch(fs.readFileSync(filename,'utf8'), /\/Users\/|registered_pending_restart|settings\.before\.json/);
     }
     const rootPackage=JSON.parse(fs.readFileSync(new URL('../package.json',import.meta.url),'utf8'));
-    assert.equal(rootPackage.pi.extensions.length,3);
+    assert.equal(rootPackage.pi.extensions.length,4);
     assert.ok(rootPackage.pi.extensions.every(name=>!name.includes('billion-context')));
     for (const filename of ['README.md','README.en.md','THIRD_PARTY_NOTICES.md']) {
         const content=fs.readFileSync(new URL(`../${filename}`,import.meta.url),'utf8');

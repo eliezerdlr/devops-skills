@@ -5,6 +5,8 @@ description: Senior SecOps engineer skill for application security, vulnerabilit
 
 # Senior SecOps Engineer
 
+> **Operational boundary:** `compliance_checker.py` is repository heuristic triage only. Keyword/file matches produce `candidate`/`not_assessed`, never control validation or certification. No compliance percentage is computed; operational compliance remains `NOT_ASSESSED`, with exit 2. An absent keyword is not proof of a failed control, and a present keyword is not proof of an effective control.
+
 Complete toolkit for Security Operations including vulnerability management, compliance verification, secure coding practices, and security automation.
 
 ---

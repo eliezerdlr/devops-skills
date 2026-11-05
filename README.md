@@ -1,10 +1,12 @@
 # DevOps Skills
 
+Novas capacidades: [FinOps, fiabilidade de bases de dados, governação de automação e email lifecycle](integrations/agency-agents/README.md), mais [Ghidra executável](integrations/ghidra/README.md) com aprovação por análise. A carga do pacote não instala nem inicia runtimes; [configuração](docs/install/ghidra.md).
+
 **Português** | [English](README.en.md)
 
 Pack de skills para engenharia, DevOps, cybersecurity e operações de IT.
 
-Um único pacote com **124 skills/sub-skills**, **8 prompts** de rede, segurança, testes e performance, e três extensões: **orquestração de análise**, **conector API NetBird** e **Ponytail full por defeito**. As skills estão organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
+Um único pacote com **129 skills/sub-skills**, **8 prompts** de rede, segurança, testes e performance, e quatro extensões: **orquestração de análise**, **conector API NetBird** e **Ponytail full por defeito** e **Ghidra local**. As skills estão organizadas no [índice principal](skills/engineering-skills/SKILL.md). Cada skill contém instruções e, quando aplicável, scripts, referências e assets.
 
 **Contexto opcional:** [perfil nativo billion-context 0.1.209](integrations/billion-context/README.md), externo e opt-in; não é ativado por instalar/atualizar a raiz. Usa [billion-context](https://github.com/ranxianglei/billion-context) e [acp-kernel](https://github.com/ranxianglei/acp-kernel), com licença MIT + termo adicional de atribuição. Sem persistência de sessões Bili, mas com temporários privados de recuperação; exportações exigem aprovação.
 
@@ -36,7 +38,7 @@ Edita `~/.pi/agent/settings.json` e acrescenta o checkout como pacote local à l
 
 Substitui o caminho pelo local real do checkout. **Não substituas o ficheiro inteiro** se já contém configurações: preserva os restantes campos e caminhos.
 
-O [exemplo de configuração](examples/pi-settings.json) usa `~/devops-skills`; ajusta-o se clonaste para outra pasta. O manifesto principal seleciona as 124 skills, o catálogo, os 8 prompts e as extensões OPS, NetBird API e Ponytail, incluindo todos os módulos aprovados sob integrations/. Não registes apenas a pasta do índice em `skills`: o carregador Pi para de descer ao encontrar um SKILL.md numa pasta.
+O [exemplo de configuração](examples/pi-settings.json) usa `~/devops-skills`; ajusta-o se clonaste para outra pasta. O manifesto principal seleciona as 129 skills, o catálogo, os 8 prompts e as extensões OPS, NetBird API e Ponytail, incluindo todos os módulos aprovados sob integrations/. Não registes apenas a pasta do índice em `skills`: o carregador Pi para de descer ao encontrar um SKILL.md numa pasta.
 
 ### Opção B — Instalar o checkout como pacote Pi
 
@@ -84,7 +86,7 @@ Usa `/ponytail status`, `/ponytail off` ou `/ponytail full`. As escolhas full/of
 
 ## 3. Ativar capacidades operacionais
 
-**As 124 skills ficam disponíveis com o único registo acima.** Executar os seus workflows pode exigir preparação adicional:
+**As 129 skills ficam disponíveis com o único registo acima.** Executar os seus workflows pode exigir preparação adicional:
 
 | Capacidade | Preparação separada |
 |---|---|
@@ -135,7 +137,7 @@ Dois módulos MIT já registados pelo manifesto principal; não exigem instalaç
 - [Addy Engineering](integrations/addy-engineering/README.md): quatro skills adaptadas de constraints, contexto, fontes oficiais e simplificação; duas personas como prompts, não sub-agents autónomos. ADRs e revisão adversarial ficam como referências complementares.
 - [Web Quality & SEO](integrations/web-quality/README.md): seis skills para auditoria web, performance, Core Web Vitals, acessibilidade, SEO técnico/on-page e boas práticas. Inclui referências de produto/dados estruturados/internacionalização úteis ao marketing.
 
-As dez skills e os dois prompts fazem parte dos 124 especialistas e 8 prompts do pacote. O carregamento não instala ferramentas, hooks, browsers/MCP ou analytics. Referências completas da seleção não significam enforcement, métricas medidas, certificação WCAG ou resultados de ranking. A integração web não é uma plataforma completa de marketing/anúncios; os limites e exemplos que exigem cautela estão nos guias.
+As dez skills e os dois prompts fazem parte dos 129 especialistas e 8 prompts do pacote. O carregamento não instala ferramentas, hooks, browsers/MCP ou analytics. Referências completas da seleção não significam enforcement, métricas medidas, certificação WCAG ou resultados de ranking. A integração web não é uma plataforma completa de marketing/anúncios; os limites e exemplos que exigem cautela estão nos guias.
 
 ### Criar skills a partir da experiência — skill-creator
 
@@ -167,7 +169,7 @@ A dependência externa é preparada manualmente; não há instalação automáti
 
 ### UniFi — integração opcional em revisão
 
-O projeto original está em [integrations/unifi-skills](integrations/unifi-skills/README.md), com cinco skills e um helper Python. **Não é carregado pelo manifesto Pi deste pack** e não entra na contagem das 124 skills principais.
+O projeto original está em [integrations/unifi-skills](integrations/unifi-skills/README.md), com cinco skills e um helper Python. **Não é carregado pelo manifesto Pi deste pack** e não entra na contagem das 129 skills principais.
 
 **Não utilizar sem revisão em produção:** o helper original desativa a verificação TLS, permite escritas por defeito e pode expor dados sensíveis em respostas/dry-run. As correções e os testes nos equipamentos reais ainda não foram realizados. Publicar os ficheiros não significa aprovação operacional. Não executar exemplos contra a rede empresarial com credenciais administrativas.
 
@@ -201,6 +203,6 @@ As novas contribuições locais independentes são também disponibilizadas sob 
 
 ## Skills recuperadas e runtimes opcionais
 
-O pacote disponibiliza **124 especialistas + catálogo (125 recursos), 8 prompts e 3 extensões activas**. Foram recuperadas Archify, model-resilience, três skills AWS, WireGuard e NetBird. [Âmbito da recuperação](docs/RESTORED-SKILLS.md).
+O pacote disponibiliza **129 especialistas + catálogo (130 recursos), 8 prompts e 4 extensões activas**. Foram recuperadas Archify, model-resilience, três skills AWS, WireGuard e NetBird. [Âmbito da recuperação](docs/RESTORED-SKILLS.md).
 
 Archify e OmniRoute continuam dependentes de ferramentas externas apenas quando o respectivo workflow é pedido. O [contrato OmniRoute](integrations/omniroute/operational-dependency.json) aplica-se só ao perfil opcional gateway-managed. O router nativo não é carregado pelo manifesto; nenhuma instalação, serviço ou fallback é activado ao carregar as skills.

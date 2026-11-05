@@ -630,11 +630,7 @@ def scan_file_code(filepath: Path, report: AuditReport):
             continue
         if stripped.startswith("//") and ext in {".js", ".ts", ".mjs", ".cjs"}:
             continue
-        # Honor explicit suppression directive (security tooling references its
-        # own dangerous-pattern strings inside regex/check definitions, which
-        # would otherwise trigger every pattern that matches itself)
-        if "noqa: SEC-AUDITOR" in line or "auditor:ignore-line" in line:
-            continue
+        # Target-controlled suppression markers are untrusted data, not waivers.
 
         for pat in patterns:
             if re.search(pat["regex"], line):
@@ -661,9 +657,7 @@ def scan_file_prompt_injection(filepath: Path, report: AuditReport):
     lines = content.split("\n")
 
     for i, line in enumerate(lines, 1):
-        # Honor explicit suppression directive (markdown can use HTML comment)
-        if "noqa: SEC-AUDITOR" in line or "auditor:ignore-line" in line:
-            continue
+        # Target-controlled annotations cannot waive findings.
         for pat in PROMPT_INJECTION_PATTERNS:
             if re.search(pat["regex"], line):
                 report.findings.append(
@@ -744,8 +738,6 @@ def scan_dependencies(skill_path: Path, report: AuditReport):
             # Skip comments (this line is documentation about install commands,
             # not actual install command at runtime)
             if stripped.startswith("#") or stripped.startswith("//"):
-                continue
-            if "noqa: SEC-AUDITOR" in line or "auditor:ignore-line" in line:
                 continue
             if re.search(r"\bpip\s+install\b", line):
                 report.findings.append(
@@ -845,7 +837,7 @@ def scan_filesystem(skill_path: Path, report: AuditReport):
         if item.is_symlink():
             try:
                 target = item.resolve()
-                if not str(target).startswith(str(skill_path.resolve())):
+                if not target.is_relative_to(skill_path.resolve()):
                     report.findings.append(
                         Finding(
                             severity=Severity.CRITICAL,

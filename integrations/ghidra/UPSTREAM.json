@@ -1,0 +1,17 @@
+{
+  "repository": "https://github.com/NationalSecurityAgency/ghidra",
+  "commit": "84782699d6d112e598e3f5077bf0d5ddeea63f0c",
+  "source_sha256": {
+    "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "NOTICE": "ad4b2bb6e75e908251226180081b5afa01c7161d7710e08b603d0c340a08a23f",
+    "README.md": "8d4cc75b5c6d0d6ce218bbfa45adc36029d4719d6bcabb33499a36d66ccbf3ec",
+    "Ghidra/RuntimeScripts/support/analyzeHeadlessREADME.md": "790550bde852f7963d28a377cb115a5e5c741b74c832ed9bb418a771af6d2b2c",
+    "Ghidra/Features/PyGhidra/src/main/py/README.md": "65e35dbdc0897dcc9ce5094bbf750aac113e2908d91591d526ce9e83fd51ff68",
+    "Ghidra/Features/VersionTracking/src/main/help/help/topics/VersionTrackingPlugin/Version_Tracking_Intro.html": "2578542a60b643117b002046c833bf408866de673268acc8ebbc971ab5f2c1db"
+  },
+  "source_distribution": "Selected paths/hashes record provenance; source bodies, installers and runtime are not bundled. Licenses/notices preserved verbatim.",
+  "modifications": [
+    "Locally rewritten documentary guidance; removed fictional experience, presumed tools and automatic actions.",
+    "Added authorization, data/cost boundaries, uncertainty and recovery; no external execution on load."
+  ]
+}

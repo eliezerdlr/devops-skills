@@ -21,6 +21,10 @@ from dataclasses import dataclass, asdict
 from datetime import datetime
 import hashlib
 import subprocess
+try:
+    import tomllib
+except ImportError:
+    tomllib = None
 
 @dataclass
 class Vulnerability:
@@ -204,6 +208,10 @@ class DependencyScanner:
             'timestamp': datetime.now().isoformat(),
             'project_path': str(project_path),
             'dependencies': [],
+            'errors': [],
+            'files_scanned': 0,
+            'heuristic_files': [],
+            'status': 'ok',
             'vulnerabilities_found': 0,
             'high_severity_count': 0,
             'medium_severity_count': 0,
@@ -220,6 +228,10 @@ class DependencyScanner:
             for dep_file in matching_files:
                 try:
                     dependencies = parser(dep_file)
+                    if dep_file.name in {'yarn.lock', 'requirements.txt', 'go.mod', 'go.sum', 'Gemfile', 'Gemfile.lock'}:
+                        scan_results['heuristic_files'].append(str(dep_file))
+                    else:
+                        scan_results['files_scanned'] += 1
                     scan_results['dependencies'].extend(dependencies)
                     
                     for dep in dependencies:
@@ -240,9 +252,15 @@ class DependencyScanner:
                                 scan_results['low_severity_count'] += 1
                 
                 except Exception as e:
-                    print(f"Error parsing {dep_file}: {e}")
+                    scan_results['errors'].append({'file': str(dep_file), 'message': str(e)})
                     continue
         
+        if scan_results['errors']:
+            scan_results['status'] = 'partial' if scan_results['files_scanned'] else 'error'
+        elif scan_results['heuristic_files']:
+            scan_results['status'] = 'partial' if scan_results['files_scanned'] else 'not_assessed'
+        elif not scan_results['files_scanned']:
+            scan_results['status'] = 'not_assessed'
         scan_results['ecosystems'] = list(scan_results['ecosystems'])
         scan_results['scan_summary'] = self._generate_scan_summary(scan_results)
         scan_results['recommendations'] = self._generate_recommendations(scan_results)
@@ -326,7 +344,7 @@ class DependencyScanner:
                         dependencies.append(dep)
         
         except Exception as e:
-            print(f"Error parsing package.json: {e}")
+            raise ValueError(f"Error parsing package.json: {e}") from e
         
         return dependencies
     
@@ -356,7 +374,7 @@ class DependencyScanner:
                     dependencies.append(dep)
         
         except Exception as e:
-            print(f"Error parsing package-lock.json: {e}")
+            raise ValueError(f"Error parsing package-lock.json: {e}") from e
         
         return dependencies
     
@@ -384,7 +402,7 @@ class DependencyScanner:
                 dependencies.append(dep)
         
         except Exception as e:
-            print(f"Error parsing yarn.lock: {e}")
+            raise ValueError(f"Error parsing yarn.lock: {e}") from e
         
         return dependencies
     
@@ -412,39 +430,52 @@ class DependencyScanner:
                         dependencies.append(dep)
         
         except Exception as e:
-            print(f"Error parsing requirements.txt: {e}")
+            raise ValueError(f"Error parsing requirements.txt: {e}") from e
         
         return dependencies
     
+    @staticmethod
+    def _load_toml(file_path):
+        if tomllib is None:
+            raise ValueError("TOML validation requires Python 3.11+; not assessed")
+        with open(file_path, 'rb') as handle:
+            return tomllib.load(handle)
+
     def _parse_pyproject_toml(self, file_path: Path) -> List[Dependency]:
-        """Parse pyproject.toml for Python dependencies."""
-        dependencies = []
-        
-        try:
-            with open(file_path, 'r') as f:
-                content = f.read()
-            
-            # Simple TOML parsing for dependencies
-            dep_section = re.search(r'\[tool\.poetry\.dependencies\](.*?)(?=\[|\Z)', content, re.DOTALL)
-            if dep_section:
-                for line in dep_section.group(1).split('\n'):
-                    match = re.match(r'^([a-zA-Z0-9_-]+)\s*=\s*["\']([^"\']+)["\']', line.strip())
-                    if match:
-                        name, version = match.groups()
-                        if name != 'python':
-                            dep = Dependency(
-                                name=name,
-                                version=version.replace('^', '').replace('~', ''),
-                                ecosystem='pypi',
-                                direct=True
-                            )
-                            dependencies.append(dep)
-        
-        except Exception as e:
-            print(f"Error parsing pyproject.toml: {e}")
-        
-        return dependencies
-    
+        """Validate TOML and extract explicit Poetry or PEP 621 declarations."""
+        data = self._load_toml(file_path)
+        result = []
+        project = data.get('project', {})
+        if any(key in project.get('dynamic', []) for key in ('dependencies', 'optional-dependencies')):
+            raise ValueError("Dynamic dependencies are not assessed")
+        if 'optional-dependencies' in project or 'dependency-groups' in data:
+            raise ValueError("Optional/group dependencies are not assessed")
+        if 'dependencies' in project:
+            entries = project['dependencies']
+            if not isinstance(entries, list):
+                raise ValueError("project.dependencies must be an array")
+            for entry in entries:
+                if not isinstance(entry, str):
+                    raise ValueError("Invalid project dependency")
+                match = re.fullmatch(r'([A-Za-z0-9][A-Za-z0-9_.-]*)(?:\[[^\]]+\])?\s*([<>=!~].+)?', entry.split(';', 1)[0].strip())
+                if not match:
+                    raise ValueError("Unsupported project dependency declaration")
+                result.append(Dependency(match[1], (match[2] or '').lstrip('=<>!~ '), 'pypi', True))
+        poetry = data.get('tool', {}).get('poetry', {})
+        if 'group' in poetry or 'dev-dependencies' in poetry:
+            raise ValueError("Poetry development/group dependencies are not assessed")
+        if 'dependencies' in poetry:
+            for name, info in poetry['dependencies'].items():
+                if name == 'python':
+                    continue
+                version = info.get('version') if isinstance(info, dict) else info
+                if not isinstance(version, str):
+                    raise ValueError("Unsupported Poetry dependency declaration")
+                result.append(Dependency(name, version.lstrip('^~'), 'pypi', True))
+        if 'dependencies' not in project and 'dependencies' not in poetry:
+            raise ValueError("No supported explicit dependency table; not assessed")
+        return result
+
     def _parse_pipfile_lock(self, file_path: Path) -> List[Dependency]:
         """Parse Pipfile.lock for Python dependencies."""
         dependencies = []
@@ -466,35 +497,22 @@ class DependencyScanner:
                         dependencies.append(dep)
         
         except Exception as e:
-            print(f"Error parsing Pipfile.lock: {e}")
+            raise ValueError(f"Error parsing Pipfile.lock: {e}") from e
         
         return dependencies
     
     def _parse_poetry_lock(self, file_path: Path) -> List[Dependency]:
-        """Parse poetry.lock for Python dependencies."""
-        dependencies = []
-        
-        try:
-            with open(file_path, 'r') as f:
-                content = f.read()
-            
-            # Extract package entries from TOML
-            packages = re.findall(r'\[\[package\]\]\nname\s*=\s*"([^"]+)"\nversion\s*=\s*"([^"]+)"', content)
-            
-            for name, version in packages:
-                dep = Dependency(
-                    name=name,
-                    version=version,
-                    ecosystem='pypi',
-                    direct=False
-                )
-                dependencies.append(dep)
-        
-        except Exception as e:
-            print(f"Error parsing poetry.lock: {e}")
-        
-        return dependencies
-    
+        """Parse validated TOML lock entries independent of field order."""
+        data = self._load_toml(file_path)
+        if 'package' not in data or not isinstance(data['package'], list):
+            raise ValueError("No supported package entries; not assessed")
+        result = []
+        for entry in data['package']:
+            if not isinstance(entry, dict) or not isinstance(entry.get('name'), str) or not isinstance(entry.get('version'), str):
+                raise ValueError("Invalid lock package entry")
+            result.append(Dependency(entry['name'], entry['version'], 'pypi', False))
+        return result
+
     def _parse_go_mod(self, file_path: Path) -> List[Dependency]:
         """Parse go.mod for Go dependencies."""
         dependencies = []
@@ -520,7 +538,7 @@ class DependencyScanner:
                         dependencies.append(dep)
         
         except Exception as e:
-            print(f"Error parsing go.mod: {e}")
+            raise ValueError(f"Error parsing go.mod: {e}") from e
         
         return dependencies
     
@@ -529,58 +547,34 @@ class DependencyScanner:
         return []  # go.sum mainly contains checksums, dependencies are in go.mod
     
     def _parse_cargo_toml(self, file_path: Path) -> List[Dependency]:
-        """Parse Cargo.toml for Rust dependencies."""
-        dependencies = []
-        
-        try:
-            with open(file_path, 'r') as f:
-                content = f.read()
-            
-            # Parse [dependencies] section
-            dep_section = re.search(r'\[dependencies\](.*?)(?=\[|\Z)', content, re.DOTALL)
-            if dep_section:
-                for line in dep_section.group(1).split('\n'):
-                    match = re.match(r'^([a-zA-Z0-9_-]+)\s*=\s*["\']([^"\']+)["\']', line.strip())
-                    if match:
-                        name, version = match.groups()
-                        dep = Dependency(
-                            name=name,
-                            version=version,
-                            ecosystem='cargo',
-                            direct=True
-                        )
-                        dependencies.append(dep)
-        
-        except Exception as e:
-            print(f"Error parsing Cargo.toml: {e}")
-        
-        return dependencies
-    
+        """Validate TOML and extract explicit Cargo dependency tables."""
+        data = self._load_toml(file_path)
+        result = []
+        sections = ('dependencies', 'dev-dependencies', 'build-dependencies')
+        if 'target' in data or 'workspace' in data:
+            raise ValueError("Workspace/target Cargo dependencies are not assessed")
+        if not any(key in data for key in sections):
+            raise ValueError("No supported explicit dependency table; not assessed")
+        for key in sections:
+            for name, info in data.get(key, {}).items():
+                version = info.get('version') if isinstance(info, dict) else info
+                if not isinstance(version, str):
+                    raise ValueError("Path/git/workspace Cargo dependency is not assessed")
+                result.append(Dependency(name, version, 'cargo', True))
+        return result
+
     def _parse_cargo_lock(self, file_path: Path) -> List[Dependency]:
-        """Parse Cargo.lock for Rust dependencies."""
-        dependencies = []
-        
-        try:
-            with open(file_path, 'r') as f:
-                content = f.read()
-            
-            # Parse [[package]] entries
-            packages = re.findall(r'\[\[package\]\]\nname\s*=\s*"([^"]+)"\nversion\s*=\s*"([^"]+)"', content)
-            
-            for name, version in packages:
-                dep = Dependency(
-                    name=name,
-                    version=version,
-                    ecosystem='cargo',
-                    direct=False
-                )
-                dependencies.append(dep)
-        
-        except Exception as e:
-            print(f"Error parsing Cargo.lock: {e}")
-        
-        return dependencies
-    
+        """Parse validated TOML lock entries independent of field order."""
+        data = self._load_toml(file_path)
+        if 'package' not in data or not isinstance(data['package'], list):
+            raise ValueError("No supported package entries; not assessed")
+        result = []
+        for entry in data['package']:
+            if not isinstance(entry, dict) or not isinstance(entry.get('name'), str) or not isinstance(entry.get('version'), str):
+                raise ValueError("Invalid lock package entry")
+            result.append(Dependency(entry['name'], entry['version'], 'cargo', False))
+        return result
+
     def _parse_gemfile(self, file_path: Path) -> List[Dependency]:
         """Parse Gemfile for Ruby dependencies."""
         dependencies = []
@@ -605,7 +599,7 @@ class DependencyScanner:
                 dependencies.append(dep)
         
         except Exception as e:
-            print(f"Error parsing Gemfile: {e}")
+            raise ValueError(f"Error parsing Gemfile: {e}") from e
         
         return dependencies
     
@@ -633,7 +627,7 @@ class DependencyScanner:
                     dependencies.append(dep)
         
         except Exception as e:
-            print(f"Error parsing Gemfile.lock: {e}")
+            raise ValueError(f"Error parsing Gemfile.lock: {e}") from e
         
         return dependencies
     
@@ -704,6 +698,12 @@ class DependencyScanner:
         report.append("=" * 60)
         report.append(f"Scan Date: {scan_results['timestamp']}")
         report.append(f"Project: {scan_results['project_path']}")
+        report.append(f"Status: {scan_results['status']} (not a current vulnerability attestation)")
+        report.append(f"Validated files: {scan_results['files_scanned']}")
+        for error in scan_results['errors']:
+            report.append(f"ERROR: {error['file']}: {error['message']}")
+        for filename in scan_results['heuristic_files']:
+            report.append(f"NOT ASSESSED: {filename} (heuristic extraction only)")
         report.append("")
         
         # Summary
@@ -782,6 +782,8 @@ Examples:
         else:
             print(report)
         
+        if results['status'] != 'ok':
+            sys.exit(2)
         # Exit with error if high-severity vulnerabilities found and --fail-on-high is set
         if args.fail_on_high and results['high_severity_count'] > 0:
             sys.exit(1)

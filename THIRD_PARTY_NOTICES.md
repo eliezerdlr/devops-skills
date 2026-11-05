@@ -1,5 +1,14 @@
 # Third-party notices
 
+## agency-agents — four adapted documentary specialists
+
+Source: https://github.com/msitarzewski/agency-agents, commit b37b5bb33b78f2c1d6567d98e25ca818e3259219. MIT, Copyright (c) 2025 AgentLand Contributors. LICENSE is preserved verbatim in integrations/agency-agents/. UPSTREAM.json records selected source paths/hashes. FinOps, DBRE, automation governance and email lifecycle are rewritten concise adaptations, not full-source copies. Fictional experience, unsupported benchmarks, presumed tools and automatic actions were removed; explicit authorization, data/cost limits and uncertainty were added. Installers, host configuration and unrelated personas are excluded.
+
+## Ghidra — adapted documentation and locally authored launcher
+
+Source: https://github.com/NationalSecurityAgency/ghidra, commit 84782699d6d112e598e3f5077bf0d5ddeea63f0c. Official documentation informs the locally adapted ghidra-binary-analysis skill and checklist. Apache-2.0 LICENSE and original NOTICE are preserved in integrations/ghidra/; UPSTREAM.json records source hashes. NOTICE describes US-government portions and separately licensed components, including GPL auxiliary programs. No Ghidra runtime, GPL programs, native binaries or upstream plugins/scripts are bundled. adapter.mjs, scripts/DevopsReport.java and extensions/ghidra/index.ts are locally authored integration code; runtime-lock.json records external release assets separately. Local guidance adds isolation, approval, partial-evidence and optional-runtime boundaries. No affiliation or certification is claimed.
+
+
 ## Grafana — Prometheus label strategy
 
 The complete selected prometheus-label-strategy skill from https://github.com/grafana/skills, commit 8fb72a527961f05e708f53d2a0500709e12d7970, is preserved unchanged under integrations/prometheus-label-strategy/upstream/, together with its Apache-2.0 LICENSE. Copyright 2026 Grafana Labs. UPSTREAM.json records exact source hashes. The local same-name entrypoint is explicitly adapted with identity, numerical, platform, join, exemplar and approval corrections; the checklist and synthetic fixture are local additions. No other marketplace skills, plugins or production configuration are included.

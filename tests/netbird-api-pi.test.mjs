@@ -25,9 +25,9 @@ function register(client) {
 const signal = () => new AbortController().signal;
 
 test('actual Pi loader accepts all root extensions without tool collisions', async () => {
-  const result = await loadExtensions([resolve(root, 'extensions/ops-orchestrator/index.ts'), entry, resolve(root, 'extensions/ponytail/index.ts')], root);
+  const result = await loadExtensions([resolve(root, 'extensions/ops-orchestrator/index.ts'), entry, resolve(root, 'extensions/ponytail/index.ts'), resolve(root, 'extensions/ghidra/index.ts')], root);
   assert.deepEqual(result.errors, []);
-  assert.equal(result.extensions.length, 3);
+  assert.equal(result.extensions.length, 4);
   assert.deepEqual([...result.extensions[1].tools.keys()], ['netbird_status', 'netbird_read', 'netbird_change']);
   assert.deepEqual([...result.extensions[1].commands.keys()], ['netbird-status']);
 });

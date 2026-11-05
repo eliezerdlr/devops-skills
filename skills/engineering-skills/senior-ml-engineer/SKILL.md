@@ -16,6 +16,8 @@ triggers:
 
 # Senior ML Engineer
 
+> **Bundled script maturity:** the three Python helpers in this skill are unimplemented scaffolds, not functioning ML/data systems. They return `status: not_implemented`, `success: false`, exit 1 and create no outputs. Their domain validation, config loading and example monitoring/deployment/evaluation features are unavailable. Any examples below describe design targets, not executable capabilities of these helpers. Do not deploy them or treat them as completed work.
+
 Production ML engineering patterns for model deployment, MLOps infrastructure, and LLM integration.
 
 ---

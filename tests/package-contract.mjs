@@ -4,9 +4,9 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-export const components = ['graphify', 'security-audit', 'addy-engineering', 'web-quality', 'omniroute', 'archify', 'aws-toolkit', 'grafana-dashboards', 'prometheus-label-strategy'];
-export const specialistCount = 124;
-export const skillResourceCount = 125; // specialists + catalogue
+export const components = ['graphify', 'security-audit', 'addy-engineering', 'web-quality', 'omniroute', 'archify', 'aws-toolkit', 'grafana-dashboards', 'prometheus-label-strategy', 'agency-agents', 'ghidra'];
+export const specialistCount = 129;
+export const skillResourceCount = 130; // specialists + catalogue
 export const promptCount = 8;
 export const readJson = async path => JSON.parse(await readFile(path, 'utf8'));
 
@@ -32,9 +32,9 @@ export async function assertUnifiedManifest() {
     assert.deepEqual(pkg.pi[type], expected[type], `root manifest must include every approved ${type} resource exactly once`);
     assert.equal(new Set(pkg.pi[type]).size, pkg.pi[type].length);
   }
-  assert.equal(pkg.pi.skills.length, 22);
+  assert.equal(pkg.pi.skills.length, 27);
   assert.equal(pkg.pi.prompts.length, promptCount);
-  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts', './extensions/ponytail/index.ts']);
+  assert.deepEqual(pkg.pi.extensions, ['./extensions/ops-orchestrator/index.ts', './extensions/netbird-api/index.ts', './extensions/ponytail/index.ts', './extensions/ghidra/index.ts']);
   assert.deepEqual(pkg.pi.themes, []);
   assert.doesNotMatch(JSON.stringify(pkg.pi), /upstream|unifi|planning-with-files/);
   return pkg;

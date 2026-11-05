@@ -5,6 +5,8 @@ description: "Audit and manage dependencies across multi-language projects. Iden
 
 # Dependency Auditor
 
+> **Operational boundary:** Upgrade planning is offline: use `upgrade_planner.py inventory.json --catalog catalog.json --format json`. Catalog schema: `{"schemaVersion":1,"source":"approved snapshot source","asOf":"2026-01-01","packages":{"npm":{"example":"2.0.0"}}}`. Versions are exact, ecosystem-scoped snapshot values, not live registry/advisory queries. Missing catalog/packages produce `not_assessed`/`partial`, unknown coverage and exit 2; invalid input exits 1. `--security-only` is unavailable without an implemented advisory feed. Dependency scans similarly return nonzero for malformed/partial/unassessed manifests; an empty successful scan requires a parsed manifest. Full TOML validation requires Python 3.11+; unsupported optional/group/workspace declarations fail closed. Regex-only yarn/requirements/Go/Ruby extraction is explicitly heuristic and does not count as complete assessment.
+
 > **Skill Type:** POWERFUL · **Category:** Engineering · **Domain:** Dependency Management & Security
 
 Offline, deterministic dependency auditing across 8+ package ecosystems. The three scripts are pattern-matchers over manifests/lockfiles — they do **not** call live advisory APIs; pair their findings with `npm audit` / `pip-audit` / `cargo audit` for current CVE coverage.

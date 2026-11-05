@@ -1,11 +1,11 @@
 ---
 name: engineering-skills
-description: "Catalogue of 124 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
+description: "Catalogue of 129 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
 ---
 
 # Engineering Skills — Catalogue
 
-This catalogue lists **124 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
+This catalogue lists **129 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
 
 Copyright and licence notices are preserved in the repository's `LICENSE`, `THIRD_PARTY_NOTICES.md`, and nested licence files. Inclusion is not a security certification.
 
@@ -259,6 +259,18 @@ Apache-2.0 source from grafana/skills, pinned with unchanged references. No Graf
 | prometheus-label-strategy | Official full-source label strategy with local identity, cardinality, histogram, join and exemplar corrections | [SKILL.md](../../integrations/prometheus-label-strategy/skills/prometheus-label-strategy/SKILL.md) |
 
 Reusable Apache-2.0 guidance for local Prometheus or Grafana Cloud; no automatic queries or configuration changes. See [requirements and provenance](../../integrations/prometheus-label-strategy/README.md). Enterprise changes belong in their own approved IaC repository.
+
+## Operational governance, marketing and binary analysis (5)
+
+| Skill | Purpose | File |
+|---|---|---|
+| finops-operating-model | Multicloud allocation, showback and unit economics; no automatic savings actions | [SKILL.md](../../integrations/agency-agents/skills/finops-operating-model/SKILL.md) |
+| database-reliability | Restore evidence, PITR, fencing, replication and safe database change | [SKILL.md](../../integrations/agency-agents/skills/database-reliability/SKILL.md) |
+| automation-governance | Value/risk assessment before automation; verdict is not execution approval | [SKILL.md](../../integrations/agency-agents/skills/automation-governance/SKILL.md) |
+| email-lifecycle-strategy | Consent-aware CRM/ESP sequences, suppression and measurement; no automatic sends | [SKILL.md](../../integrations/agency-agents/skills/email-lifecycle-strategy/SKILL.md) |
+| ghidra-binary-analysis | Executable local binary analysis; isolated firmware planning with external Ghidra | [SKILL.md](../../integrations/ghidra/skills/ghidra-binary-analysis/SKILL.md) |
+
+Four MIT agency-agents adaptations and one official-documentation Ghidra adaptation are included by the root package. Ghidra tools register on load but launch only after explicit approval; no runtime, campaign or operational change runs on load. See [agency provenance](../../integrations/agency-agents/README.md) and [Ghidra requirements](../../integrations/ghidra/README.md). These focused additions do not establish full marketing, finance or enterprise disaster-recovery coverage.
 
 ## Known coverage gaps for hybrid IT
 
