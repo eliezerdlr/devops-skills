@@ -1,11 +1,11 @@
 ---
 name: engineering-skills
-description: "Catalogue of 123 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
+description: "Catalogue of 124 engineering skills and sub-skills. DevOps, AWS/Azure/GCP, Microsoft 365, security, incident response, architecture, development, QA, AI/data, Playwright and agent memory. Load only the specialist SKILL.md needed for the task."
 ---
 
 # Engineering Skills — Catalogue
 
-This catalogue lists **123 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
+This catalogue lists **124 skills/sub-skills** in the unified package, excluding this index. All specialists below are included by the main package manifest. All listed paths are relative to this catalogue; modular source/reference directories do not require separate installation. Upstream snapshots and test fixtures are not additional operational skills.
 
 Copyright and licence notices are preserved in the repository's `LICENSE`, `THIRD_PARTY_NOTICES.md`, and nested licence files. Inclusion is not a security certification.
 
@@ -251,6 +251,14 @@ These Apache-2.0 integrations (three adapted guides and two complete-source skil
 | grafana-dashboards | Official Grafana dashboarding, complete reference and bounded modern authoring/provisioning | [SKILL.md](../../integrations/grafana-dashboards/skills/grafana-dashboards/SKILL.md) |
 
 Apache-2.0 source from grafana/skills, pinned with unchanged references. No Grafana connection, production update or tool installation occurs on load. See [requirements and local corrections](../../integrations/grafana-dashboards/README.md).
+
+## Prometheus label strategy (1)
+
+| Skill | Purpose | File |
+|---|---|---|
+| prometheus-label-strategy | Official full-source label strategy with local identity, cardinality, histogram, join and exemplar corrections | [SKILL.md](../../integrations/prometheus-label-strategy/skills/prometheus-label-strategy/SKILL.md) |
+
+Reusable Apache-2.0 guidance for local Prometheus or Grafana Cloud; no automatic queries or configuration changes. See [requirements and provenance](../../integrations/prometheus-label-strategy/README.md). Enterprise changes belong in their own approved IaC repository.
 
 ## Known coverage gaps for hybrid IT
 

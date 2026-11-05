@@ -1,0 +1,17 @@
+{
+  "repository": "https://github.com/grafana/skills",
+  "commit": "8fb72a527961f05e708f53d2a0500709e12d7970",
+  "license": "Apache-2.0",
+  "source_skill": "prometheus-label-strategy",
+  "registered_skill": "prometheus-label-strategy",
+  "snapshot_root": "upstream",
+  "source_sha256": {
+    "LICENSE": "efb4d91baa7cd9559d3452f79deb2b3d9dc819c83d7058a1f90ac70484a1a23e",
+    "skills/grafana-cloud/prometheus-label-strategy/SKILL.md": "e252cada8154f1caa56eb352c4873dd05462f22d92b9cc5192963fc15d7b29b9"
+  },
+  "modifications": [
+    "Complete selected source/license unchanged; local adapter adds bounded scope, uniqueness/counter semantics, numerical/platform/join/exemplar corrections.",
+    "Local review checklist and synthetic non-operational fixture; no enterprise configuration or live data."
+  ],
+  "excluded": "Other marketplace skills, plugins, hooks and runtime dependencies; related workflows remain optional."
+}

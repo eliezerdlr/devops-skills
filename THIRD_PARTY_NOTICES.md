@@ -1,5 +1,9 @@
 # Third-party notices
 
+## Grafana — Prometheus label strategy
+
+The complete selected prometheus-label-strategy skill from https://github.com/grafana/skills, commit 8fb72a527961f05e708f53d2a0500709e12d7970, is preserved unchanged under integrations/prometheus-label-strategy/upstream/, together with its Apache-2.0 LICENSE. Copyright 2026 Grafana Labs. UPSTREAM.json records exact source hashes. The local same-name entrypoint is explicitly adapted with identity, numerical, platform, join, exemplar and approval corrections; the checklist and synthetic fixture are local additions. No other marketplace skills, plugins or production configuration are included.
+
 ## Grafana dashboarding
 
 The complete selected dashboarding skill and reference from https://github.com/grafana/skills, commit 8fb72a527961f05e708f53d2a0500709e12d7970, are preserved unchanged under integrations/grafana-dashboards/upstream/. Copyright 2026 Grafana Labs, Apache-2.0; LICENSE is included. UPSTREAM.json records source hashes. The local grafana-dashboards entrypoint adds approval, provisioning, compatibility and percentage-semantics corrections and is identified as modified guidance. No wshobson/agents content is included.

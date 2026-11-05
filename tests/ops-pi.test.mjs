@@ -57,7 +57,7 @@ async function invoke(ext, name, params, ctx, signal = new AbortController().sig
   return JSON.parse(result.content[0].text);
 }
 
-test('one root package discovers 124 skill resources, eight prompts and three extensions in actual Pi', async () => {
+test('one root package discovers 125 skill resources, eight prompts and three extensions in actual Pi', async () => {
   const temp = await mkdtemp(resolve(tmpdir(), 'devops-resource-test-'));
   try {
     const sdkImport = name => import(pathToFileURL(resolve(sdkRoot, `dist/core/${name}.js`)));
@@ -68,7 +68,7 @@ test('one root package discovers 124 skill resources, eight prompts and three ex
     const skills = loadSkills({ cwd: temp, agentDir: temp, skillPaths: selected('skills'), includeDefaults: false });
     const prompts = loadPromptTemplates({ cwd: temp, agentDir: temp, promptPaths: selected('prompts'), includeDefaults: false });
     assert.equal(skills.skills.length, skillResourceCount); assert.equal(prompts.templates.length, promptCount); assert.deepEqual(skills.diagnostics, []); assert.deepEqual(prompts.diagnostics, []);
-    for (const name of ['aws-observability', 'setting-up-cloudwatch-alarm-notifications', 'grafana-dashboards']) {
+    for (const name of ['aws-observability', 'setting-up-cloudwatch-alarm-notifications', 'grafana-dashboards', 'prometheus-label-strategy']) {
       assert.equal(skills.skills.filter(skill => skill.name === name).length, 1);
     }
     assert.equal(skills.skills.some(skill => skill.name === 'setting-up-cloudwatch-observability'), false);

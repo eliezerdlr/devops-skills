@@ -1,0 +1,15 @@
+{
+  "name": "devops-skills-prometheus-label-strategy",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "description": "Internal inventory for complete official Prometheus label strategy with local corrections; install repository root only.",
+  "pi": {
+    "skills": [
+      "./skills/prometheus-label-strategy/SKILL.md"
+    ],
+    "extensions": [],
+    "prompts": [],
+    "themes": []
+  }
+}

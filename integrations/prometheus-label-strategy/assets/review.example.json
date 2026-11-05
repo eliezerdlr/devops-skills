@@ -1,0 +1,54 @@
+{
+  "kind": "synthetic-review-fixture",
+  "execution_approved": false,
+  "measurement_claim": false,
+  "identity_example": {
+    "metric": "example_requests_total",
+    "before": [
+      {
+        "service": "example-api",
+        "instance": "target-a",
+        "status_class": "2xx"
+      },
+      {
+        "service": "example-api",
+        "instance": "target-b",
+        "status_class": "2xx"
+      }
+    ],
+    "proposed_remove": "instance",
+    "expected_unique_before": 2,
+    "expected_unique_after": 1,
+    "decision": "reject-collision; do not apply"
+  },
+  "cardinality_example": {
+    "observed": [
+      {
+        "region": "region-a",
+        "cluster": "cluster-a"
+      },
+      {
+        "region": "region-a",
+        "cluster": "cluster-b"
+      },
+      {
+        "region": "region-b",
+        "cluster": "cluster-c"
+      }
+    ],
+    "distinct_values": {
+      "region": 2,
+      "cluster": 3
+    },
+    "possible_product": 6,
+    "observed_series": 3
+  },
+  "histogram_example": {
+    "bucket_series_including_inf": 12,
+    "sum_series": 1,
+    "count_series": 1,
+    "created_series": 0,
+    "observed_series_per_label_set": 14,
+    "note": "Illustration only; inspect actual client/exported samples."
+  }
+}

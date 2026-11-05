@@ -11,7 +11,7 @@
     "typebox": "*"
   },
   "scripts": {
-    "test": "node --test tests/pdf-to-markdown.test.mjs tests/billion-context.test.mjs tests/ponytail.test.mjs tests/skill-creator-integration.test.mjs tests/netbird-skill.test.mjs tests/model-resilience.test.mjs tests/omniroute-contract.test.mjs tests/archify-integration.test.mjs tests/aws-vpn-integration.test.mjs tests/aws-cloudwatch-integration.test.mjs tests/grafana-dashboards-integration.test.mjs tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs tests/netbird-api.test.mjs tests/netbird-api-transport.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
+    "test": "node --test tests/pdf-to-markdown.test.mjs tests/billion-context.test.mjs tests/ponytail.test.mjs tests/skill-creator-integration.test.mjs tests/netbird-skill.test.mjs tests/model-resilience.test.mjs tests/omniroute-contract.test.mjs tests/archify-integration.test.mjs tests/aws-vpn-integration.test.mjs tests/aws-cloudwatch-integration.test.mjs tests/grafana-dashboards-integration.test.mjs tests/prometheus-label-strategy-integration.test.mjs tests/ops-engine.test.mjs tests/graphify-integration.test.mjs tests/security-audit-integration.test.mjs tests/addy-integrations.test.mjs tests/unified-package.test.mjs tests/netbird-api.test.mjs tests/netbird-api-transport.test.mjs integrations/security-audit/upstream/security-audit/validate-findings.test.cjs integrations/security-audit/upstream/security-audit/validate-coverage-ledger.test.cjs",
     "test:pi": "node --test tests/ops-pi.test.mjs tests/netbird-api-pi.test.mjs tests/skill-creator-pi.test.mjs tests/ponytail-pi.test.mjs",
     "test:planning": "node --test tests/planning-pi.test.mjs",
     "test:package": "node --test tests/unified-package.test.mjs",
@@ -44,7 +44,8 @@
       "./integrations/aws-toolkit/skills/aws-well-architected-review/SKILL.md",
       "./integrations/aws-toolkit/skills/aws-observability/SKILL.md",
       "./integrations/aws-toolkit/skills/setting-up-cloudwatch-alarm-notifications/SKILL.md",
-      "./integrations/grafana-dashboards/skills/grafana-dashboards/SKILL.md"
+      "./integrations/grafana-dashboards/skills/grafana-dashboards/SKILL.md",
+      "./integrations/prometheus-label-strategy/skills/prometheus-label-strategy/SKILL.md"
     ],
     "extensions": [
       "./extensions/ops-orchestrator/index.ts",

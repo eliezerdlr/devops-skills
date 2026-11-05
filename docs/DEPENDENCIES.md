@@ -4,11 +4,15 @@
 
 Pi installed and an authenticated model/provider. Reading Markdown skills does not require installing Python libraries, npm integration dependencies or infrastructure CLIs. No target script is run automatically by this package.
 
-The root `package.json` declares all 123 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator, NetBird API and Ponytail efficiency extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or upstream lifecycle hooks. Ponytail intentionally adds a fixed default-full prompt policy through native Pi events; it makes no external calls. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
+The root `package.json` declares all 124 specialist skills plus their catalogue, eight same-session role prompts and the locally authored ops-orchestrator, NetBird API and Ponytail efficiency extensions. One root package registration supplies all approved skills/prompts. It has no bundled runtime dependencies, install scripts or upstream lifecycle hooks. Ponytail intentionally adds a fixed default-full prompt policy through native Pi events; it makes no external calls. Pi coding-agent, pi-agent-core and TypeBox are host peer dependencies; orchestration is tested on Pi 1.2.0 / Node 22.23.1. It is private to avoid accidental npm publication; this does not make a GitHub repository private.
 
 See [ORCHESTRATION.md](ORCHESTRATION.md) for orchestration and [NETBIRD-API.md](NETBIRD-API.md) for persistent API access (macOS/Linux, HTTPS, protected local token and explicit approvals), approval boundary, model/data requirements and how to disable it while retaining skills/prompts. No child-worker tools or third-party setup are activated.
 
 This is not a full workstation bootstrap. Credentials, network access, cloud subscriptions, target software and permissions must be provided separately. Do not install every dependency globally or run `npm install` recursively over all manifests.
+
+## Prometheus label strategy
+
+The [official label-strategy integration](../integrations/prometheus-label-strategy/README.md) preserves its complete Apache-2.0 source/license with a corrected local entrypoint, review checklist and synthetic fixture. Reading/design requires no runtime dependency or Cloud subscription. Real queries need existing approved backend tools, selectors and query/privacy budgets; actual relabeling, instrumentation, recording rules or deployment require a separate change. Related Grafana skills are optional and not auto-installed. No operational examples run on loading the root package.
 
 ## Grafana dashboard authoring
 
@@ -32,7 +36,7 @@ Clone to a chosen directory, then merge a `packages` entry into the existing `~/
 }
 ```
 
-Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 20 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
+Replace the path if the checkout is elsewhere. Preserve existing settings and package entries; do not overwrite the whole file. `examples/pi-settings.json` is a merge example, not an installer. The package manifest's scoped `**/SKILL.md` glob selects the original specialist tree, and explicit paths add the 21 approved skills from internal modules. Upstream snapshots are not discovery roots. Pi stops directory traversal at a skill root; registering only the catalogue directory would load only that index. Use the package method tested here instead of assuming top-level settings globs behave like package manifest globs. Run `/reload` after editing settings or pulling updates.
 
 ### Register the checkout as a local Pi package
 
