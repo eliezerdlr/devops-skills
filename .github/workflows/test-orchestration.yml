@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Privacy policy, filesystem ACLs and offline bootstrap contracts
-        run: node --test tests/billion-context.test.mjs tests/billion-context-privacy.test.mjs
+        run: node scripts/run-bili-ci.mjs
 
   test:
     runs-on: ubuntu-latest
