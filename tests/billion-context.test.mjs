@@ -93,6 +93,13 @@ test('billion-context metadata, license and npm pins are reproducible', () => {
     assert.equal(sha(fs.readFileSync(path.join(integration, 'LICENSE'))), 'f27574cd3f4b0b4877da2869953945d66d76a665e7ebb9320a5e87aa76f7ab58');
 });
 
+test('integrity-pinned files retain LF bytes in Windows Git checkouts', () => {
+    const attributes = fs.readFileSync(new URL('../.gitattributes', import.meta.url), 'utf8');
+    for (const pattern of ['integrations/billion-context/profile/*', 'integrations/billion-context/LICENSE']) {
+        assert.ok(attributes.split(/\r?\n/).some(line => line === `${pattern} text eol=lf`), pattern);
+    }
+});
+
 test('profile pins patched Zod without overriding optional Zod 3 consumers', () => {
     const pkg = json('package.json');
     const npm = json('package-lock.json');
