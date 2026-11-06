@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
+import { assertPrivate, createPrivateDirectory } from './privacy.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const marker = Symbol.for('devops.billion-context.profile.v1');
@@ -21,14 +22,16 @@ function initialize() {
     if (current && current.root !== root) throw new Error('Another billion-context profile is already active; restart Pi.');
     if (!current) {
         const base = path.join(root, 'tmp');
-        fs.mkdirSync(base, { recursive: true, mode: 0o700 });
-        const st = fs.lstatSync(base);
-        if (st.isSymbolicLink() || !st.isDirectory() || (st.mode & 0o077) !== 0) throw new Error('Temporary base must be a private real directory.');
+        assertPrivate(root, { directory: true });
+        if (!fs.existsSync(base)) createPrivateDirectory(base);
+        assertPrivate(base, { directory: true });
         // Only remove this profile's marked directories whose owner no longer exists.
         for (const entry of fs.readdirSync(base, { withFileTypes: true })) {
             if (!entry.isDirectory() || !entry.name.startsWith('pi-')) continue;
             const dir = path.join(base, entry.name);
             try {
+                assertPrivate(dir, { directory: true });
+                assertPrivate(path.join(dir, 'owner.json'));
                 const owner = JSON.parse(fs.readFileSync(path.join(dir, 'owner.json'), 'utf8'));
                 if (owner.profile !== 'devops-bili-v1' || !Number.isSafeInteger(owner.pid) || owner.pid < 1) continue;
                 try { process.kill(owner.pid, 0); } catch (error) {
@@ -36,9 +39,12 @@ function initialize() {
                 }
             } catch { /* Unknown/unreadable entries are never deleted. */ }
         }
+        // mkdtemp inherits the already private base ACL on Windows.
         const tmp = fs.mkdtempSync(path.join(base, 'pi-'));
         fs.chmodSync(tmp, 0o700);
+        assertPrivate(tmp, { directory: true });
         fs.writeFileSync(path.join(tmp, 'owner.json'), JSON.stringify({ profile: 'devops-bili-v1', pid: process.pid }), { mode: 0o600 });
+        assertPrivate(path.join(tmp, 'owner.json'));
         globalThis[marker] = { root, tmp };
         process.once('exit', () => { try { fs.rmSync(tmp, { recursive: true }); } catch { /* retained for next startup */ } });
     }

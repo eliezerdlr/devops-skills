@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { assertPrivate } from './profile/privacy.mjs';
 
 const profile = new URL('./profile/', import.meta.url);
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -11,18 +12,12 @@ export function verifyRuntime(directory) {
     const root = path.resolve(directory);
     const lock = JSON.parse(fs.readFileSync(new URL('runtime-lock.json', profile), 'utf8'));
     function privateDirectory(name) {
-        const st = fs.lstatSync(name);
-        if (st.isSymbolicLink() || !st.isDirectory() || (st.mode & 0o077) !== 0) {
-            throw new Error(`Expected private real directory: ${name}`);
-        }
+        assertPrivate(name, { directory: true });
     }
     privateDirectory(root);
-    for (const name of ['bootstrap.js', 'runtime.config.json', 'runtime-lock.json', 'package.json', 'package-lock.json']) {
+    for (const name of ['bootstrap.js', 'privacy.mjs', 'runtime.config.json', 'runtime-lock.json', 'package.json', 'package-lock.json']) {
         const target = path.join(root, name);
-        const st = fs.lstatSync(target);
-        if (!st.isFile() || st.isSymbolicLink() || (st.mode & 0o022) !== 0) {
-            throw new Error(`Expected regular file not writable by others: ${target}`);
-        }
+        assertPrivate(target);
         if (digest(fs.readFileSync(target)) !== digest(fs.readFileSync(new URL(name, profile)))) {
             throw new Error(`Profile integrity mismatch: ${name}`);
         }
