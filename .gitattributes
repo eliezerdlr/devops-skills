@@ -1,3 +1,0 @@
-# Bili integrity checks compare exact bytes; preserve them on Windows checkouts.
-integrations/billion-context/profile/* text eol=lf
-integrations/billion-context/LICENSE text eol=lf

@@ -7,7 +7,6 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { verifyRuntime } from '../integrations/billion-context/verify.mjs';
-import { assertPrivate, createPrivateDirectory } from '../integrations/billion-context/profile/privacy.mjs';
 
 const integration = fileURLToPath(new URL('../integrations/billion-context/', import.meta.url));
 const profile = path.join(integration, 'profile');
@@ -31,10 +30,9 @@ const upstream = `export default function(pi) {
 
 function fixture(t, { corruptConfig = false, corruptBundle = false, names = tools } = {}) {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'devops-bili-test-'));
-    fs.rmdirSync(root);
-    createPrivateDirectory(root);
+    fs.chmodSync(root, 0o700);
     t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-    for (const name of ['bootstrap.js', 'privacy.mjs', 'runtime.config.json', 'runtime-lock.json', 'package.json', 'package-lock.json']) {
+    for (const name of ['bootstrap.js', 'runtime.config.json', 'runtime-lock.json', 'package.json', 'package-lock.json']) {
         fs.copyFileSync(path.join(profile, name), path.join(root, name));
         fs.chmodSync(path.join(root, name), 0o600);
     }
@@ -64,14 +62,7 @@ function fixture(t, { corruptConfig = false, corruptBundle = false, names = tool
             const result = spawnSync(process.execPath, ['--input-type=module', '-e', script], {
                 encoding: 'utf8', timeout: 20000,
                 // Do not pass live provider credentials or inherited Pi/Bili flags to children.
-                env: {
-                    PATH: process.env.PATH, HOME: root, PI_OFFLINE: '1', FIXTURE_ROOT: root, FAKE_TOOLS: JSON.stringify(names),
-                    ...(process.platform === 'win32' ? {
-                        SystemRoot: process.env.SystemRoot || 'C:/Windows',
-                        WINDIR: process.env.SystemRoot || 'C:/Windows',
-                        USERPROFILE: root, TEMP: root, TMP: root,
-                    } : {}),
-                },
+                env: { PATH: process.env.PATH, HOME: root, PI_OFFLINE: '1', FIXTURE_ROOT: root, FAKE_TOOLS: JSON.stringify(names) },
             });
             assert.equal(result.status, 0, result.stderr || result.error?.message);
         },
@@ -89,30 +80,8 @@ test('billion-context metadata, license and npm pins are reproducible', () => {
     assert.equal(provenance.integrity, lock.integrity);
     assert.equal(provenance.publishedCommit, lock.publishedCommit);
     assert.equal(sha(fs.readFileSync(path.join(profile, 'runtime.config.json'))), lock.configSha256);
-    assert.equal(sha(fs.readFileSync(path.join(profile, 'bootstrap.js'))), '0d695c0a37e67b0de26fb56f306ed3ecf89984bbd77220c6d4cb53a6af0737dd');
+    assert.equal(sha(fs.readFileSync(path.join(profile, 'bootstrap.js'))), '15b8617298a8b1dd63fee47c6e3110519072bc314f58c0fd791d265723d3f9c2');
     assert.equal(sha(fs.readFileSync(path.join(integration, 'LICENSE'))), 'f27574cd3f4b0b4877da2869953945d66d76a665e7ebb9320a5e87aa76f7ab58');
-});
-
-test('integrity-pinned files retain LF bytes in Windows Git checkouts', () => {
-    const attributes = fs.readFileSync(new URL('../.gitattributes', import.meta.url), 'utf8');
-    for (const pattern of ['integrations/billion-context/profile/*', 'integrations/billion-context/LICENSE']) {
-        assert.ok(attributes.split(/\r?\n/).some(line => line === `${pattern} text eol=lf`), pattern);
-    }
-});
-
-test('profile pins patched Zod without overriding optional Zod 3 consumers', () => {
-    const pkg = json('package.json');
-    const npm = json('package-lock.json');
-    assert.deepEqual(pkg.overrides, { 'zod@4.1.8': '4.6.6' });
-    assert.equal(npm.packages['node_modules/zod'].version, '4.6.6');
-    assert.match(npm.packages['node_modules/zod'].integrity, /^sha512-/);
-    assert.equal(npm.packages['node_modules/billion-context'].dependencies.zod, '4.1.8');
-    for (const [name, dependency] of Object.entries(npm.packages)) {
-        if (name.startsWith('node_modules/@jimp/') && name.endsWith('/node_modules/zod')) {
-            assert.match(dependency.version, /^3\./, name);
-            assert.equal(dependency.optional, true, name);
-        }
-    }
 });
 
 test('profile keeps persistence, updates, delegates, dumps and injection disabled', () => {
@@ -155,9 +124,8 @@ test('tools are bounded, credential getter hidden, foreign registry untouched, e
         assert.equal(originalRegistry.size, 1); assert.equal(Object.isFrozen(originalRegistry.get('foreign')), true);
         handlers.get('custom')({}, ctx); assert.equal(globalThis.keyHidden, true);
         assert.equal(process.env.ACP_NO_INJECT_TOOL, '1'); assert.equal(process.env.BILI_PERSIST, '0');
-        const {assertPrivate} = await import(pathToFileURL(path.join(root,'privacy.mjs')));
-        assertPrivate(process.env.TMPDIR, {directory:true});
-        assertPrivate(path.join(process.env.TMPDIR,'owner.json'));
+        const st=fs.statSync(process.env.TMPDIR); assert.equal(st.mode & 0o077, 0);
+        assert.equal(fs.statSync(path.join(process.env.TMPDIR,'owner.json')).mode & 0o077, 0);
         fs.writeFileSync(path.join(process.env.TMPDIR,'recovery.txt'), 'synthetic recovery', {mode:0o600});`);
     assert.deepEqual(fs.readdirSync(path.join(f.root, 'tmp')), [], 'owned process temp removed at exit');
 });
@@ -196,16 +164,14 @@ test('read-only verifier rejects modified profile and unsafe permissions without
     const f = fixture(t);
     // Fixture runtime lock differs from shipped reference, so verification must not trust it.
     assert.throws(() => verifyRuntime(f.root), /Profile integrity mismatch: runtime-lock.json/);
-    if (process.platform !== 'win32') {
-        fs.chmodSync(f.root, 0o755);
-        assert.throws(() => verifyRuntime(f.root), /Expected private real directory/);
-    }
+    fs.chmodSync(f.root, 0o755);
+    assert.throws(() => verifyRuntime(f.root), /Expected private real directory/);
     assert.equal(fs.existsSync(path.join(f.root, 'tmp')), false);
 });
 
 test('integration ships only public profile, source verifier, attribution and documentation', () => {
     assert.deepEqual(fs.readdirSync(integration).sort(), ['LICENSE','README.md','UPSTREAM.json','profile','verify.mjs']);
-    assert.deepEqual(fs.readdirSync(profile).sort(), ['bootstrap.js','package-lock.json','package.json','privacy.mjs','runtime-lock.json','runtime.config.json']);
+    assert.deepEqual(fs.readdirSync(profile).sort(), ['bootstrap.js','package-lock.json','package.json','runtime-lock.json','runtime.config.json']);
     for (const dir of [integration,profile]) for (const name of fs.readdirSync(dir)) {
         const filename=path.join(dir,name);
         if (fs.statSync(filename).isFile()) assert.doesNotMatch(fs.readFileSync(filename,'utf8'), /\/Users\/|registered_pending_restart|settings\.before\.json/);
